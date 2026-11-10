@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#E7E9F0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+</style>
+</helmet>
+
+<!-- ============ SCREEN 1 — LOGIN ============ -->
+<div style="position:absolute;left:80px;top:80px;width:1440px">
+  <div data-drags-parent="1" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55)">01 — Login</div>
+  <div style="width:1440px;height:900px;background:#fff;border-radius:18px;box-shadow:0 12px 40px rgba(15,27,45,.16);overflow:hidden;display:flex;font-family:'Inter',system-ui,sans-serif">
+
+    <!-- LEFT gradient panel -->
+    <div style="width:720px;height:900px;background:linear-gradient(155deg,#5B4FE8 0%,#3B33B0 45%,#0F1B2D 100%);padding:60px;box-sizing:border-box;display:flex;flex-direction:column;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);top:-160px;right:-120px"></div>
+      <div style="display:flex;align-items:center;gap:12px;position:relative">
+        <div style="width:40px;height:40px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:5px;background:#5B4FE8;transform:rotate(45deg)"></div></div>
+        <div style="font:800 30px Inter;letter-spacing:-1px">SYNCO</div>
+      </div>
+      <div style="margin-top:auto;position:relative">
+        <div style="font:800 44px/1.08 Inter;letter-spacing:-1.6px;max-width:540px">Your team, always in sync.</div>
+        <div style="margin-top:22px;font:400 18px/1.55 Inter;color:rgba(255,255,255,.78);max-width:470px">Set goals, decompose them with AI, and watch your team execute — visually.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:40px">
+          <div style="padding:11px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08);backdrop-filter:blur(4px)">Org Tree</div>
+          <div style="padding:11px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">AI Decomposition</div>
+          <div style="padding:11px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">Virtual Office</div>
+          <div style="padding:11px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">Brainstorm</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT form panel -->
+    <div style="width:720px;height:900px;padding:0 96px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:22px">
+      <div>
+        <div style="font:800 34px Inter;letter-spacing:-1px;color:#0F1B2D">Welcome back</div>
+        <div style="margin-top:8px;font:400 16px Inter;color:#6B7385">Sign in to your SYNCO workspace</div>
+      </div>
+
+      <button style="height:54px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font:600 15px Inter;color:#0F1B2D;cursor:pointer">
+        <span style="width:20px;height:20px;border-radius:5px;background:#fff;border:1px solid #E2E5F0;display:flex;align-items:center;justify-content:center;font:800 13px Inter;color:#4285F4">G</span>
+        Continue with Google
+      </button>
+
+      <div style="display:flex;align-items:center;gap:16px;color:#9CA3B5;font:400 13px Inter">
+        <div style="flex:1;height:1px;background:#E8EAF2"></div>or sign in with email<div style="flex:1;height:1px;background:#E8EAF2"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font:600 13px Inter;color:#0F1B2D">Email</label>
+        <input value="alex@regagro.com" style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none">
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <label style="font:600 13px Inter;color:#0F1B2D">Password</label>
+          <span style="font:600 13px Inter;color:#5B4FE8;cursor:pointer">Forgot password?</span>
+        </div>
+        <input type="password" value="passwordvalue" style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none">
+      </div>
+
+      <button style="height:54px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 16px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Sign in</button>
+
+      <div style="text-align:center;font:400 14px Inter;color:#6B7385">Don't have an account? <span style="color:#5B4FE8;font-weight:600;cursor:pointer">Request access</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 2 — ONBOARDING ============ -->
+<div style="position:absolute;left:1640px;top:80px;width:1440px">
+  <div data-drags-parent="1" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55)">02 — Onboarding</div>
+  <div style="width:1440px;height:900px;border-radius:18px;box-shadow:0 12px 40px rgba(15,27,45,.16);overflow:hidden;background:radial-gradient(circle at 50% 28%,#1c2c47,#0F1B2D 70%);display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif">
+
+    <div style="width:540px;background:#fff;border-radius:20px;padding:44px 48px;box-sizing:border-box;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div>
+          <div style="width:20px;height:8px;border-radius:99px;background:#5B4FE8"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div>
+        </div>
+        <div style="font:600 13px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 1 OF 3</div>
+      </div>
+
+      <div style="margin-top:26px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">Let's set up your workspace</div>
+      <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Tell us a bit about your team to personalize SYNCO.</div>
+
+      <div style="margin-top:30px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font:600 13px Inter;color:#0F1B2D">Workspace name</label>
+          <input value="REGAGRO" style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none">
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font:600 13px Inter;color:#0F1B2D">Your role</label>
+          <div style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font:400 15px Inter;color:#0F1B2D;cursor:pointer">
+            Owner
+            <span style="width:9px;height:9px;border-right:2px solid #9CA3B5;border-bottom:2px solid #9CA3B5;transform:rotate(45deg);margin-bottom:4px"></span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font:600 13px Inter;color:#0F1B2D">Company size</label>
+          <div style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font:400 15px Inter;color:#9CA3B5;cursor:pointer">
+            Select company size
+            <span style="width:9px;height:9px;border-right:2px solid #9CA3B5;border-bottom:2px solid #9CA3B5;transform:rotate(45deg);margin-bottom:4px"></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:30px;display:flex;align-items:center;justify-content:space-between;font:600 12px Inter;color:#9CA3B5">
+        <span>Progress</span><span>33%</span>
+      </div>
+      <div style="margin-top:8px;height:8px;border-radius:99px;background:#EEF0F6;overflow:hidden">
+        <div style="width:33%;height:100%;border-radius:99px;background:linear-gradient(90deg,#5B4FE8,#7B6FF0)"></div>
+      </div>
+
+      <button style="margin-top:26px;width:100%;height:54px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 16px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Continue</button>
+      <div style="margin-top:16px;text-align:center;font:500 14px Inter;color:#9CA3B5;cursor:pointer">Skip for now</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 3 — DASHBOARD ============ -->
+<div style="position:absolute;left:80px;top:1100px;width:1440px">
+  <div data-drags-parent="1" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55)">03 — Dashboard (Owner)</div>
+  <div style="width:1440px;height:900px;border-radius:18px;box-shadow:0 12px 40px rgba(15,27,45,.16);overflow:hidden;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column">
+
+    <!-- navbar -->
+    <div style="height:64px;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:28px;height:28px;border-radius:8px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:11px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+        <div style="font:800 19px Inter;letter-spacing:-.6px;color:#0F1B2D">SYNCO</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;padding:6px 12px;background:#F2F3F9;border-radius:9px;font:600 13px Inter;color:#0F1B2D">
+        <div style="width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">R</div>
+        REGAGRO
+      </div>
+      <div style="flex:1;max-width:440px;margin:0 auto;height:40px;background:#F2F3F9;border-radius:10px;display:flex;align-items:center;gap:10px;padding:0 14px">
+        <div style="width:14px;height:14px;border:2px solid #9CA3B5;border-radius:50%;position:relative"><div style="position:absolute;width:6px;height:2px;background:#9CA3B5;right:-4px;bottom:-1px;transform:rotate(45deg)"></div></div>
+        <span style="font:400 14px Inter;color:#9CA3B5">Search people, tasks, goals…</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center">
+          <div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:6px 6px 3px 3px"></div>
+          <div style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F5A623;border:2px solid #F2F3F9"></div>
+        </div>
+        <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">AK</div>
+      </div>
+    </div>
+
+    <div style="flex:1;display:flex;min-height:0">
+      <!-- sidebar -->
+      <div style="width:72px;background:#fff;border-right:1px solid #ECEEF5;display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:8px;flex-shrink:0">
+        <div style="width:44px;height:44px;border-radius:12px;background:#5B4FE8;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(91,79,232,.3)"><div style="display:grid;grid-template-columns:1fr 1fr;gap:3px"><div style="width:6px;height:6px;background:#fff;border-radius:2px"></div><div style="width:6px;height:6px;background:#fff;border-radius:2px"></div><div style="width:6px;height:6px;background:#fff;border-radius:2px"></div><div style="width:6px;height:6px;background:#fff;border-radius:2px"></div></div></div>
+        <div style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:8px;height:8px;border-radius:50%;border:2px solid #9CA3B5"></div><div style="width:18px;height:6px;border-radius:2px;border:2px solid #9CA3B5;border-bottom:none"></div></div></div>
+        <div style="width:44px;height:44px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><div style="width:18px;height:3px;border-radius:2px;background:#9CA3B5"></div><div style="width:18px;height:3px;border-radius:2px;background:#9CA3B5"></div><div style="width:12px;height:3px;border-radius:2px;background:#9CA3B5"></div></div>
+        <div style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50% 50% 50% 2px;border:2px solid #9CA3B5"></div></div>
+        <div style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="width:15px;height:15px;border-radius:50%;border:2px solid #9CA3B5;display:flex;align-items:center;justify-content:center"><div style="width:5px;height:5px;border-radius:50%;background:#9CA3B5"></div></div></div>
+      </div>
+
+      <!-- main split -->
+      <div style="flex:1;display:flex;min-width:0;padding:24px;gap:22px;box-sizing:border-box">
+
+        <!-- ORG TREE -->
+        <div style="flex:1.25;min-width:0;background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:22px;box-sizing:border-box;box-shadow:0 2px 10px rgba(15,27,45,.04);display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:700 17px Inter;color:#0F1B2D">Org Tree</div>
+            <div style="display:flex;align-items:center;gap:6px;font:500 12px Inter;color:#6B7385"><div style="width:8px;height:8px;border-radius:50%;background:#00C896"></div>10 active</div>
+          </div>
+
+          <div style="position:relative;width:100%;height:500px;margin-top:8px">
+            <svg width="100%" height="500" viewBox="0 0 760 500" preserveAspectRatio="xMidYMin meet" style="position:absolute;inset:0">
+              <path d="M380 74 L380 120" stroke="#CBD0DD" stroke-width="2" fill="none"/>
+              <path d="M130 120 L630 120" stroke="#CBD0DD" stroke-width="2" fill="none"/>
+              <path d="M130 120 L130 160 M380 120 L380 160 M630 120 L630 160" stroke="#CBD0DD" stroke-width="2" fill="none"/>
+              <path d="M130 220 L130 456 M380 220 L380 456 M630 220 L630 386" stroke="#CBD0DD" stroke-width="2" fill="none"/>
+            </svg>
+
+            <!-- root -->
+            <div style="position:absolute;left:280px;top:10px;width:200px;height:64px;border-radius:13px;background:linear-gradient(135deg,#5B4FE8,#3B33B0);box-shadow:0 8px 20px rgba(91,79,232,.32);padding:0 18px;box-sizing:border-box;display:flex;align-items:center;gap:12px">
+              <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;font:800 15px Inter;display:flex;align-items:center;justify-content:center">R</div>
+              <div><div style="font:700 16px Inter;color:#fff">REGAGRO</div><div style="font:500 11px Inter;color:rgba(255,255,255,.7)">Organization</div></div>
+            </div>
+
+            <!-- depts -->
+            <div style="position:absolute;left:52px;top:160px;width:156px;height:60px;border-radius:12px;background:#fff;border:1px solid #E9EBF2;box-shadow:0 3px 10px rgba(15,27,45,.07);padding:0 14px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center">
+              <div style="display:flex;align-items:center"><div style="font:700 14px Inter;color:#0F1B2D">Marketing</div><div style="width:8px;height:8px;border-radius:50%;background:#00C896;margin-left:auto"></div></div>
+              <div style="font:500 11px Inter;color:#9CA3B5">Department · 3 people</div>
+            </div>
+            <div style="position:absolute;left:302px;top:160px;width:156px;height:60px;border-radius:12px;background:#fff;border:1px solid #E9EBF2;box-shadow:0 3px 10px rgba(15,27,45,.07);padding:0 14px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center">
+              <div style="display:flex;align-items:center"><div style="font:700 14px Inter;color:#0F1B2D">Development</div><div style="width:8px;height:8px;border-radius:50%;background:#00C896;margin-left:auto"></div></div>
+              <div style="font:500 11px Inter;color:#9CA3B5">Department · 3 people</div>
+            </div>
+            <div style="position:absolute;left:552px;top:160px;width:156px;height:60px;border-radius:12px;background:#fff;border:1px solid #E9EBF2;box-shadow:0 3px 10px rgba(15,27,45,.07);padding:0 14px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center">
+              <div style="display:flex;align-items:center"><div style="font:700 14px Inter;color:#0F1B2D">Sales</div><div style="width:8px;height:8px;border-radius:50%;background:#00C896;margin-left:auto"></div></div>
+              <div style="font:500 11px Inter;color:#9CA3B5">Department · 2 people</div>
+            </div>
+
+            <!-- members: Marketing -->
+            <div style="position:absolute;left:52px;top:290px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">JS</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Jane Smith</div><div style="font:500 10px Inter;color:#9CA3B5">Content Lead</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="4 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">4</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+            <div style="position:absolute;left:52px;top:360px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">TR</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Tom Reyes</div><div style="font:500 10px Inter;color:#9CA3B5">Designer</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="6 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">6</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+            <div style="position:absolute;left:52px;top:430px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">MC</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Mia Cole</div><div style="font:500 10px Inter;color:#9CA3B5">Social</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="2 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">2</div><div style="width:7px;height:7px;border-radius:50%;background:#C3C9D6"></div></div>
+            </div>
+
+            <!-- members: Development -->
+            <div style="position:absolute;left:302px;top:290px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">AK</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Alex Kim</div><div style="font:500 10px Inter;color:#9CA3B5">Tech Lead</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="5 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">5</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+            <div style="position:absolute;left:302px;top:360px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">SP</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Sam Park</div><div style="font:500 10px Inter;color:#9CA3B5">Backend</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="3 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">3</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+            <div style="position:absolute;left:302px;top:430px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">LV</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Lena Vu</div><div style="font:500 10px Inter;color:#9CA3B5">Frontend</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="7 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">7</div><div style="width:7px;height:7px;border-radius:50%;background:#C3C9D6"></div></div>
+            </div>
+
+            <!-- members: Sales -->
+            <div style="position:absolute;left:552px;top:290px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">OD</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Omar Diaz</div><div style="font:500 10px Inter;color:#9CA3B5">Sales Lead</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="2 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">2</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+            <div style="position:absolute;left:552px;top:360px;width:156px;height:52px;border-radius:11px;background:#fff;border:1px solid #EEF0F6;box-shadow:0 2px 6px rgba(15,27,45,.05);padding:0 11px;box-sizing:border-box;display:flex;align-items:center;gap:9px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">RN</div>
+              <div style="min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Ria Nair</div><div style="font:500 10px Inter;color:#9CA3B5">Account Exec</div></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0"><div title="4 tasks in backlog" style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;min-width:17px;height:17px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 4px">4</div><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GOAL INPUT -->
+        <div style="flex:.95;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:20px;box-sizing:border-box;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="font:700 13px Inter;color:#0F1B2D">Set a goal for your team</div>
+            <textarea style="margin-top:12px;width:100%;height:84px;resize:none;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:12px 14px;box-sizing:border-box;font:500 15px/1.4 Inter;color:#0F1B2D;outline:none">Launch new product by September 1</textarea>
+            <button style="margin-top:12px;width:100%;height:48px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(91,79,232,.3)">Decompose with AI <span style="font-size:16px">✦</span></button>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;font:600 12px Inter;color:#6B7385"><span style="font-size:13px;color:#5B4FE8">✦</span>AI-GENERATED TASKS</div>
+
+          <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:12px">
+            <!-- marketing card -->
+            <div style="background:#fff;border:1px solid #ECEEF5;border-radius:14px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="width:7px;height:7px;border-radius:50%;background:#5B4FE8"></div><div style="font:700 13px Inter;color:#0F1B2D">Marketing</div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Define launch campaign brief</span><span style="font:600 11px Inter;color:#6B7385;background:#EEF0F6;padding:3px 9px;border-radius:99px">To Do</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Design landing page</span><span style="font:600 11px Inter;color:#C77E0A;background:rgba(245,166,35,.14);padding:3px 9px;border-radius:99px">In Progress</span></div>
+            </div>
+            <!-- dev card -->
+            <div style="background:#fff;border:1px solid #ECEEF5;border-radius:14px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="width:7px;height:7px;border-radius:50%;background:#00C896"></div><div style="font:700 13px Inter;color:#0F1B2D">Development</div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Build product API</span><span style="font:600 11px Inter;color:#C77E0A;background:rgba(245,166,35,.14);padding:3px 9px;border-radius:99px">In Progress</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Set up CI pipeline</span><span style="font:600 11px Inter;color:#00936E;background:rgba(0,200,150,.14);padding:3px 9px;border-radius:99px">Done</span></div>
+            </div>
+            <!-- sales card -->
+            <div style="background:#fff;border:1px solid #ECEEF5;border-radius:14px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="width:7px;height:7px;border-radius:50%;background:#F5A623"></div><div style="font:700 13px Inter;color:#0F1B2D">Sales</div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Prepare pricing tiers</span><span style="font:600 11px Inter;color:#6B7385;background:#EEF0F6;padding:3px 9px;border-radius:99px">To Do</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font:500 13px Inter;color:#3A4253">Draft outreach list</span><span style="font:600 11px Inter;color:#C77E0A;background:rgba(245,166,35,.14);padding:3px 9px;border-radius:99px">In Progress</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 4 — ASSIGN WORK ============ -->
+<div style="position:absolute;left:1640px;top:1100px;width:1440px">
+  <div data-drags-parent="1" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55)">04 — Assign Work (Owner)</div>
+  <div data-screen-label="04 Assign Work" style="width:1440px;height:900px;border-radius:18px;box-shadow:0 12px 40px rgba(15,27,45,.16);overflow:hidden;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column">
+
+    <!-- top bar -->
+    <div style="height:58px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+      <div style="display:flex;align-items:center;gap:9px"><div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div><div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div></div>
+      <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px"><div style="font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</div><div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Assign Work</div></div>
+      <div style="font:500 13px Inter;color:#9CA3B5">REGAGRO · Owner view</div>
+      <div style="margin-left:auto;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">AK</div>
+    </div>
+
+    <!-- goal bar -->
+    <div style="flex-shrink:0;padding:14px 24px;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:18px">
+      <div style="flex:1;min-width:0"><div style="font:600 11px Inter;letter-spacing:.5px;color:#9CA3B5">GOAL</div><div style="margin-top:3px;display:flex;align-items:center;gap:10px"><div style="font:800 18px Inter;letter-spacing:-.4px;color:#0F1B2D">Launch new product by September 1</div><div style="font:600 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:4px 9px;border-radius:99px">✦ AI decomposed · 6 tasks</div></div></div>
+      <div style="display:flex;align-items:center;gap:10px"><div style="text-align:right;margin-right:4px"><div style="font:700 13px Inter;color:#0F1B2D">4/6</div><div style="font:500 10px Inter;color:#9CA3B5">assigned</div></div>
+        <div style="height:40px;padding:0 15px;border-radius:11px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 13px Inter;display:flex;align-items:center;gap:7px">✦ Suggest assignments</div>
+        <div style="height:40px;padding:0 15px;border-radius:11px;background:#5B4FE8;color:#fff;font:700 13px Inter;display:flex;align-items:center;gap:7px;box-shadow:0 6px 14px rgba(91,79,232,.26)">Approve all suggested</div></div>
+    </div>
+
+    <!-- body -->
+    <div style="flex:1;display:flex;min-height:0">
+
+      <!-- unassigned -->
+      <div style="width:330px;flex-shrink:0;border-right:1px solid #ECEEF5;background:#FBFBFE;display:flex;flex-direction:column">
+        <div style="padding:15px 18px 10px;display:flex;align-items:center;gap:9px"><div style="font:700 13px Inter;color:#0F1B2D">Unassigned</div><div style="font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">2</div><div style="margin-left:auto;font:500 11px Inter;color:#B7BCCB">drag → or Assign ▾</div></div>
+        <div style="padding:0 16px;display:flex;flex-direction:column;gap:11px">
+          <!-- card with AI suggestion -->
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:13px;box-shadow:0 2px 8px rgba(15,27,45,.05);padding:13px 14px">
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="flex:1;font:600 14px/1.3 Inter;color:#0F1B2D">Build product API</div><div style="width:6px;height:18px;border-radius:3px;background:#00C896"></div></div>
+            <div style="margin-top:9px;display:flex;align-items:center;gap:7px"><span style="font:700 9px Inter;color:#E5484D;background:rgba(229,72,77,.12);padding:3px 8px;border-radius:99px">High</span><span style="font:600 10px Inter;color:#6B7385;background:#F2F3F9;padding:3px 8px;border-radius:6px">Development</span><span style="font:500 11px Inter;color:#9CA3B5">Suggested Sep 9</span></div>
+            <div style="margin-top:11px;border:1px solid #E2DEF8;background:#F7F5FF;border-radius:11px;padding:10px 11px">
+              <div style="font:700 9px Inter;letter-spacing:.4px;color:#5B4FE8">✦ AI SUGGESTS</div>
+              <div style="margin-top:7px;display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">SP</div><div><div style="font:700 12px Inter;color:#0F1B2D">Sam Park</div><div style="font:500 10px Inter;color:#8A91A3">Lightest load in Development · by Sep 9</div></div></div>
+              <div style="margin-top:8px;font:500 11px Inter;color:#E5484D">⚠ May push Sam over capacity</div>
+              <div style="margin-top:9px;display:flex;gap:7px"><div style="flex:1;height:34px;border-radius:9px;background:#5B4FE8;color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">Approve</div><div style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;display:flex;align-items:center">Change ▾</div></div>
+            </div>
+          </div>
+          <!-- plain card -->
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:13px;box-shadow:0 2px 8px rgba(15,27,45,.05);padding:13px 14px">
+            <div style="display:flex;align-items:flex-start;gap:8px"><div style="flex:1;font:600 14px/1.3 Inter;color:#0F1B2D">Draft outreach list</div><div style="width:6px;height:18px;border-radius:3px;background:#F5A623"></div></div>
+            <div style="margin-top:9px;display:flex;align-items:center;gap:7px"><span style="font:700 9px Inter;color:#C77E0A;background:rgba(245,166,35,.16);padding:3px 8px;border-radius:99px">Medium</span><span style="font:600 10px Inter;color:#6B7385;background:#F2F3F9;padding:3px 8px;border-radius:6px">Sales</span><span style="font:500 11px Inter;color:#9CA3B5">Suggested Sep 8</span></div>
+            <div style="margin-top:11px;height:38px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;display:flex;align-items:center;justify-content:center;gap:6px">Assign <span style="color:#9CA3B5">▾</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- teams -->
+      <div style="flex:1;min-width:0;overflow:hidden;padding:15px 20px">
+        <div style="font:700 13px Inter;color:#0F1B2D;margin-bottom:12px">Teams</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <!-- Marketing -->
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;box-shadow:0 2px 10px rgba(15,27,45,.04);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #F0F1F6;border-left:4px solid #5B4FE8">
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">JS</div>
+              <div><div style="display:flex;align-items:center;gap:7px"><div style="font:700 15px Inter;color:#0F1B2D">Marketing</div><div style="font:600 9px Inter;color:#5B4FE8;background:#EEEDFB;padding:2px 7px;border-radius:99px">LEAD: Jane Smith</div></div><div style="font:500 11px Inter;color:#9CA3B5">2 members</div></div>
+              <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+                <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">EFFICIENCY</div><div style="margin-top:3px;width:88px;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:91%;height:100%;border-radius:99px;background:#00C896"></div></div></div>
+                <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">CAPACITY</div><div style="margin-top:2px;display:flex;align-items:center;gap:3px;justify-content:flex-end"><div style="width:34px;height:16px;border:2px solid #00C896;border-radius:4px;padding:2px"><div style="width:55%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:3px;height:7px;background:#00C896;border-radius:0 2px 2px 0"></div></div></div>
+              </div>
+            </div>
+            <div style="padding:13px 18px;display:flex;gap:16px">
+              <div style="flex:1;min-width:0">
+                <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">ON THE LEAD'S DESK · DELEGATE ↓</div>
+                <div style="border:1px solid #ECEEF5;border-radius:11px;background:#FBFBFE;padding:10px 12px;display:flex;align-items:center;gap:9px">
+                  <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">Design launch landing page</div><div style="margin-top:4px;display:flex;gap:6px;align-items:center"><span style="font:700 9px Inter;color:#E5484D;background:rgba(229,72,77,.12);padding:2px 7px;border-radius:99px">High</span><span style="font:500 10px Inter;color:#9CA3B5">Sep 8</span></div></div>
+                  <div style="height:32px;padding:0 11px;border-radius:9px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 11px Inter;display:flex;align-items:center;white-space:nowrap">Delegate ▾</div>
+                </div>
+              </div>
+              <div style="width:218px;flex-shrink:0">
+                <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">MEMBERS · DROP TO ASSIGN</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">TR</div><div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Tom Reyes</div><div style="font:500 9px Inter;color:#9CA3B5">Designer · 5 tasks</div></div><div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid #F5A623;border-radius:3px;padding:1.5px"><div style="width:83%;height:100%;background:#F5A623;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#F5A623;border-radius:0 2px 2px 0"></div></div></div>
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">MC</div><div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Mia Cole</div><div style="font:500 9px Inter;color:#9CA3B5">Social · 2 tasks</div></div><div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:33%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Development (overloaded) -->
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;box-shadow:0 2px 10px rgba(15,27,45,.04);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #F0F1F6;border-left:4px solid #00C896">
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">AK</div>
+              <div><div style="display:flex;align-items:center;gap:7px"><div style="font:700 15px Inter;color:#0F1B2D">Development</div><div style="font:600 9px Inter;color:#5B4FE8;background:#EEEDFB;padding:2px 7px;border-radius:99px">LEAD: Alex Kim</div></div><div style="font:500 11px Inter;color:#9CA3B5">2 members</div></div>
+              <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+                <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">EFFICIENCY</div><div style="margin-top:3px;width:88px;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:77%;height:100%;border-radius:99px;background:#F5A623"></div></div></div>
+                <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">CAPACITY</div><div style="margin-top:2px;display:flex;align-items:center;gap:3px;justify-content:flex-end"><div style="width:34px;height:16px;border:2px solid #E5484D;border-radius:4px;padding:2px"><div style="width:100%;height:100%;background:#E5484D;border-radius:1px"></div></div><div style="width:3px;height:7px;background:#E5484D;border-radius:0 2px 2px 0"></div></div></div>
+              </div>
+            </div>
+            <div style="padding:13px 18px;display:flex;gap:16px">
+              <div style="flex:1;min-width:0">
+                <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">ON THE LEAD'S DESK · DELEGATE ↓</div>
+                <div style="font:500 11px Inter;color:#C3C9D6;padding:4px 0">Nothing waiting to delegate.</div>
+              </div>
+              <div style="width:218px;flex-shrink:0">
+                <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">MEMBERS · DROP TO ASSIGN</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="border:1px solid #F6D2D3;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px;background:#FFF7F7"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">SP</div><div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Sam Park</div><div style="font:500 9px Inter;color:#9CA3B5">Backend · 7 tasks</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid #E5484D;border-radius:3px;padding:1.5px"><div style="width:100%;height:100%;background:#E5484D;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#E5484D;border-radius:0 2px 2px 0"></div></div><div style="font:700 8px Inter;color:#E5484D">OVERLOADED</div></div></div>
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">LV</div><div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">Lena Vu</div><div style="font:500 9px Inter;color:#9CA3B5">Frontend · 5 tasks</div></div><div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid #F5A623;border-radius:3px;padding:1.5px"><div style="width:83%;height:100%;background:#F5A623;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#F5A623;border-radius:0 2px 2px 0"></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- daily status rail -->
+      <div style="width:330px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;padding:16px 18px">
+        <div style="font:800 17px Inter;letter-spacing:-.4px;color:#0F1B2D">Daily Status</div>
+        <div style="margin-top:3px;font:500 12px Inter;color:#9CA3B5">Wed, Jun 24 · live</div>
+        <div style="margin-top:16px;font:700 11px Inter;letter-spacing:.4px;color:#9CA3B5">BY DEPARTMENT</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:9px">
+          <div style="border:1px solid #ECEEF5;border-radius:13px;padding:12px 13px;box-shadow:0 2px 8px rgba(15,27,45,.04)"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:#5B4FE8"></div><div style="font:700 13px Inter;color:#0F1B2D">Marketing</div><div style="margin-left:auto;font:700 9px Inter;color:#00936E;background:rgba(0,200,150,.14);padding:3px 8px;border-radius:99px">ON TRACK</div></div><div style="margin-top:10px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Efficiency</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:91%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:700 11px Inter;color:#00C896;width:32px;text-align:right">91%</span></div><div style="margin-top:6px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Capacity</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:55%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:700 11px Inter;color:#00C896;width:32px;text-align:right">3.3</span></div></div>
+          <div style="border:1px solid #ECEEF5;border-radius:13px;padding:12px 13px;box-shadow:0 2px 8px rgba(15,27,45,.04)"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:#00C896"></div><div style="font:700 13px Inter;color:#0F1B2D">Development</div><div style="margin-left:auto;font:700 9px Inter;color:#E5484D;background:rgba(229,72,77,.12);padding:3px 8px;border-radius:99px">OVERLOAD</div></div><div style="margin-top:10px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Efficiency</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:77%;height:100%;border-radius:99px;background:#F5A623"></div></div><span style="font:700 11px Inter;color:#F5A623;width:32px;text-align:right">77%</span></div><div style="margin-top:6px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Capacity</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:100%;height:100%;border-radius:99px;background:#E5484D"></div></div><span style="font:700 11px Inter;color:#E5484D;width:32px;text-align:right">6.0</span></div></div>
+          <div style="border:1px solid #ECEEF5;border-radius:13px;padding:12px 13px;box-shadow:0 2px 8px rgba(15,27,45,.04)"><div style="display:flex;align-items:center;gap:8px"><div style="width:9px;height:9px;border-radius:50%;background:#F5A623"></div><div style="font:700 13px Inter;color:#0F1B2D">Sales</div><div style="margin-left:auto;font:700 9px Inter;color:#00936E;background:rgba(0,200,150,.14);padding:3px 8px;border-radius:99px">ON TRACK</div></div><div style="margin-top:10px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Efficiency</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:90%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:700 11px Inter;color:#00C896;width:32px;text-align:right">90%</span></div><div style="margin-top:6px;display:flex;align-items:center;gap:9px"><span style="font:500 10px Inter;color:#9CA3B5;width:52px">Capacity</span><div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:33%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:700 11px Inter;color:#00C896;width:32px;text-align:right">2.0</span></div></div>
+        </div>
+        <div style="margin-top:16px;font:700 11px Inter;letter-spacing:.4px;color:#9CA3B5">BY PERSON</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">TR</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Tom Reyes</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:88%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">88%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #F5A623;border-radius:3px;padding:1.5px"><div style="width:83%;height:100%;background:#F5A623;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#F5A623;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">5/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">MC</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Mia Cole</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:94%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">94%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:33%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">2/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">SP</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Sam Park</div><div style="font:600 8px Inter;color:#E5484D">OVERLOADED</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:79%;height:100%;border-radius:99px;background:#F5A623"></div></div><span style="font:600 9px Inter;color:#F5A623">79%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #E5484D;border-radius:3px;padding:1.5px"><div style="width:100%;height:100%;background:#E5484D;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#E5484D;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">7/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">LV</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Lena Vu</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:66%;height:100%;border-radius:99px;background:#E5484D"></div></div><span style="font:600 9px Inter;color:#E5484D">66%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #F5A623;border-radius:3px;padding:1.5px"><div style="width:83%;height:100%;background:#F5A623;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#F5A623;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">5/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">RN</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Ria Nair</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:91%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">91%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:50%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">3/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">JS</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Jane Smith</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:90%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">90%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:55%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">3/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">AK</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Alex Kim</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:85%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">85%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:33%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">2/6</span></div></div><div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:8px 11px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">OD</div><div style="min-width:0;flex:1"><div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">Omar Diaz</div></div><div style="margin-top:5px;display:flex;align-items:center;gap:6px"><div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:88%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:600 9px Inter;color:#00C896">88%</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0"><div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid #00C896;border-radius:3px;padding:1.5px"><div style="width:17%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:6px;background:#00C896;border-radius:0 2px 2px 0"></div></div><span style="font:600 8px Inter;color:#9CA3B5">1/6</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-added-screens="1" style="position:absolute;left:82px;top:2110px;font:800 28px Inter,system-ui;letter-spacing:-.6px;color:#0F1B2D">Added screens <span style="font:500 15px Inter,system-ui;color:rgba(40,45,70,.55);letter-spacing:0">· live and clickable — each opens as its own page</span></div>
+<div style="position:absolute;left:80px;top:2220px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#login" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">05 — Login · by role &#8599;</a>
+  <div data-screen-label="05 — Login · by role" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#login" loading="lazy" title="05 — Login · by role" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:2220px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#signup" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">06 — Sign up / request access &#8599;</a>
+  <div data-screen-label="06 — Sign up / request access" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#signup" loading="lazy" title="06 — Sign up / request access" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:3260px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#sent" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">07 — Request sent &#8599;</a>
+  <div data-screen-label="07 — Request sent" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#sent" loading="lazy" title="07 — Request sent" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:3260px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#forgot" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">08 — Forgot password &#8599;</a>
+  <div data-screen-label="08 — Forgot password" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#forgot" loading="lazy" title="08 — Forgot password" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:4300px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#forgotSent" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">09 — Check your inbox &#8599;</a>
+  <div data-screen-label="09 — Check your inbox" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#forgotSent" loading="lazy" title="09 — Check your inbox" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:4300px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#reset" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">10 — New password &#8599;</a>
+  <div data-screen-label="10 — New password" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#reset" loading="lazy" title="10 — New password" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:5340px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Auth.dc.html#invite" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">11 — Accept invite &#8599;</a>
+  <div data-screen-label="11 — Accept invite" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Auth.dc.html#invite" loading="lazy" title="11 — Accept invite" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:5340px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#1" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">12 — Onboarding · step 1 &#8599;</a>
+  <div data-screen-label="12 — Onboarding · step 1" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#1" loading="lazy" title="12 — Onboarding · step 1" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:6380px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#2" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">13 — Onboarding · step 2 · org &#8599;</a>
+  <div data-screen-label="13 — Onboarding · step 2 · org" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#2" loading="lazy" title="13 — Onboarding · step 2 · org" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:6380px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#3" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">14 — Onboarding · step 3 · invite &#8599;</a>
+  <div data-screen-label="14 — Onboarding · step 3 · invite" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#3" loading="lazy" title="14 — Onboarding · step 3 · invite" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:7420px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#done" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">15 — Onboarding · done &#8599;</a>
+  <div data-screen-label="15 — Onboarding · done" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#done" loading="lazy" title="15 — Onboarding · done" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:7420px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#m1" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">16 — Member onboarding · welcome &#8599;</a>
+  <div data-screen-label="16 — Member onboarding · welcome" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#m1" loading="lazy" title="16 — Member onboarding · welcome" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:8460px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#m2" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">17 — Member onboarding · profile &#8599;</a>
+  <div data-screen-label="17 — Member onboarding · profile" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#m2" loading="lazy" title="17 — Member onboarding · profile" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:8460px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Onboarding.dc.html#m3" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">18 — Member onboarding · how it works &#8599;</a>
+  <div data-screen-label="18 — Member onboarding · how it works" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Onboarding.dc.html#m3" loading="lazy" title="18 — Member onboarding · how it works" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:9500px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Roles.dc.html#clevel" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">19 — C-Level dashboard &#8599;</a>
+  <div data-screen-label="19 — C-Level dashboard" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Roles.dc.html#clevel" loading="lazy" title="19 — C-Level dashboard" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:9500px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Roles.dc.html#lead" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">20 — Team Lead dashboard &#8599;</a>
+  <div data-screen-label="20 — Team Lead dashboard" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Roles.dc.html#lead" loading="lazy" title="20 — Team Lead dashboard" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:10540px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Org%20Editor.dc.html" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">21 — Org Tree editor &#8599;</a>
+  <div data-screen-label="21 — Org Tree editor" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Org%20Editor.dc.html" loading="lazy" title="21 — Org Tree editor" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:10540px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Settings.dc.html#members" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">22 — Settings · members & roles &#8599;</a>
+  <div data-screen-label="22 — Settings · members & roles" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Settings.dc.html#members" loading="lazy" title="22 — Settings · members & roles" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:11580px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Settings.dc.html#permissions" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">23 — Settings · permissions &#8599;</a>
+  <div data-screen-label="23 — Settings · permissions" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Settings.dc.html#permissions" loading="lazy" title="23 — Settings · permissions" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:11580px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Settings.dc.html#integrations" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">24 — Settings · integrations &#8599;</a>
+  <div data-screen-label="24 — Settings · integrations" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Settings.dc.html#integrations" loading="lazy" title="24 — Settings · integrations" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:80px;top:12620px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Notifications.dc.html" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">25 — Notifications &#8599;</a>
+  <div data-screen-label="25 — Notifications" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Notifications.dc.html" loading="lazy" title="25 — Notifications" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+<div style="position:absolute;left:1640px;top:12620px;width:1440px">
+  <a data-drags-parent="1" href="SYNCO%20Office.dc.html" target="_blank" style="position:absolute;top:-34px;left:2px;font:600 13px Inter,system-ui;color:rgba(40,45,70,.55);text-decoration:none">26 — Virtual Office &#8599;</a>
+  <div data-screen-label="26 — Virtual Office" style="width:1440px;height:900px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,27,45,.16);background:#fff">
+    <iframe src="SYNCO%20Office.dc.html" loading="lazy" title="26 — Virtual Office" style="width:1440px;height:900px;border:0;display:block"></iframe>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

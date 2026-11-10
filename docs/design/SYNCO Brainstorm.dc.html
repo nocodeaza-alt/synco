@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes popIn{0%{transform:translateY(-10px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+  @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:780px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Brainstorm</div>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <div style="font:500 13px Inter;color:#9CA3B5">You're contributing as Tom Reyes · Designer</div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">TR</div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+
+    <!-- SESSIONS RAIL -->
+    <div style="width:300px;flex-shrink:0;background:#fff;border-right:1px solid #ECEEF5;display:flex;flex-direction:column">
+      <div style="padding:20px 18px 12px;display:flex;align-items:center">
+        <div style="font:800 18px Inter;letter-spacing:-.4px;color:#0F1B2D">Brainstorms</div>
+        <button onClick="{{ onToggleNew }}" style="margin-left:auto;height:34px;padding:0 12px;border-radius:10px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">{{ newBtnLabel }}</button>
+      </div>
+
+      <div style="display:{{ newDisplay }};margin:0 14px 12px;border:1px solid #E2DEF8;background:#FBFAFF;border-radius:14px;padding:13px">
+        <div style="font:700 11px Inter;letter-spacing:.4px;color:#5B4FE8">NEW SESSION · OWNER / LEADS</div>
+        <textarea value="{{ nTopic }}" onInput="{{ onNTopic }}" placeholder="Topic or question for the team…" style="margin-top:9px;width:100%;height:64px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#fff;padding:9px 11px;font:500 13px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+        <div style="margin-top:10px;font:600 11px Inter;color:#6B7385">Duration</div>
+        <div style="margin-top:6px;display:flex;gap:6px">
+          <sc-for list="{{ durOpts }}" as="o" hint-placeholder-count="3">
+            <div onClick="{{ o.onClick }}" style="flex:1;text-align:center;padding:7px 0;border-radius:9px;cursor:pointer;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-top:10px;font:600 11px Inter;color:#6B7385">Who's invited</div>
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">
+          <sc-for list="{{ audOpts }}" as="o" hint-placeholder-count="4">
+            <div onClick="{{ o.onClick }}" style="padding:6px 10px;border-radius:99px;cursor:pointer;font:600 11px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+          </sc-for>
+        </div>
+        <button onClick="{{ onStart }}" style="margin-top:12px;width:100%;height:40px;border-radius:10px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer">Start session</button>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:0 14px 20px;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ sessions }}" as="b" hint-placeholder-count="3">
+          <div onClick="{{ b.onClick }}" style="cursor:pointer;border:{{ b.border }};background:#fff;border-radius:14px;padding:13px 14px">
+            <div style="display:flex;align-items:center;gap:7px">
+              <span style="display:{{ b.liveDisplay }};align-items:center;gap:5px;font:800 9px Inter;letter-spacing:.4px;color:#E5484D;background:rgba(229,72,77,.1);padding:3px 8px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:#E5484D;animation:livePulse 1.2s infinite"></span>LIVE · {{ b.clock }}</span>
+              <span style="display:{{ b.closedDisplay }};font:800 9px Inter;letter-spacing:.4px;color:#6B7385;background:#EEF0F6;padding:3px 8px;border-radius:99px">CLOSED</span>
+              <span style="margin-left:auto;font:600 11px Inter;color:#9CA3B5">{{ b.count }} ideas</span>
+            </div>
+            <div style="margin-top:8px;font:600 13px/1.35 Inter;color:#0F1B2D">{{ b.topic }}</div>
+            <div style="margin-top:6px;font:500 11px Inter;color:#9CA3B5">{{ b.aud }} · by {{ b.byName }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- BOARD -->
+    <div style="flex:1;min-width:0;overflow-y:auto;padding:26px 32px 40px">
+      <div style="display:flex;align-items:flex-start;gap:24px">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="display:{{ cur.liveDisplay }};align-items:center;gap:6px;font:800 10px Inter;letter-spacing:.5px;color:#E5484D;background:rgba(229,72,77,.1);padding:4px 10px;border-radius:99px"><span style="width:7px;height:7px;border-radius:50%;background:#E5484D;animation:livePulse 1.2s infinite"></span>LIVE</span>
+            <span style="display:{{ cur.closedDisplay }};font:800 10px Inter;letter-spacing:.5px;color:#6B7385;background:#EEF0F6;padding:4px 10px;border-radius:99px">CLOSED</span>
+            <span style="font:500 12px Inter;color:#9CA3B5">Started by {{ cur.byName }} · {{ cur.aud }} · {{ cur.dur }} min</span>
+          </div>
+          <div style="margin-top:10px;font:800 28px/1.18 Inter;letter-spacing:-.9px;color:#0F1B2D;text-wrap:pretty">{{ cur.topic }}</div>
+          <div style="margin-top:8px;font:500 13px Inter;color:#6B7385">Text only, no voting. When time is up, every idea goes to Sync Mind.</div>
+        </div>
+        <div style="width:200px;flex-shrink:0;background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+          <div style="font:600 11px Inter;color:#9CA3B5">{{ cur.clockLabel }}</div>
+          <div style="margin-top:2px;font:800 34px Inter;letter-spacing:-1px;color:{{ cur.clockColor }};font-variant-numeric:tabular-nums">{{ cur.clock }}</div>
+          <div style="margin-top:8px;height:6px;border-radius:99px;background:#EEF0F6;overflow:hidden"><div style="width:{{ cur.timePct }}%;height:100%;background:{{ cur.clockColor }};border-radius:99px;transition:width 1s linear"></div></div>
+          <button onClick="{{ onEnd }}" style="display:{{ cur.endDisplay }};margin-top:10px;width:100%;height:32px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 11px Inter;cursor:pointer">End now</button>
+        </div>
+      </div>
+
+      <!-- participants -->
+      <div style="margin-top:18px;display:flex;align-items:center;gap:12px">
+        <div style="display:flex">
+          <sc-for list="{{ cur.people }}" as="m" hint-placeholder-count="6">
+            <div title="{{ m.name }}" style="width:32px;height:32px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;border:2px solid #F7F8FC;margin-right:-7px;opacity:{{ m.op }}">{{ m.init }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-left:10px;font:600 13px Inter;color:#6B7385">{{ cur.contribText }}</div>
+      </div>
+
+      <!-- composer -->
+      <div style="display:{{ cur.composerDisplay }};margin-top:16px;background:#fff;border:1px solid #E2DEF8;border-radius:16px;padding:12px;box-shadow:0 6px 18px rgba(91,79,232,.08);align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">TR</div>
+        <input value="{{ draft }}" onInput="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="Add your idea — one thought per card. Press Enter to post." style="flex:1;min-width:0;height:44px;border:none;background:transparent;font:500 15px Inter;color:#0F1B2D;outline:none">
+        <button onClick="{{ onPost }}" style="height:42px;padding:0 18px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer">Post idea</button>
+      </div>
+
+      <div style="display:{{ cur.closedDisplay2 }};margin-top:16px;align-items:center;gap:12px;border-radius:14px;padding:14px 18px;background:#0F1B2D;color:#fff">
+        <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#7B6FF0,#5B4FE8);display:flex;align-items:center;justify-content:center"><div style="width:14px;height:14px;border:2px solid #fff;border-radius:4px"></div></div>
+        <div style="flex:1"><div style="font:800 14px Inter">Session closed · {{ cur.count }} ideas sent to Sync Mind</div><div style="font:400 12px Inter;color:rgba(255,255,255,.65)">Ask Sync Mind to group the ideas or turn them into a goal.</div></div>
+        <a href="SYNCO Flow.dc.html" style="font:700 13px Inter;color:#B9B2FF;text-decoration:none">Open Sync Mind &rarr;</a>
+      </div>
+
+      <!-- wall -->
+      <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px">
+        <sc-for list="{{ cur.ideas }}" as="i" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(15,27,45,.05);animation:{{ i.anim }};display:flex;flex-direction:column">
+            <div style="height:4px;background:{{ i.color }}"></div>
+            <div style="padding:13px 14px 12px;flex:1;display:flex;flex-direction:column">
+              <div style="font:500 14px/1.5 Inter;color:#0F1B2D;flex:1;text-wrap:pretty">{{ i.text }}</div>
+              <div style="margin-top:12px;display:flex;align-items:center;gap:7px">
+                <div style="width:22px;height:22px;border-radius:50%;background:{{ i.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ i.init }}</div>
+                <span style="font:600 11px Inter;color:#3A4253">{{ i.name }}</span>
+                <span style="font:500 11px Inter;color:#9CA3B5">· {{ i.dept }}</span>
+                <span style="margin-left:auto;font:500 10px Inter;color:#B7BCCB">{{ i.when }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ cur.empty }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:4px;border:1.5px dashed #DDE0EA;border-radius:14px;padding:30px;text-align:center;font:500 13px Inter;color:#B7BCCB">No ideas yet — be the first.</div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.grads={JS:I,AK:I,LV:I,MC:M,SP:M,RN:M,TR:A,OD:A,OW:'linear-gradient(135deg,#0F1B2D,#34445F)'};
+    this.names={JS:'Jane Smith',TR:'Tom Reyes',MC:'Mia Cole',AK:'Alex Kim',SP:'Sam Park',LV:'Lena Vu',OD:'Omar Diaz',RN:'Ria Nair',OW:'Olga White'};
+    this.dept={JS:'Marketing',TR:'Marketing',MC:'Marketing',AK:'Development',SP:'Development',LV:'Development',OD:'Sales',RN:'Sales',OW:'Owner'};
+    this.dColor={Marketing:'#5B4FE8',Development:'#00C896',Sales:'#F5A623',Owner:'#0F1B2D'};
+    this.aud={'All company':['JS','TR','MC','AK','SP','LV','OD','RN'],Marketing:['JS','TR','MC'],Development:['AK','SP','LV'],Sales:['OD','RN']};
+    const now=Date.now(), m=60000;
+    const I_=(a,text,ago)=>({id:Math.random().toString(36).slice(2),a,text,at:now-ago*m});
+    this.pool=[['SP','Pre-provision a sandbox workspace with sample data on signup.'],['LV','Show a 3-step checklist on the empty dashboard instead of a blank page.'],['OD','Offer a kickoff call slot right inside the onboarding flow.'],['JS','Celebrate the first completed task with a small team moment.'],['AK','Let admins import the org tree from a CSV in one click.']];
+    this.state={sel:'b1',draft:'',showNew:false,nTopic:'',nDur:15,nAud:'All company',justId:null,sessions:[
+      {id:'b1',topic:"How might we make a new customer's first week feel effortless?",by:'OW',aud:'All company',dur:15,endsAt:now+11*m+24000,closed:false,ideas:[
+        I_('RN','Assign every new customer a named contact for week one.',3),I_('MC','Send a 60-second video recap after their first goal is decomposed.',2),
+        I_('JS','A welcome email that links straight to building the org tree.',2),I_('AK','Pre-fill departments from the company size they chose at signup.',1)]},
+      {id:'b2',topic:'Names for the September launch campaign',by:'JS',aud:'Marketing',dur:10,closed:true,ideas:[
+        I_('TR','"In Sync" — short and on-brand.',1500),I_('MC','"One Tree, Every Team".',1490),I_('JS','"Goals, Untangled".',1480)]},
+      {id:'b3',topic:'What slows down our release process?',by:'AK',aud:'Development',dur:30,closed:true,ideas:[
+        I_('SP','Manual QA sign-off waits on one person.',4300),I_('LV','Preview environments take 20 minutes to spin up.',4290),I_('AK','Release notes are written at the last minute.',4280)]}
+    ]};
+  }
+  componentDidMount(){
+    this._t=setInterval(()=>{
+      const now=Date.now();
+      if(this.state.sessions.some(b=>!b.closed&&b.endsAt<=now)) this.setState(s=>({sessions:s.sessions.map(b=>!b.closed&&b.endsAt<=now?{...b,closed:true}:b)}));
+      else this.forceUpdate();
+    },1000);
+    this._sim=setInterval(()=>this.sim(),8000);
+  }
+  componentWillUnmount(){ clearInterval(this._t); clearInterval(this._sim); }
+  push(sid,idea){
+    this.setState(s=>({justId:idea.id,sessions:s.sessions.map(b=>b.id===sid?{...b,ideas:[...b.ideas,idea]}:b)}));
+    clearTimeout(this._j); this._j=setTimeout(()=>this.setState({justId:null}),600);
+  }
+  sim(){
+    const b=this.state.sessions.find(x=>x.id==='b1'); if(!b||b.closed||!this.pool.length) return;
+    const [a,text]=this.pool.shift(); this.push('b1',{id:Math.random().toString(36).slice(2),a,text,at:Date.now()});
+  }
+  post(){
+    const v=(this.state.draft||'').trim(); const b=this.state.sessions.find(x=>x.id===this.state.sel);
+    if(!v||!b||b.closed) return;
+    this.push(b.id,{id:Math.random().toString(36).slice(2),a:'TR',text:v,at:Date.now()}); this.setState({draft:''});
+  }
+  start(){
+    const t=(this.state.nTopic||'').trim(); if(!t) return;
+    const id='b'+Date.now();
+    const b={id,topic:t,by:'OW',aud:this.state.nAud,dur:this.state.nDur,endsAt:Date.now()+this.state.nDur*60000,closed:false,ideas:[]};
+    this.setState(s=>({sessions:[b,...s.sessions],sel:id,showNew:false,nTopic:''}));
+  }
+  clock(ms){ ms=Math.max(0,ms); const t=Math.ceil(ms/1000); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); }
+  ago(at){ const m=Math.floor((Date.now()-at)/60000); if(m<1) return 'just now'; if(m<60) return m+'m ago'; const h=Math.floor(m/60); return h<24?h+'h ago':Math.floor(h/24)+'d ago'; }
+  renderVals(){
+    const s=this.state, now=Date.now();
+    const pill=(on)=>({color:on?'#fff':'#3A4253',bg:on?'#5B4FE8':'#fff',border:on?'1px solid #5B4FE8':'1px solid #E5E7F0'});
+    const sessions=s.sessions.map(b=>({topic:b.topic,aud:b.aud,byName:this.names[b.by],count:b.ideas.length,
+      liveDisplay:b.closed?'none':'inline-flex',closedDisplay:b.closed?'inline-block':'none',clock:b.closed?'':this.clock(b.endsAt-now),
+      border:s.sel===b.id?'2px solid #5B4FE8':'1px solid #ECEEF5',onClick:()=>this.setState({sel:b.id})}));
+    const b=s.sessions.find(x=>x.id===s.sel)||s.sessions[0];
+    const rem=b.closed?0:b.endsAt-now, low=!b.closed&&rem<120000;
+    const people=this.aud[b.aud]||this.aud['All company'];
+    const contributors=new Set(b.ideas.map(i=>i.a));
+    const ideas=[...b.ideas].reverse().map(i=>{ const d=this.dept[i.a]; return {text:i.text,init:i.a,name:this.names[i.a],grad:this.grads[i.a],dept:d,color:this.dColor[d],when:this.ago(i.at),anim:s.justId===i.id?'popIn .45s ease both':'none'}; });
+    return {
+      sessions,newBtnLabel:s.showNew?'Close':'+ New session',newDisplay:s.showNew?'block':'none',
+      onToggleNew:()=>this.setState({showNew:!s.showNew}),
+      nTopic:s.nTopic,onNTopic:e=>this.setState({nTopic:e.target.value}),
+      durOpts:[10,15,30].map(d=>({label:d+' min',...pill(s.nDur===d),onClick:()=>this.setState({nDur:d})})),
+      audOpts:Object.keys(this.aud).map(a=>({label:a,...pill(s.nAud===a),onClick:()=>this.setState({nAud:a})})),
+      onStart:()=>this.start(),
+      cur:{topic:b.topic,byName:this.names[b.by],aud:b.aud,dur:b.dur,count:b.ideas.length,
+        liveDisplay:b.closed?'none':'inline-flex',closedDisplay:b.closed?'inline-block':'none',
+        clockLabel:b.closed?'Session ended':'Time left',clock:b.closed?'0:00':this.clock(rem),
+        clockColor:b.closed?'#9CA3B5':(low?'#E5484D':'#0F1B2D'),
+        timePct:b.closed?0:Math.max(0,Math.min(100,rem/(b.dur*60000)*100)),
+        endDisplay:b.closed?'none':'block',composerDisplay:b.closed?'none':'flex',closedDisplay2:b.closed?'flex':'none',
+        people:people.map(k=>({init:k,name:this.names[k],grad:this.grads[k],op:contributors.has(k)?1:.35})),
+        contribText:people.filter(k=>contributors.has(k)).length+' of '+people.length+' have shared an idea',
+        ideas,empty:ideas.length===0},
+      onEnd:()=>this.setState(st=>({sessions:st.sessions.map(x=>x.id===b.id?{...x,closed:true}:x)})),
+      draft:s.draft,onDraft:e=>this.setState({draft:e.target.value}),
+      onDraftKey:e=>{ if(e.key==='Enter') this.post(); },onPost:()=>this.post()
+    };
+  }
+}
+</script>
+</body>
+</html>

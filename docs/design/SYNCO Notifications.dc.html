@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1100px;height:100vh;min-height:800px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Roles.dc.html#lead" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Home</a>
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <div style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#EEEDFB;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px #5B4FE8"><div style="width:14px;height:14px;border:2px solid #5B4FE8;border-radius:7px 7px 3px 3px"></div></div>
+    <a href="SYNCO Settings.dc.html" title="Settings" style="text-decoration:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">JS</a>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;padding:28px 24px 60px">
+    <div style="max-width:860px;margin:0 auto">
+      <div style="display:flex;align-items:flex-end;gap:12px">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="font:800 26px Inter;letter-spacing:-.8px;color:#0F1B2D">Notifications</div><span style="display:{{ unreadDisplay }};font:800 12px Inter;color:#fff;background:#F5A623;padding:3px 9px;border-radius:99px">{{ unread }} new</span></div>
+          <div style="margin-top:4px;font:500 13px Inter;color:#9CA3B5">Jane Smith · Team Lead, Marketing</div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:14px">
+          <span onClick="{{ markAll }}" style="cursor:pointer;font:600 13px Inter;color:#5B4FE8">Mark all as read</span>
+          <a href="SYNCO Settings.dc.html#notifications" style="height:36px;padding:0 13px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;display:flex;align-items:center;text-decoration:none">Preferences</a>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:6px;flex-wrap:wrap">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="6">
+          <div onClick="{{ f.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:99px;font:700 12px Inter;color:{{ f.color }};background:{{ f.bg }};border:{{ f.border }}">{{ f.label }}<span style="font:700 11px Inter;opacity:.65">{{ f.count }}</span></div>
+        </sc-for>
+      </div>
+
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+        <div style="margin-top:22px">
+          <div style="font:700 11px Inter;letter-spacing:.5px;color:#9CA3B5">{{ g.label }}</div>
+          <div style="margin-top:10px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <sc-for list="{{ g.items }}" as="n" hint-placeholder-count="4">
+              <div onClick="{{ n.onRead }}" style="display:flex;gap:14px;padding:15px 18px;border-bottom:1px solid #F3F4F8;background:{{ n.bg }};cursor:pointer">
+                <div style="width:8px;flex-shrink:0;padding-top:15px"><div style="width:8px;height:8px;border-radius:50%;background:{{ n.dot }}"></div></div>
+                <div style="position:relative;width:40px;height:40px;flex-shrink:0">
+                  <div style="width:40px;height:40px;border-radius:50%;background:{{ n.grad }};color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">{{ n.init }}</div>
+                  <div style="position:absolute;right:-4px;bottom:-4px;width:20px;height:20px;border-radius:7px;background:{{ n.typeBg }};border:2px solid #fff;color:#fff;font:800 10px Inter;display:flex;align-items:center;justify-content:center">{{ n.icon }}</div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:400 14px/1.45 Inter;color:#3A4253"><span style="font-weight:700;color:#0F1B2D">{{ n.actor }}</span> {{ n.verb }} <span style="font-weight:700;color:#0F1B2D">{{ n.obj }}</span></div>
+                  <div style="display:{{ n.quoteDisplay }};margin-top:7px;border-left:3px solid #E2E5F0;padding:2px 0 2px 10px;font:400 13px/1.45 Inter;color:#6B7385">{{ n.quote }}</div>
+                  <div style="margin-top:7px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                    <span style="display:{{ n.goalDisplay }};align-items:center;gap:4px;font:700 9px Inter;color:{{ n.goalColor }};background:{{ n.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ n.goalColor }}"></span>{{ n.goal }}</span>
+                    <span style="font:500 12px Inter;color:#9CA3B5">{{ n.when }}</span>
+                  </div>
+                  <div style="display:{{ n.actionsDisplay }};margin-top:11px;gap:8px">
+                    <button onClick="{{ n.onPrimary }}" style="height:34px;padding:0 14px;border-radius:9px;border:none;background:{{ n.pBg }};color:#fff;font:700 12px Inter;cursor:pointer">{{ n.primary }}</button>
+                    <button onClick="{{ n.onSecondary }}" style="display:{{ n.secDisplay }};height:34px;padding:0 14px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">{{ n.secondary }}</button>
+                  </div>
+                  <div style="display:{{ n.resultDisplay }};margin-top:9px;font:700 12px Inter;color:{{ n.resultColor }}">{{ n.result }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:22px;border:1.5px dashed #DDE0EA;border-radius:16px;padding:36px;text-align:center;font:500 14px Inter;color:#B7BCCB">You're all caught up.</div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.g={TR:A,OD:A,MC:M,VK:'linear-gradient(135deg,#8B5CF6,#6D3FE0)',OW:'linear-gradient(135deg,#0F1B2D,#34445F)',AS:'linear-gradient(135deg,#E5487F,#B83266)',SYS:'linear-gradient(135deg,#5B4FE8,#3B33B0)',DR:M};
+    this.types={review:['Reviews','#5B4FE8','✓'],request:['Requests','#F5A623','↘'],priority:['Requests','#6D3FE0','★'],mention:['Mentions','#2E9BE6','@'],goal:['Goals','#E5487F','◆'],brainstorm:['Mentions','#8B5CF6','✦'],decline:['Requests','#E5484D','×'],drive:['Goals','#00C896','↑'],team:['Mentions','#0F1B2D','+']};
+    this.goals={G1:['Launch','#E5487F'],G2:['EMEA','#2E9BE6'],G3:['Onboarding','#8B5CF6']};
+    this.state={filter:'All',items:[
+      {id:1,day:'Today',type:'review',a:'TR',actor:'Tom Reyes',verb:'sent for your review',obj:'Design launch landing page',goal:'G1',when:'12 min ago',unread:true,act:['Approve','Open'],res:['Approved · filed to Sync Mind','#00936E'],href:'SYNCO Roles.dc.html#lead'},
+      {id:2,day:'Today',type:'request',a:'OD',actor:'Omar Diaz',verb:'from Sales requested',obj:'Product screenshots for the sales deck',goal:'G1',when:'40 min ago',unread:true,act:['Accept','Decline'],res:['Accepted · on your desk','#00936E'],res2:['Declined · Omar was notified','#E5484D']},
+      {id:3,day:'Today',type:'priority',a:'VK',actor:'Vera Kova',verb:'sent a priority request',obj:'One-pager for EMEA partners',goal:'G2',when:'1 h ago',unread:true,act:['Accept','Open'],res:['Accepted · on your desk','#00936E'],href:'SYNCO Flow.dc.html'},
+      {id:4,day:'Today',type:'mention',a:'MC',actor:'Mia Cole',verb:'mentioned you in',obj:'Social media launch calendar',quote:'@Jane can you double-check the posting times for the EMEA audience?',goal:'G1',when:'2 h ago',unread:true,act:['Open'],href:'SYNCO Flow.dc.html'},
+      {id:5,day:'Today',type:'goal',a:'SYS',actor:'G3 · Onboarding',verb:'is now',obj:'50% complete',goal:'G3',when:'3 h ago',unread:true,act:['View puzzle'],href:'SYNCO Goals.dc.html'},
+      {id:6,day:'Earlier',type:'brainstorm',a:'OW',actor:'Olga White',verb:'started a brainstorm',obj:'How might we make a new customer\u2019s first week feel effortless?',when:'Yesterday',unread:false,act:['Join'],href:'SYNCO Brainstorm.dc.html'},
+      {id:7,day:'Earlier',type:'decline',a:'OD',actor:'Sales',verb:'declined your request',obj:'Share top-20 prospect logos for a case study',quote:'Clients haven\u2019t approved logo use yet — revisit in October.',goal:'G1',when:'Yesterday',unread:false,act:[]},
+      {id:8,day:'Earlier',type:'drive',a:'DR',actor:'Google Drive',verb:'saved',obj:'Q3 messaging guide',quote:'SYNCO / Marketing / Q3 messaging guide',when:'2 days ago',unread:false,act:['Open in Drive'],href:'https://drive.google.com'},
+      {id:9,day:'Earlier',type:'team',a:'AS',actor:'Ana Silva',verb:'accepted your invite and joined',obj:'Marketing',when:'2 days ago',unread:false,act:['View in Org Tree'],href:'SYNCO Org Editor.dc.html'}
+    ]};
+  }
+  upd(id,p){ this.setState(s=>({items:s.items.map(x=>x.id===id?{...x,...p}:x)})); }
+  nav(h){ if(!h) return; if(/^https?:/.test(h)) window.open(h,'_blank'); else location.href=h; }
+  renderVals(){
+    const s=this.state;
+    const cat=n=>this.types[n.type][0];
+    const pass=n=>s.filter==='All'||(s.filter==='Unread'?n.unread:cat(n)===s.filter);
+    const fl=['All','Unread','Reviews','Requests','Mentions','Goals'];
+    const stop=f=>e=>{ if(e&&e.stopPropagation) e.stopPropagation(); f(); };
+    const vis=s.items.filter(pass);
+    const mk=n=>{ const t=this.types[n.type], g=n.goal&&this.goals[n.goal], done=!!n.done;
+      const prim=n.act[0], sec=n.act[1];
+      const navs=['Open','View puzzle','Join','Open in Drive','View in Org Tree'];
+      return {actor:n.actor,verb:n.verb,obj:n.obj,when:n.when,init:n.a==='SYS'?'◆':(n.a==='DR'?'D':n.a),grad:this.g[n.a],
+        icon:t[2],typeBg:t[1],bg:n.unread?'#FBFAFF':'#fff',dot:n.unread?'#5B4FE8':'transparent',
+        quote:n.quote||'',quoteDisplay:n.quote?'block':'none',
+        goal:g?n.goal+' · '+g[0]:'',goalColor:g?g[1]:'#9CA3B5',goalBg:g?g[1]+'1A':'transparent',goalDisplay:g?'inline-flex':'none',
+        actionsDisplay:prim&&!done?'flex':'none',primary:prim||'',secondary:sec||'',secDisplay:sec?'block':'none',
+        pBg:navs.indexOf(prim)>-1?'#0F1B2D':(prim==='Approve'||prim==='Accept'?'#00C896':'#5B4FE8'),
+        resultDisplay:done?'block':'none',result:done?n.done[0]:'',resultColor:done?n.done[1]:'#9CA3B5',
+        onRead:()=>{ if(n.unread) this.upd(n.id,{unread:false}); },
+        onPrimary:stop(()=>{ if(navs.indexOf(prim)>-1){ this.upd(n.id,{unread:false}); this.nav(n.href); } else this.upd(n.id,{unread:false,done:n.res}); }),
+        onSecondary:stop(()=>{ if(sec==='Decline') this.upd(n.id,{unread:false,done:n.res2}); else { this.upd(n.id,{unread:false}); this.nav(n.href); } })};
+    };
+    const groups=['Today','Earlier'].map(d=>({label:d.toUpperCase(),items:vis.filter(n=>n.day===d).map(mk)})).filter(g=>g.items.length);
+    const unread=s.items.filter(n=>n.unread).length;
+    return {
+      unread,unreadDisplay:unread?'inline-block':'none',
+      markAll:()=>this.setState(x=>({items:x.items.map(n=>({...n,unread:false}))})),
+      filters:fl.map(f=>{ const on=s.filter===f, c=f==='All'?s.items.length:(f==='Unread'?unread:s.items.filter(n=>cat(n)===f).length);
+        return {label:f,count:c,color:on?'#fff':'#3A4253',bg:on?'#0F1B2D':'#fff',border:on?'1px solid #0F1B2D':'1px solid #E5E7F0',onClick:()=>this.setState({filter:f})}; }),
+      groups,empty:!groups.length
+    };
+  }
+}
+</script>
+</body>
+</html>

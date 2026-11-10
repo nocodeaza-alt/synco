@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes dropIn{0%{transform:translateY(-14px);opacity:.3}60%{transform:translateY(3px)}100%{transform:translateY(0);opacity:1}}
+  @keyframes glowSug{0%,100%{box-shadow:0 0 0 0 rgba(91,79,232,0)}50%{box-shadow:0 0 0 4px rgba(91,79,232,.1)}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1280px;height:100vh;min-height:880px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <!-- TOP BAR -->
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Assign Work</div>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <div style="font:500 13px Inter;color:#9CA3B5;margin-left:4px">REGAGRO · Owner view</div>
+    <div style="margin-left:auto;font:500 13px Inter;color:#9CA3B5">Today · Wed, Jun 24</div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">AK</div>
+  </div>
+
+  <!-- GOAL BAR -->
+  <div style="flex-shrink:0;padding:16px 24px;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:18px">
+    <div style="flex:1;min-width:0">
+      <div style="font:600 11px Inter;letter-spacing:.5px;color:#9CA3B5">GOAL</div>
+      <div style="margin-top:3px;display:flex;align-items:center;gap:10px">
+        <div style="font:800 19px Inter;letter-spacing:-.4px;color:#0F1B2D">Launch new product by September 1</div>
+        <div style="font:600 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:4px 9px;border-radius:99px">✦ AI decomposed · {{ taskTotal }} tasks</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="text-align:right;margin-right:4px"><div style="font:700 13px Inter;color:#0F1B2D">{{ assignedCount }}/{{ taskTotal }}</div><div style="font:500 10px Inter;color:#9CA3B5">assigned</div></div>
+      <button onClick="{{ onSuggest }}" style="height:42px;padding:0 16px;border-radius:11px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:7px">✦ Suggest assignments</button>
+      <button onClick="{{ onApproveAll }}" style="height:42px;padding:0 16px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 6px 14px rgba(91,79,232,.26);opacity:{{ approveAllOpacity }}">Approve all suggested</button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div style="flex:1;display:flex;min-height:0">
+
+    <!-- LANE A: UNASSIGNED -->
+    <div style="width:336px;flex-shrink:0;border-right:1px solid #ECEEF5;display:flex;flex-direction:column;background:#FBFBFE">
+      <div style="padding:16px 18px 10px;display:flex;align-items:center;gap:9px;flex-shrink:0">
+        <div style="font:700 13px Inter;color:#0F1B2D">Unassigned</div>
+        <div style="font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ unassignedCount }}</div>
+        <div style="margin-left:auto;font:500 11px Inter;color:#B7BCCB">drag → or Assign ▾</div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:0 16px 20px;display:flex;flex-direction:column;gap:11px">
+        <sc-for list="{{ unassigned }}" as="t" hint-placeholder-count="6">
+          <div draggable="true" onDragStart="{{ t.onDragStart }}" onDragEnd="{{ t.onDragEnd }}" style="flex-shrink:0;background:#fff;border:1px solid #ECEEF5;border-radius:13px;box-shadow:0 2px 8px rgba(15,27,45,.05);cursor:grab;overflow:hidden">
+            <div style="padding:13px 14px">
+              <div style="display:flex;align-items:flex-start;gap:8px">
+                <div style="flex:1;min-width:0;font:600 14px/1.3 Inter;color:#0F1B2D">{{ t.title }}</div>
+                <div style="width:6px;height:18px;border-radius:3px;background:{{ t.deptColor }};flex-shrink:0"></div>
+              </div>
+              <div style="margin-top:9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+                <span style="font:700 9px Inter;color:{{ t.prColor }};background:{{ t.prBg }};padding:3px 8px;border-radius:99px">{{ t.priority }}</span>
+                <span style="font:600 10px Inter;color:#6B7385;background:#F2F3F9;padding:3px 8px;border-radius:6px">{{ t.dept }}</span>
+                <span style="font:500 11px Inter;color:#9CA3B5">{{ t.deadlineText }}</span>
+              </div>
+
+              <!-- AI suggestion -->
+              <div style="display:{{ t.sugDisplay }};margin-top:11px;border:1px solid #E2DEF8;background:#F7F5FF;border-radius:11px;padding:10px 11px;animation:glowSug 2.4s ease-in-out infinite">
+                <div style="font:700 9px Inter;letter-spacing:.4px;color:#5B4FE8">✦ AI SUGGESTS</div>
+                <div style="margin-top:7px;display:flex;align-items:center;gap:8px">
+                  <div style="width:26px;height:26px;border-radius:50%;background:{{ t.sugGrad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ t.sugInit }}</div>
+                  <div style="min-width:0"><div style="font:700 12px Inter;color:#0F1B2D">{{ t.sugName }}</div><div style="font:500 10px Inter;color:#8A91A3">{{ t.sugReason }}</div></div>
+                </div>
+                <div style="margin-top:8px;font:500 11px Inter;color:{{ t.sugWarnColor }}">{{ t.sugWarn }}</div>
+                <div style="margin-top:9px;display:flex;gap:7px">
+                  <button onClick="{{ t.onApproveSug }}" style="flex:1;height:34px;border-radius:9px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">Approve</button>
+                  <button data-keep="1" onClick="{{ t.onToggle }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Change ▾</button>
+                </div>
+              </div>
+
+              <!-- manual assign trigger -->
+              <div style="display:{{ t.assignBtnDisplay }};margin-top:11px">
+                <button data-keep="1" onClick="{{ t.onToggle }}" style="width:100%;height:38px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">Assign <span style="color:#9CA3B5">▾</span></button>
+              </div>
+            </div>
+
+            <!-- picker -->
+            <div data-keep="1" style="display:{{ t.pickerDisplay }};border-top:1px solid #F0F1F6;background:#FBFBFE;max-height:248px;overflow-y:auto">
+              <div style="position:sticky;top:0;background:#FBFBFE;display:flex;align-items:center;justify-content:space-between;padding:9px 12px 7px;border-bottom:1px solid #F0F1F6"><span style="font:700 9px Inter;letter-spacing:.4px;color:#5B4FE8">CHOOSE ASSIGNEE</span><div onClick="{{ t.onToggle }}" style="width:20px;height:20px;border-radius:6px;background:#EEF0F6;display:flex;align-items:center;justify-content:center;color:#6B7385;font:400 14px Inter;cursor:pointer">×</div></div>
+              <div style="padding:9px 12px 4px;font:700 9px Inter;letter-spacing:.4px;color:#9CA3B5">DELEGATE TO TEAM LEAD</div>
+              <sc-for list="{{ t.leadOptions }}" as="o" hint-placeholder-count="3">
+                <div onClick="{{ o.onPick }}" style="display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer" style-hover="background:#F2F1FC">
+                  <div style="width:24px;height:24px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                  <div style="min-width:0;flex:1"><div style="font:600 12px Inter;color:#0F1B2D">{{ o.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">{{ o.sub }}</div></div>
+                  <div style="display:flex;align-items:center;gap:3px"><div style="width:26px;height:13px;border:1.5px solid {{ o.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ o.batPct }}%;height:100%;background:{{ o.batColor }};border-radius:1px"></div></div></div>
+                </div>
+              </sc-for>
+              <div style="padding:9px 12px 4px;font:700 9px Inter;letter-spacing:.4px;color:#9CA3B5">ASSIGN DIRECTLY TO MEMBER</div>
+              <sc-for list="{{ t.memberOptions }}" as="o" hint-placeholder-count="5">
+                <div onClick="{{ o.onPick }}" style="display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer" style-hover="background:#F2F1FC">
+                  <div style="width:24px;height:24px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                  <div style="min-width:0;flex:1"><div style="font:600 12px Inter;color:#0F1B2D">{{ o.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">{{ o.sub }}</div></div>
+                  <div style="display:flex;align-items:center;gap:3px"><div style="width:26px;height:13px;border:1.5px solid {{ o.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ o.batPct }}%;height:100%;background:{{ o.batColor }};border-radius:1px"></div></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ allAssigned }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1.5px dashed #DDE0EA;border-radius:13px;padding:26px 16px;text-align:center;font:500 13px Inter;color:#B7BCCB">Everything's assigned. 🎉</div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- LANE B: TEAMS CASCADE -->
+    <div style="flex:1;min-width:0;overflow-y:auto;padding:16px 20px 30px">
+      <div style="font:700 13px Inter;color:#0F1B2D;margin-bottom:12px">Teams</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+
+        <!-- TEAM 0 -->
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;box-shadow:0 2px 10px rgba(15,27,45,.04);overflow:hidden">
+          <div onDragOver="{{ onDragOver }}" onDrop="{{ tm0.onDropLead }}" style="display:flex;align-items:center;gap:13px;padding:15px 18px;border-bottom:1px solid #F0F1F6;border-left:4px solid {{ tm0.color }};outline:{{ tm0.dropOutline }};outline-offset:-3px">
+            <div style="width:40px;height:40px;border-radius:50%;background:{{ tm0.leadGrad }};color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">{{ tm0.leadInit }}</div>
+            <div><div style="display:flex;align-items:center;gap:7px"><div style="font:700 15px Inter;color:#0F1B2D">{{ tm0.name }}</div><div style="font:600 9px Inter;color:#5B4FE8;background:#EEEDFB;padding:2px 7px;border-radius:99px">LEAD: {{ tm0.leadName }}</div></div><div style="font:500 11px Inter;color:#9CA3B5">{{ tm0.memberCount }} members</div></div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">EFFICIENCY</div><div style="margin-top:3px;width:88px;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:{{ tm0.eff }}%;height:100%;border-radius:99px;background:{{ tm0.effColor }}"></div></div></div>
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">BATTERY</div><div style="margin-top:2px;display:flex;align-items:center;gap:3px;justify-content:flex-end"><div style="width:34px;height:16px;border:2px solid {{ tm0.batColor }};border-radius:4px;padding:2px"><div style="width:{{ tm0.batPct }}%;height:100%;background:{{ tm0.batColor }};border-radius:1px"></div></div><div style="width:3px;height:7px;background:{{ tm0.batColor }};border-radius:0 2px 2px 0"></div></div></div>
+            </div>
+          </div>
+          <div style="padding:13px 18px;display:flex;gap:16px">
+            <div style="flex:1;min-width:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">ON THE LEAD'S DESK · DELEGATE ↓</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm0.deskTasks }}" as="t" hint-placeholder-count="0">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;background:#FBFBFE;overflow:hidden;animation:dropIn .5s ease both">
+                    <div style="padding:10px 12px;display:flex;align-items:center;gap:9px">
+                      <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">{{ t.title }}</div><div style="margin-top:4px;display:flex;gap:6px;align-items:center"><span style="font:700 9px Inter;color:{{ t.prColor }};background:{{ t.prBg }};padding:2px 7px;border-radius:99px">{{ t.priority }}</span><span style="font:500 10px Inter;color:#9CA3B5">{{ t.deadlineText }}</span></div></div>
+                      <button data-keep="1" onClick="{{ t.onToggle }}" style="height:32px;padding:0 11px;border-radius:9px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 11px Inter;cursor:pointer;white-space:nowrap">Delegate ▾</button>
+                    </div>
+                    <div data-keep="1" style="display:{{ t.pickerDisplay }};border-top:1px solid #F0F1F6">
+                      <sc-for list="{{ t.memberOptions }}" as="o" hint-placeholder-count="2">
+                        <div onClick="{{ o.onPick }}" style="display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer" style-hover="background:#F2F1FC">
+                          <div style="width:22px;height:22px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                          <div style="flex:1;min-width:0"><div style="font:600 11px Inter;color:#0F1B2D">{{ o.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ o.sub }}</div></div>
+                          <div style="width:24px;height:12px;border:1.5px solid {{ o.batColor }};border-radius:3px;padding:1px"><div style="width:{{ o.batPct }}%;height:100%;background:{{ o.batColor }};border-radius:1px"></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ tm0.deskEmpty }}" hint-placeholder-val="{{ true }}">
+                  <div style="font:500 11px Inter;color:#C3C9D6;padding:4px 0">Nothing waiting to delegate.</div>
+                </sc-if>
+              </div>
+            </div>
+            <div style="width:218px;flex-shrink:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">MEMBERS · DROP TO ASSIGN</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm0.members }}" as="m" hint-placeholder-count="2">
+                  <div onDragOver="{{ onDragOver }}" onDrop="{{ m.onDrop }}" style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px;outline:{{ m.dropOutline }};outline-offset:-2px">
+                    <div style="width:28px;height:28px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ m.init }}</div>
+                    <div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">{{ m.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ m.role }} · {{ m.count }} tasks</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                      <div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid {{ m.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ m.batPct }}%;height:100%;background:{{ m.batColor }};border-radius:1px"></div></div><div style="width:2px;height:6px;background:{{ m.batColor }};border-radius:0 2px 2px 0"></div></div>
+                      <div style="font:700 8px Inter;color:{{ m.overColor }}">{{ m.overLabel }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEAM 1 -->
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;box-shadow:0 2px 10px rgba(15,27,45,.04);overflow:hidden">
+          <div onDragOver="{{ onDragOver }}" onDrop="{{ tm1.onDropLead }}" style="display:flex;align-items:center;gap:13px;padding:15px 18px;border-bottom:1px solid #F0F1F6;border-left:4px solid {{ tm1.color }};outline:{{ tm1.dropOutline }};outline-offset:-3px">
+            <div style="width:40px;height:40px;border-radius:50%;background:{{ tm1.leadGrad }};color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">{{ tm1.leadInit }}</div>
+            <div><div style="display:flex;align-items:center;gap:7px"><div style="font:700 15px Inter;color:#0F1B2D">{{ tm1.name }}</div><div style="font:600 9px Inter;color:#5B4FE8;background:#EEEDFB;padding:2px 7px;border-radius:99px">LEAD: {{ tm1.leadName }}</div></div><div style="font:500 11px Inter;color:#9CA3B5">{{ tm1.memberCount }} members</div></div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">EFFICIENCY</div><div style="margin-top:3px;width:88px;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:{{ tm1.eff }}%;height:100%;border-radius:99px;background:{{ tm1.effColor }}"></div></div></div>
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">BATTERY</div><div style="margin-top:2px;display:flex;align-items:center;gap:3px;justify-content:flex-end"><div style="width:34px;height:16px;border:2px solid {{ tm1.batColor }};border-radius:4px;padding:2px"><div style="width:{{ tm1.batPct }}%;height:100%;background:{{ tm1.batColor }};border-radius:1px"></div></div><div style="width:3px;height:7px;background:{{ tm1.batColor }};border-radius:0 2px 2px 0"></div></div></div>
+            </div>
+          </div>
+          <div style="padding:13px 18px;display:flex;gap:16px">
+            <div style="flex:1;min-width:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">ON THE LEAD'S DESK · DELEGATE ↓</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm1.deskTasks }}" as="t" hint-placeholder-count="0">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;background:#FBFBFE;overflow:hidden;animation:dropIn .5s ease both">
+                    <div style="padding:10px 12px;display:flex;align-items:center;gap:9px">
+                      <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">{{ t.title }}</div><div style="margin-top:4px;display:flex;gap:6px;align-items:center"><span style="font:700 9px Inter;color:{{ t.prColor }};background:{{ t.prBg }};padding:2px 7px;border-radius:99px">{{ t.priority }}</span><span style="font:500 10px Inter;color:#9CA3B5">{{ t.deadlineText }}</span></div></div>
+                      <button data-keep="1" onClick="{{ t.onToggle }}" style="height:32px;padding:0 11px;border-radius:9px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 11px Inter;cursor:pointer;white-space:nowrap">Delegate ▾</button>
+                    </div>
+                    <div data-keep="1" style="display:{{ t.pickerDisplay }};border-top:1px solid #F0F1F6">
+                      <sc-for list="{{ t.memberOptions }}" as="o" hint-placeholder-count="2">
+                        <div onClick="{{ o.onPick }}" style="display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer" style-hover="background:#F2F1FC">
+                          <div style="width:22px;height:22px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                          <div style="flex:1;min-width:0"><div style="font:600 11px Inter;color:#0F1B2D">{{ o.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ o.sub }}</div></div>
+                          <div style="width:24px;height:12px;border:1.5px solid {{ o.batColor }};border-radius:3px;padding:1px"><div style="width:{{ o.batPct }}%;height:100%;background:{{ o.batColor }};border-radius:1px"></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ tm1.deskEmpty }}" hint-placeholder-val="{{ true }}">
+                  <div style="font:500 11px Inter;color:#C3C9D6;padding:4px 0">Nothing waiting to delegate.</div>
+                </sc-if>
+              </div>
+            </div>
+            <div style="width:218px;flex-shrink:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">MEMBERS · DROP TO ASSIGN</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm1.members }}" as="m" hint-placeholder-count="2">
+                  <div onDragOver="{{ onDragOver }}" onDrop="{{ m.onDrop }}" style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px;outline:{{ m.dropOutline }};outline-offset:-2px">
+                    <div style="width:28px;height:28px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ m.init }}</div>
+                    <div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">{{ m.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ m.role }} · {{ m.count }} tasks</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                      <div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid {{ m.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ m.batPct }}%;height:100%;background:{{ m.batColor }};border-radius:1px"></div></div><div style="width:2px;height:6px;background:{{ m.batColor }};border-radius:0 2px 2px 0"></div></div>
+                      <div style="font:700 8px Inter;color:{{ m.overColor }}">{{ m.overLabel }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEAM 2 -->
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;box-shadow:0 2px 10px rgba(15,27,45,.04);overflow:hidden">
+          <div onDragOver="{{ onDragOver }}" onDrop="{{ tm2.onDropLead }}" style="display:flex;align-items:center;gap:13px;padding:15px 18px;border-bottom:1px solid #F0F1F6;border-left:4px solid {{ tm2.color }};outline:{{ tm2.dropOutline }};outline-offset:-3px">
+            <div style="width:40px;height:40px;border-radius:50%;background:{{ tm2.leadGrad }};color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">{{ tm2.leadInit }}</div>
+            <div><div style="display:flex;align-items:center;gap:7px"><div style="font:700 15px Inter;color:#0F1B2D">{{ tm2.name }}</div><div style="font:600 9px Inter;color:#5B4FE8;background:#EEEDFB;padding:2px 7px;border-radius:99px">LEAD: {{ tm2.leadName }}</div></div><div style="font:500 11px Inter;color:#9CA3B5">{{ tm2.memberCount }} members</div></div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">EFFICIENCY</div><div style="margin-top:3px;width:88px;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:{{ tm2.eff }}%;height:100%;border-radius:99px;background:{{ tm2.effColor }}"></div></div></div>
+              <div style="text-align:right"><div style="font:500 9px Inter;color:#9CA3B5">BATTERY</div><div style="margin-top:2px;display:flex;align-items:center;gap:3px;justify-content:flex-end"><div style="width:34px;height:16px;border:2px solid {{ tm2.batColor }};border-radius:4px;padding:2px"><div style="width:{{ tm2.batPct }}%;height:100%;background:{{ tm2.batColor }};border-radius:1px"></div></div><div style="width:3px;height:7px;background:{{ tm2.batColor }};border-radius:0 2px 2px 0"></div></div></div>
+            </div>
+          </div>
+          <div style="padding:13px 18px;display:flex;gap:16px">
+            <div style="flex:1;min-width:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">ON THE LEAD'S DESK · DELEGATE ↓</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm2.deskTasks }}" as="t" hint-placeholder-count="0">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;background:#FBFBFE;overflow:hidden;animation:dropIn .5s ease both">
+                    <div style="padding:10px 12px;display:flex;align-items:center;gap:9px">
+                      <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">{{ t.title }}</div><div style="margin-top:4px;display:flex;gap:6px;align-items:center"><span style="font:700 9px Inter;color:{{ t.prColor }};background:{{ t.prBg }};padding:2px 7px;border-radius:99px">{{ t.priority }}</span><span style="font:500 10px Inter;color:#9CA3B5">{{ t.deadlineText }}</span></div></div>
+                      <button data-keep="1" onClick="{{ t.onToggle }}" style="height:32px;padding:0 11px;border-radius:9px;border:1px solid #D9D5F7;background:#F4F2FE;color:#5B4FE8;font:700 11px Inter;cursor:pointer;white-space:nowrap">Delegate ▾</button>
+                    </div>
+                    <div data-keep="1" style="display:{{ t.pickerDisplay }};border-top:1px solid #F0F1F6">
+                      <sc-for list="{{ t.memberOptions }}" as="o" hint-placeholder-count="1">
+                        <div onClick="{{ o.onPick }}" style="display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer" style-hover="background:#F2F1FC">
+                          <div style="width:22px;height:22px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                          <div style="flex:1;min-width:0"><div style="font:600 11px Inter;color:#0F1B2D">{{ o.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ o.sub }}</div></div>
+                          <div style="width:24px;height:12px;border:1.5px solid {{ o.batColor }};border-radius:3px;padding:1px"><div style="width:{{ o.batPct }}%;height:100%;background:{{ o.batColor }};border-radius:1px"></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ tm2.deskEmpty }}" hint-placeholder-val="{{ true }}">
+                  <div style="font:500 11px Inter;color:#C3C9D6;padding:4px 0">Nothing waiting to delegate.</div>
+                </sc-if>
+              </div>
+            </div>
+            <div style="width:218px;flex-shrink:0">
+              <div style="font:600 10px Inter;letter-spacing:.3px;color:#9CA3B5;margin-bottom:8px">MEMBERS · DROP TO ASSIGN</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ tm2.members }}" as="m" hint-placeholder-count="1">
+                  <div onDragOver="{{ onDragOver }}" onDrop="{{ m.onDrop }}" style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;display:flex;align-items:center;gap:9px;outline:{{ m.dropOutline }};outline-offset:-2px">
+                    <div style="width:28px;height:28px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ m.init }}</div>
+                    <div style="flex:1;min-width:0"><div style="font:600 12px Inter;color:#0F1B2D">{{ m.name }}</div><div style="font:500 9px Inter;color:#9CA3B5">{{ m.role }} · {{ m.count }} tasks</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                      <div style="display:flex;align-items:center;gap:2px"><div style="width:26px;height:13px;border:1.5px solid {{ m.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ m.batPct }}%;height:100%;background:{{ m.batColor }};border-radius:1px"></div></div><div style="width:2px;height:6px;background:{{ m.batColor }};border-radius:0 2px 2px 0"></div></div>
+                      <div style="font:700 8px Inter;color:{{ m.overColor }}">{{ m.overLabel }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT RAIL: DAILY STATUS -->
+    <div style="width:340px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;overflow-y:auto;padding:18px 20px 30px">
+      <div style="font:800 17px Inter;letter-spacing:-.4px;color:#0F1B2D">Daily Status</div>
+      <div style="margin-top:3px;font:500 12px Inter;color:#9CA3B5">Wed, Jun 24 · live</div>
+
+      <div style="margin-top:18px;font:700 11px Inter;letter-spacing:.4px;color:#9CA3B5">BY DEPARTMENT</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ deptStats }}" as="d" hint-placeholder-count="3">
+          <div style="border:1px solid #ECEEF5;border-radius:13px;padding:13px 14px;box-shadow:0 2px 8px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:9px;height:9px;border-radius:50%;background:{{ d.color }}"></div>
+              <div style="font:700 13px Inter;color:#0F1B2D">{{ d.name }}</div>
+              <div style="margin-left:auto;font:700 9px Inter;color:{{ d.overColor }};background:{{ d.overBg }};padding:3px 8px;border-radius:99px">{{ d.statusLabel }}</div>
+            </div>
+            <div style="margin-top:11px;display:flex;align-items:center;gap:9px">
+              <span style="font:500 10px Inter;color:#9CA3B5;width:54px">Efficiency</span>
+              <div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:{{ d.eff }}%;height:100%;border-radius:99px;background:{{ d.effColor }}"></div></div>
+              <span style="font:700 11px Inter;color:{{ d.effColor }};width:34px;text-align:right">{{ d.effText }}</span>
+            </div>
+            <div style="margin-top:7px;display:flex;align-items:center;gap:9px">
+              <span style="font:500 10px Inter;color:#9CA3B5;width:54px">Battery</span>
+              <div style="flex:1;height:7px;border-radius:99px;background:#EEF0F6"><div style="width:{{ d.batPct }}%;height:100%;border-radius:99px;background:{{ d.batColor }}"></div></div>
+              <span style="font:700 11px Inter;color:{{ d.batColor }};width:34px;text-align:right">{{ d.batText }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:20px;font:700 11px Inter;letter-spacing:.4px;color:#9CA3B5">BY PERSON</div>
+      <div style="margin-top:5px;display:flex;align-items:center;gap:6px;font:500 10px Inter;color:#B7BCCB"><div style="display:flex;align-items:center;gap:1px"><div style="width:18px;height:10px;border:1.5px solid #00C896;border-radius:2px;padding:1px"><div style="width:80%;height:100%;background:#00C896;border-radius:1px"></div></div><div style="width:2px;height:5px;background:#00C896;border-radius:0 1px 1px 0"></div></div>Battery = capacity left — drains green→red as tasks pile up</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:7px">
+        <sc-for list="{{ peopleStats }}" as="p" hint-placeholder-count="8">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:9px 11px">
+            <div style="width:30px;height:30px;border-radius:50%;background:{{ p.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ p.init }}</div>
+            <div style="min-width:0;flex:1">
+              <div style="display:flex;align-items:center;gap:6px"><div style="font:600 12px Inter;color:#0F1B2D">{{ p.name }}</div><div style="font:600 8px Inter;color:{{ p.overColor }}">{{ p.overLabel }}</div></div>
+              <div style="margin-top:5px;display:flex;align-items:center;gap:6px">
+                <div style="width:54px;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:{{ p.eff }}%;height:100%;border-radius:99px;background:{{ p.effColor }}"></div></div>
+                <span style="font:600 9px Inter;color:{{ p.effColor }}">{{ p.effText }}</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+              <div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid {{ p.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ p.batPct }}%;height:100%;background:{{ p.batColor }};border-radius:1px"></div></div><div style="width:2px;height:6px;background:{{ p.batColor }};border-radius:0 2px 2px 0"></div></div>
+              <span style="font:600 8px Inter;color:#9CA3B5">{{ p.loadText }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const G={indigo:'linear-gradient(135deg,#5B4FE8,#3B33B0)',mint:'linear-gradient(135deg,#00C896,#00936E)',amber:'linear-gradient(135deg,#F5A623,#D98A0E)'};
+    this.cap=6;
+    this.people={
+      JS:{name:'Jane Smith',role:'Content Lead',dept:'Marketing',grad:G.indigo,base:2,eff:90,lead:true},
+      TR:{name:'Tom Reyes',role:'Designer',dept:'Marketing',grad:G.amber,base:4,eff:88},
+      MC:{name:'Mia Cole',role:'Social',dept:'Marketing',grad:G.mint,base:2,eff:94},
+      AK:{name:'Alex Kim',role:'Tech Lead',dept:'Development',grad:G.indigo,base:2,eff:85,lead:true},
+      SP:{name:'Sam Park',role:'Backend',dept:'Development',grad:G.mint,base:5,eff:79},
+      LV:{name:'Lena Vu',role:'Frontend',dept:'Development',grad:G.indigo,base:5,eff:66},
+      OD:{name:'Omar Diaz',role:'Sales Lead',dept:'Sales',grad:G.amber,base:1,eff:88,lead:true},
+      RN:{name:'Ria Nair',role:'Account Exec',dept:'Sales',grad:G.mint,base:3,eff:91}
+    };
+    this.deptOrder=[
+      {name:'Marketing',color:'#5B4FE8',lead:'JS',members:['TR','MC']},
+      {name:'Development',color:'#00C896',lead:'AK',members:['SP','LV']},
+      {name:'Sales',color:'#F5A623',lead:'OD',members:['RN']}
+    ];
+    this.leadByDept={Marketing:'JS',Development:'AK',Sales:'OD'};
+    this.state={
+      picker:null, dragId:null,
+      tasks:[
+        {id:'t1',title:'Design launch landing page',dept:'Marketing',priority:'High',sdl:'Sep 8',owner:null,worker:null,deadline:null,sug:null},
+        {id:'t2',title:'Write blog announcement',dept:'Marketing',priority:'Medium',sdl:'Sep 12',owner:null,worker:null,deadline:null,sug:null},
+        {id:'t3',title:'Build product API',dept:'Development',priority:'High',sdl:'Sep 9',owner:null,worker:null,deadline:null,sug:null},
+        {id:'t4',title:'Frontend dashboard shell',dept:'Development',priority:'Medium',sdl:'Sep 11',owner:null,worker:null,deadline:null,sug:null},
+        {id:'t5',title:'Prepare pricing tiers',dept:'Sales',priority:'High',sdl:'Sep 10',owner:null,worker:null,deadline:null,sug:null},
+        {id:'t6',title:'Draft outreach list',dept:'Sales',priority:'Medium',sdl:'Sep 8',owner:null,worker:null,deadline:null,sug:null}
+      ]
+    };
+  }
+  componentDidMount(){ this._oc=(e)=>{ if(this.state.picker&&!(e.target.closest&&e.target.closest('[data-keep]'))) this.setState({picker:null}); }; document.addEventListener('mousedown',this._oc,true); }
+  componentWillUnmount(){ if(this._oc) document.removeEventListener('mousedown',this._oc,true); }
+  loads(tasks){
+    const m={}; Object.keys(this.people).forEach(k=>{m[k]=this.people[k].base;});
+    tasks.forEach(t=>{
+      if(t.worker) m[t.worker]+=1;
+      else if(t.owner) m[t.owner]+=1;
+    });
+    return m;
+  }
+  bat(load){ const cap=this.cap; const remaining=Math.max(0,cap-load); const ratio=remaining/cap; const pct=Math.round(ratio*100); const over=load>=cap; const color=over?'#E5484D':(ratio>=0.5?'#00C896':(ratio>=0.25?'#F5A623':'#E5484D')); return {pct,over,color,load,cap,remaining}; }
+  effColor(e){ return e>=85?'#00C896':(e>=70?'#F5A623':'#E5484D'); }
+  pr(p){ if(p==='High')return{c:'#E5484D',b:'rgba(229,72,77,.12)'}; if(p==='Medium')return{c:'#C77E0A',b:'rgba(245,166,35,.16)'}; return{c:'#6B7385',b:'#EEF0F6'}; }
+  patch(id,p){ this.setState(s=>({tasks:s.tasks.map(t=>t.id===id?{...t,...p}:t),picker:null})); }
+  toggle(id){ this.setState(s=>({picker:s.picker===id?null:id})); }
+  assignLead(id,lead){ this.patch(id,{owner:lead,worker:null}); }
+  assignWorker(id,member){ const lead=this.leadByDept[this.people[member].dept]; const t=this.state.tasks.find(x=>x.id===id); this.patch(id,{worker:member,owner:lead,deadline:t&&t.deadline?t.deadline:(t?t.sdl:null)}); }
+  suggest(){
+    const ld=this.loads(this.state.tasks);
+    this.setState(s=>({tasks:s.tasks.map(t=>{
+      if(t.owner||t.worker) return t;
+      const cands=this.deptOrder.find(d=>d.name===t.dept).members;
+      let best=cands[0]; cands.forEach(c=>{ if(ld[c]<ld[best]) best=c; });
+      const willOver=(ld[best]+1)>=this.cap;
+      return {...t,sug:{a:best,reason:'Lightest load in '+t.dept,deadline:t.sdl,warn:willOver}};
+    })}));
+  }
+  approveSug(id){ const t=this.state.tasks.find(x=>x.id===id); if(t&&t.sug) this.assignWorker(id,t.sug.a); }
+  approveAll(){
+    const ld=this.loads(this.state.tasks);
+    this.setState(s=>({picker:null,tasks:s.tasks.map(t=>{
+      if(t.owner||t.worker||!t.sug) return t;
+      const lead=this.leadByDept[this.people[t.sug.a].dept];
+      return {...t,worker:t.sug.a,owner:lead,deadline:t.deadline||t.sdl};
+    })}));
+  }
+  batOpt(init,onPick){ const ld=this.loads(this.state.tasks); const b=this.bat(ld[init]); const p=this.people[init]; return {init,name:p.name,sub:p.role+' · '+ld[init]+'/'+this.cap,grad:p.grad,batColor:b.color,batPct:b.pct,onPick}; }
+  renderVals(){
+    const s=this.state, ld=this.loads(s.tasks);
+    const leadInits=this.deptOrder.map(d=>d.lead);
+    const memberInits=this.deptOrder.reduce((a,d)=>a.concat(d.members),[]);
+    // unassigned cards
+    const unassigned=s.tasks.filter(t=>!t.owner&&!t.worker).map(t=>{
+      const pr=this.pr(t.priority);
+      const dColor=this.deptOrder.find(d=>d.name===t.dept).color;
+      const open=s.picker===t.id;
+      const leadOptions=leadInits.map(li=>this.batOpt(li,()=>this.assignLead(t.id,li)));
+      leadOptions.forEach(o=>{o.sub='Team Lead · '+this.people[o.init].dept;});
+      const memberOptions=memberInits.map(mi=>this.batOpt(mi,()=>this.assignWorker(t.id,mi)));
+      const sug=t.sug;
+      return {id:t.id,title:t.title,dept:t.dept,deptColor:dColor,priority:t.priority,prColor:pr.c,prBg:pr.b,
+        deadlineText:'Suggested '+t.sdl,
+        sugDisplay:(sug&&!open)?'block':'none',
+        assignBtnDisplay:(!sug&&!open)?'block':'none',
+        pickerDisplay:open?'block':'none',
+        sugInit:sug?sug.a:'',sugName:sug?this.people[sug.a].name:'',sugGrad:sug?this.people[sug.a].grad:'',
+        sugReason:sug?(sug.reason+' · by '+sug.deadline):'',
+        sugWarn:sug&&sug.warn?'⚠ May push '+(sug?this.people[sug.a].name.split(' ')[0]:'')+' over capacity':'Balanced — keeps the team under capacity',
+        sugWarnColor:sug&&sug.warn?'#E5484D':'#00936E',
+        onApproveSug:()=>this.approveSug(t.id),
+        onToggle:()=>this.toggle(t.id),
+        onDragStart:(e)=>{ try{e.dataTransfer.effectAllowed='move';}catch(_){}; this.setState({dragId:t.id}); },
+        onDragEnd:()=>this.setState({dragId:null}),
+        leadOptions,memberOptions};
+    });
+    const dragOn=!!s.dragId;
+    const team=(i)=>{
+      const d=this.deptOrder[i]; const lead=this.people[d.lead];
+      const desk=s.tasks.filter(t=>t.owner===d.lead&&!t.worker).map(t=>{
+        const pr=this.pr(t.priority); const open=s.picker===t.id;
+        const memberOptions=d.members.map(mi=>this.batOpt(mi,()=>this.assignWorker(t.id,mi)));
+        return {id:t.id,title:t.title,priority:t.priority,prColor:pr.c,prBg:pr.b,deadlineText:(t.deadline||t.sdl),
+          pickerDisplay:open?'block':'none',onToggle:()=>this.toggle(t.id),memberOptions};
+      });
+      const members=d.members.map(mi=>{
+        const b=this.bat(ld[mi]); const cnt=s.tasks.filter(t=>t.worker===mi).length;
+        return {init:mi,name:this.people[mi].name,role:this.people[mi].role,grad:this.people[mi].grad,count:cnt,
+          batColor:b.color,batPct:b.pct,overColor:b.over?'#E5484D':'transparent',overLabel:b.over?'OVERLOADED':'',
+          dropOutline:dragOn?'2px dashed '+d.color:'none',
+          onDrop:(e)=>{ e.preventDefault(); if(s.dragId)this.assignWorker(s.dragId,mi); this.setState({dragId:null}); }};
+      });
+      const lb=this.bat(ld[d.lead]);
+      // dept aggregate
+      const all=[d.lead].concat(d.members);
+      const eff=Math.round(all.reduce((a,k)=>a+this.people[k].eff,0)/all.length);
+      const avgLoad=all.reduce((a,k)=>a+ld[k],0)/all.length;
+      const db=this.bat(avgLoad);
+      return {name:d.name,color:d.color,leadInit:d.lead,leadName:lead.name,leadGrad:lead.grad,memberCount:d.members.length,
+        eff:eff,effColor:this.effColor(eff),batPct:lb.pct,batColor:lb.color,
+        dropOutline:dragOn?'2px dashed '+d.color:'none',
+        onDropLead:(e)=>{ e.preventDefault(); if(s.dragId)this.assignLead(s.dragId,d.lead); this.setState({dragId:null}); },
+        deskTasks:desk,deskEmpty:desk.length===0,members};
+    };
+    // dept stats rail
+    const deptStats=this.deptOrder.map(d=>{
+      const all=[d.lead].concat(d.members);
+      const eff=Math.round(all.reduce((a,k)=>a+this.people[k].eff,0)/all.length);
+      const avgLoad=all.reduce((a,k)=>a+ld[k],0)/all.length;
+      const b=this.bat(avgLoad);
+      const anyOver=all.some(k=>ld[k]>=this.cap);
+      return {name:d.name,color:d.color,eff,effColor:this.effColor(eff),effText:eff+'%',
+        batPct:b.pct,batColor:b.color,batText:(Math.round((this.cap-avgLoad)*10)/10)+'',
+        statusLabel:anyOver?'OVERLOAD':(eff>=85?'ON TRACK':'WATCH'),
+        overColor:anyOver?'#E5484D':(eff>=85?'#00936E':'#C77E0A'),
+        overBg:anyOver?'rgba(229,72,77,.12)':(eff>=85?'rgba(0,200,150,.14)':'rgba(245,166,35,.16)')};
+    });
+    const peopleStats=memberInits.concat(leadInits).map(k=>{
+      const p=this.people[k]; const b=this.bat(ld[k]);
+      return {init:k,name:p.name,grad:p.grad,eff:p.eff,effColor:this.effColor(p.eff),effText:p.eff+'%',
+        batColor:b.color,batPct:b.pct,loadText:ld[k]+'/'+this.cap,
+        overColor:b.over?'#E5484D':'transparent',overLabel:b.over?'OVERLOADED':''};
+    });
+    const assignedCount=s.tasks.filter(t=>t.worker||t.owner).length;
+    const anySug=s.tasks.some(t=>t.sug&&!t.owner&&!t.worker);
+    return {
+      taskTotal:s.tasks.length,assignedCount,unassignedCount:unassigned.length,
+      unassigned,allAssigned:unassigned.length===0,
+      onSuggest:()=>this.suggest(),onApproveAll:()=>this.approveAll(),
+      approveAllOpacity:anySug?'1':'.4',
+      onDragOver:(e)=>e.preventDefault(),
+      tm0:team(0),tm1:team(1),tm2:team(2),
+      deptStats,peopleStats
+    };
+  }
+}
+</script>
+</body>
+</html>

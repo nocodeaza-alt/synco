@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes arrive{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;position:relative">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Office</div>
+    </div>
+    <div style="font:500 13px Inter;color:#9CA3B5">You're Tom Reyes · Designer</div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <a href="SYNCO Settings.dc.html" title="Settings" style="text-decoration:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">TR</a>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;min-height:0">
+      <div style="flex-shrink:0;padding:18px 26px 0;display:flex;align-items:center;gap:14px">
+        <div>
+          <div style="font:800 22px Inter;letter-spacing:-.6px;color:#0F1B2D">REGAGRO HQ</div>
+          <div style="margin-top:2px;font:500 13px Inter;color:#9CA3B5">{{ onlineText }}</div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <span style="font:600 12px Inter;color:#6B7385">My status</span>
+          <div style="display:flex;background:#fff;border:1px solid #ECEEF5;border-radius:11px;padding:3px;gap:2px">
+            <sc-for list="{{ statusOpts }}" as="o" hint-placeholder-count="4">
+              <div onClick="{{ o.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:8px;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }}"></span>{{ o.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <a href="SYNCO Brainstorm.dc.html" style="margin:14px 26px 0;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#0F1B2D;color:#fff;text-decoration:none">
+        <span style="width:8px;height:8px;border-radius:50%;background:#E5484D;animation:pulse 1.2s infinite"></span>
+        <span style="font:700 13px Inter">Brainstorm live now</span>
+        <span style="font:500 13px Inter;color:rgba(255,255,255,.65);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">How might we make a new customer's first week feel effortless?</span>
+        <span style="font:700 13px Inter;color:#B9B2FF">Join &rarr;</span>
+      </a>
+
+      <div style="flex:1;overflow-y:auto;padding:16px 26px 110px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(230px,auto);gap:14px">
+          <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+            <div onClick="{{ r.onClick }}" style="cursor:pointer;position:relative;border-radius:18px;padding:16px;background:{{ r.bg }};border:{{ r.border }};box-shadow:{{ r.shadow }};display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="width:10px;height:10px;border-radius:3px;background:{{ r.color }}"></span>
+                <div style="font:800 15px Inter;color:#0F1B2D">{{ r.name }}</div>
+                <span style="display:{{ r.liveDisplay }};align-items:center;gap:5px;font:800 9px Inter;letter-spacing:.4px;color:#E5484D;background:rgba(229,72,77,.1);padding:3px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:#E5484D;animation:pulse 1.2s infinite"></span>ON A CALL</span>
+                <span style="margin-left:auto;font:600 11px Inter;color:#9CA3B5">{{ r.count }}</span>
+              </div>
+              <div style="margin-top:3px;font:500 12px Inter;color:#8A91A3">{{ r.desc }}</div>
+              <div onClick="{{ r.stop }}" style="margin-top:10px;display:{{ r.linkDisplay }};align-items:center;gap:8px;padding:6px 9px;border-radius:10px;background:#F7F8FC;border:1px solid #ECEEF5">
+                <span style="width:22px;height:22px;border-radius:6px;background:{{ r.provBg }};color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ r.provMono }}</span>
+                <span style="flex:1;min-width:0;font:600 12px Inter;color:#3A4253;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.link }}</span>
+                <span onClick="{{ r.onEdit }}" style="cursor:pointer;font:600 11px Inter;color:#5B4FE8">Edit</span>
+              </div>
+              <div onClick="{{ r.onEdit }}" style="margin-top:10px;display:{{ r.addDisplay }};cursor:pointer;height:34px;border-radius:10px;border:1.5px dashed #D5D9E5;align-items:center;justify-content:center;font:600 12px Inter;color:#9CA3B5">+ Add meeting link</div>
+              <div onClick="{{ r.stop }}" style="margin-top:10px;display:{{ r.editDisplay }};gap:6px">
+                <input value="{{ linkDraft }}" onInput="{{ onLinkDraft }}" placeholder="Paste a Google Meet or Zoom link" style="flex:1;min-width:0;height:34px;border-radius:9px;border:1px solid #5B4FE8;background:#fff;padding:0 10px;font:500 12px Inter;color:#0F1B2D;outline:none">
+                <button onClick="{{ r.onSaveLink }}" style="height:34px;padding:0 12px;border-radius:9px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">Save</button>
+              </div>
+              <div style="flex:1;margin-top:14px;display:flex;flex-wrap:wrap;gap:14px;align-content:flex-start">
+                <sc-for list="{{ r.people }}" as="p" hint-placeholder-count="2">
+                  <div onClick="{{ p.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;width:64px;cursor:pointer;animation:{{ p.anim }}">
+                    <div style="position:relative;width:52px;height:52px;border-radius:50%;padding:3px;background:{{ p.ring }};box-shadow:{{ p.selShadow }}">
+                      <div style="width:100%;height:100%;border-radius:50%;background:{{ p.grad }};border:2px solid #fff;color:#fff;font:700 14px Inter;display:flex;align-items:center;justify-content:center;opacity:{{ p.op }}">{{ p.init }}</div>
+                      <div style="display:{{ p.youDisplay }};position:absolute;left:50%;top:-8px;transform:translateX(-50%);font:800 8px Inter;letter-spacing:.4px;color:#fff;background:#0F1B2D;padding:2px 6px;border-radius:99px">YOU</div>
+                      <div style="display:{{ p.micDisplay }};position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#E5484D;border:2px solid #fff;color:#fff;font:800 8px Inter;align-items:center;justify-content:center">&#215;</div>
+                    </div>
+                    <div style="font:600 11px Inter;color:#0F1B2D;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px">{{ p.first }}</div>
+                  </div>
+                </sc-for>
+                <div style="display:{{ r.emptyDisplay }};width:100%;font:500 12px Inter;color:#B7BCCB">Empty right now</div>
+              </div>
+              <div style="display:{{ r.moveDisplay }};margin-top:12px">
+                <button onClick="{{ r.onMove }}" style="height:34px;padding:0 13px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">{{ r.moveLabel }}</button>
+              </div>
+              <div style="display:{{ r.hereDisplay }};margin-top:12px;font:700 12px Inter;color:#5B4FE8">&#9679; You're here</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- CALL BAR -->
+      <div style="display:{{ callDisplay }};position:absolute;left:26px;right:366px;bottom:20px;align-items:center;gap:14px;padding:12px 16px;border-radius:16px;background:#0F1B2D;color:#fff;box-shadow:0 16px 40px rgba(15,27,45,.35);animation:fadeUp .25s ease both">
+        <div style="display:flex">
+          <sc-for list="{{ callPeople }}" as="p" hint-placeholder-count="3">
+            <div style="width:30px;height:30px;border-radius:50%;background:{{ p.grad }};border:2px solid #0F1B2D;color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;margin-right:-8px">{{ p.init }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-left:6px;flex:1;min-width:0"><div style="font:700 14px Inter">{{ callTitle }}</div><div style="font:500 12px Inter;color:rgba(255,255,255,.6)">{{ callSub }}</div></div>
+        <button onClick="{{ openMeeting }}" style="height:40px;padding:0 16px;border-radius:11px;border:none;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">{{ callBtn }}</button>
+        <button onClick="{{ leave }}" style="height:40px;padding:0 16px;border-radius:11px;border:none;background:#E5484D;color:#fff;font:700 12px Inter;cursor:pointer">Leave</button>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div style="width:340px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;overflow-y:auto;padding:20px">
+      <sc-if value="{{ hasPerson }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeUp .2s ease both">
+          <div style="display:flex;align-items:flex-start">
+            <div style="width:64px;height:64px;border-radius:50%;padding:3px;background:{{ sp.ring }}"><div style="width:100%;height:100%;border-radius:50%;background:{{ sp.grad }};border:2px solid #fff;color:#fff;font:800 19px Inter;display:flex;align-items:center;justify-content:center">{{ sp.init }}</div></div>
+            <div onClick="{{ closePerson }}" style="margin-left:auto;width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#6B7385;font:400 17px Inter;cursor:pointer">&times;</div>
+          </div>
+          <div style="margin-top:12px;font:800 19px Inter;color:#0F1B2D">{{ sp.name }}</div>
+          <div style="margin-top:2px;font:500 13px Inter;color:#9CA3B5">{{ sp.role }} · {{ sp.dept }}</div>
+          <div style="margin-top:12px;display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:99px;background:{{ sp.stBg }};font:700 12px Inter;color:{{ sp.stColor }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ sp.dot }}"></span>{{ sp.status }}</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <div style="background:#F7F8FC;border-radius:12px;padding:11px 13px"><div style="font:600 11px Inter;color:#9CA3B5">Room</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">{{ sp.room }}</div></div>
+            <div style="background:#F7F8FC;border-radius:12px;padding:11px 13px"><div style="font:600 11px Inter;color:#9CA3B5">Working on</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">{{ sp.task }}</div></div>
+            <div style="background:#F7F8FC;border-radius:12px;padding:11px 13px"><div style="font:600 11px Inter;color:#9CA3B5">Local time</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">{{ sp.time }}</div></div>
+          </div>
+          <div style="display:{{ sp.focusNoteDisplay }};margin-top:12px;font:500 12px/1.45 Inter;color:#6D3FE0;background:#F1EEFD;border-radius:10px;padding:9px 11px">In focus — a knock is delivered quietly and shown when they come back.</div>
+          <div style="display:{{ sp.actionsDisplay }};margin-top:16px;gap:8px">
+            <button onClick="{{ sp.onKnock }}" style="flex:1;height:42px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer">{{ sp.knockLabel }}</button>
+            <button onClick="{{ sp.onJoin }}" style="flex:1;height:42px;border-radius:11px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer">{{ sp.joinLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noPerson }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:800 16px Inter;color:#0F1B2D">Who's around</div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:8px;background:#F7F8FC;border-radius:10px;padding:9px 11px"><span style="width:10px;height:10px;border-radius:50%;background:{{ l.dot }}"></span><span style="font:600 12px Inter;color:#0F1B2D;flex:1">{{ l.label }}</span><span style="font:800 13px Inter;color:#0F1B2D">{{ l.count }}</span></div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:6px">
+            <sc-for list="{{ roster }}" as="p" hint-placeholder-count="10">
+              <div onClick="{{ p.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:11px;border:1px solid #F0F1F6">
+                <div style="position:relative;width:32px;height:32px;flex-shrink:0"><div style="width:32px;height:32px;border-radius:50%;background:{{ p.grad }};color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center">{{ p.init }}</div><div style="position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:{{ p.dot }};border:2px solid #fff"></div></div>
+                <div style="flex:1;min-width:0"><div style="font:700 13px Inter;color:#0F1B2D">{{ p.name }}</div><div style="font:500 11px Inter;color:#9CA3B5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.room }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="display:{{ toastDisplay }};position:absolute;left:50%;top:76px;transform:translateX(-50%);background:#0F1B2D;color:#fff;font:600 13px Inter;padding:11px 16px;border-radius:12px;box-shadow:0 12px 30px rgba(15,27,45,.3);animation:fadeUp .25s ease both;z-index:5">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.st={available:['Available','#00C896','rgba(0,200,150,.12)','#00936E'],focus:['In focus','#8B5CF6','#F1EEFD','#6D3FE0'],meeting:['In a meeting','#F5A623','rgba(245,166,35,.14)','#C77E0A'],away:['Away','#C3C9D6','#EEF0F6','#6B7385']};
+    this.rooms=[
+      {id:'mkt',name:'Marketing',desc:'Team room · Jane\u2019s team',color:'#5B4FE8'},
+      {id:'dev',name:'Development',desc:'Team room · Alex\u2019s team',color:'#00C896'},
+      {id:'sales',name:'Sales',desc:'Team room · Omar\u2019s team',color:'#F5A623'},
+      {id:'war',name:'Launch war room',desc:'Meeting room · G1 · Launch',color:'#E5487F'},
+      {id:'focus',name:'Focus zone',desc:'Quiet · knocks are held until later',color:'#8B5CF6'},
+      {id:'lounge',name:'Lounge',desc:'Coffee, small talk, random hellos',color:'#9CA3B5'}
+    ];
+    const P=(id,name,role,dept,grad,room,status,task,time)=>({id,name,role,dept,grad,room,status,task,time});
+    this.state={sel:null,links:{mkt:'meet.google.com/mkt-regagro-day',dev:'meet.google.com/dev-sprint-room',sales:'zoom.us/j/84120399',war:'meet.google.com/launch-war-room',lounge:'meet.google.com/regagro-lounge'},editing:null,linkDraft:'',mic:true,cam:false,toast:'',knocked:{},justId:null,people:[
+      P('TR','Tom Reyes','Designer','Marketing',A,'mkt','available','Design product launch landing page','14:32 · Lisbon'),
+      P('JS','Jane Smith','Content Lead','Marketing',I,'mkt','available','Reviewing the social calendar','14:32 · Lisbon'),
+      P('MC','Mia Cole','Social','Marketing',M,'mkt','available','Social media launch calendar','15:32 · Berlin'),
+      P('AK','Alex Kim','Tech Lead','Development',I,'dev','meeting','Sprint planning','14:32 · Lisbon'),
+      P('LV','Lena Vu','Frontend','Development',I,'dev','meeting','Empty-state redesign','15:32 · Berlin'),
+      P('SP','Sam Park','Backend','Development',M,'focus','focus','Build product API','09:32 · New York'),
+      P('OD','Omar Diaz','Sales Lead','Sales',A,'sales','meeting','Demo with a design partner','10:32 · São Paulo'),
+      P('OW','Olga White','Owner','Leadership','linear-gradient(135deg,#0F1B2D,#34445F)','war','meeting','Launch go/no-go review','14:32 · Lisbon'),
+      P('VK','Vera Kova','COO','Leadership','linear-gradient(135deg,#8B5CF6,#6D3FE0)','war','meeting','Launch go/no-go review','15:32 · Berlin'),
+      P('RN','Ria Nair','Account Exec','Sales',M,'lounge','away','Back at 15:00','14:32 · London')
+    ]};
+  }
+  componentWillUnmount(){ clearTimeout(this._t); clearTimeout(this._j); }
+  flash(t){ this.setState({toast:t}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:''}),2400); }
+  prov(u){ u=(u||'').toLowerCase(); if(u.indexOf('meet.google')>-1) return {name:'Google Meet',mono:'GM',bg:'#00936E'}; if(u.indexOf('zoom.')>-1) return {name:'Zoom',mono:'Z',bg:'#2E9BE6'}; if(u.indexOf('teams.')>-1) return {name:'Teams',mono:'T',bg:'#6264A7'}; return {name:'link',mono:'URL',bg:'#0F1B2D'}; }
+  openUrl(u){ if(!u) return; try{ window.open(/^https?:/.test(u)?u:'https://'+u,'_blank'); }catch(e){} }
+  me(){ return this.state.people.find(p=>p.id==='TR'); }
+  moveMe(room){
+    const r=this.rooms.find(x=>x.id===room);
+    this.setState(s=>({people:s.people.map(p=>p.id==='TR'?{...p,room}:p),justId:'TR'}));
+    clearTimeout(this._j); this._j=setTimeout(()=>this.setState({justId:null}),700);
+    this.flash('You moved to '+r.name);
+  }
+  renderVals(){
+    const s=this.state, me=this.me();
+    const stop=f=>e=>{ if(e&&e.stopPropagation) e.stopPropagation(); f(); };
+    const roomName=id=>this.rooms.find(r=>r.id===id).name;
+    const inCall=r=>{ const ps=s.people.filter(p=>p.room===r.id); return r.id!=='focus'&&r.id!=='lounge'&&ps.length>=2&&(ps.some(p=>p.status==='meeting')||ps.some(p=>p.id==='TR')); };
+    const myRoom=this.rooms.find(r=>r.id===me.room);
+    const callOn=inCall(myRoom)&&me.status!=='away';
+    const callPeople=s.people.filter(p=>p.room===me.room);
+    const sel=s.sel&&s.people.find(p=>p.id===s.sel);
+    const out={
+      onlineText:s.people.filter(p=>p.status!=='away').length+' of '+s.people.length+' online · '+this.rooms.filter(inCall).length+' calls in progress',
+      statusOpts:Object.keys(this.st).map(k=>{ const on=me.status===k; return {label:this.st[k][0],dot:this.st[k][1],color:on?'#0F1B2D':'#6B7385',bg:on?'#F2F1FC':'transparent',
+        onClick:()=>{ this.setState(x=>({people:x.people.map(p=>p.id==='TR'?{...p,status:k}:p)})); if(k==='focus') this.moveMe('focus'); }}; }),
+      rooms:this.rooms.map(r=>{ const ps=s.people.filter(p=>p.room===r.id), here=me.room===r.id, live=inCall(r);
+        return {name:r.name,desc:r.desc,color:r.color,count:ps.length?ps.length+' here':'',liveDisplay:live?'inline-flex':'none',
+          bg:here?'#fff':'#FCFCFE',border:here?'2px solid '+r.color:'1px solid #ECEEF5',shadow:here?'0 10px 26px rgba(15,27,45,.08)':'0 2px 8px rgba(15,27,45,.03)',
+          emptyDisplay:ps.length?'none':'block',moveDisplay:here?'none':'block',hereDisplay:here?'block':'none',
+          moveLabel:live&&s.links[r.id]?'Join call ↗':(r.id==='focus'?'Go focus':'Move here'),
+          onMove:stop(()=>{ this.moveMe(r.id); if(live&&s.links[r.id]) this.openUrl(s.links[r.id]); }),onClick:()=>this.setState({sel:null,editing:null}),
+          stop:e=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
+          link:s.links[r.id]||'',provMono:this.prov(s.links[r.id]).mono,provBg:this.prov(s.links[r.id]).bg,
+          linkDisplay:s.links[r.id]&&s.editing!==r.id?'flex':'none',addDisplay:!s.links[r.id]&&r.id!=='focus'&&s.editing!==r.id?'flex':'none',editDisplay:s.editing===r.id?'flex':'none',
+          onEdit:stop(()=>this.setState({editing:r.id,linkDraft:s.links[r.id]||''})),
+          onSaveLink:stop(()=>{ const v=(this.state.linkDraft||'').trim().replace(/^https?:\/\//,''); this.setState(x=>({links:{...x.links,[r.id]:v},editing:null})); if(v) this.flash('Meeting link saved'); }),
+          people:ps.map(p=>{ const c=this.st[p.status][1];
+            return {init:p.id,first:p.id==='TR'?'You':p.name.split(' ')[0],grad:p.grad,ring:c,op:p.status==='away'?.55:1,
+              selShadow:s.sel===p.id?'0 0 0 3px #fff, 0 0 0 5px #0F1B2D':'none',youDisplay:p.id==='TR'?'block':'none',
+              micDisplay:p.id==='TR'&&callOn&&!s.mic?'flex':'none',anim:s.justId===p.id?'arrive .5s ease both':'none',
+              onClick:stop(()=>this.setState({sel:p.id}))}; })}; }),
+      callDisplay:callOn&&s.links[me.room]?'flex':'none',callTitle:'On a call in '+myRoom.name,
+      callSub:callPeople.filter(p=>p.id!=='TR').map(p=>p.name.split(' ')[0]).join(', ')+' · '+this.prov(s.links[me.room]).name,
+      callPeople:callPeople.map(p=>({init:p.id,grad:p.grad})),
+      callBtn:'Open in '+this.prov(s.links[me.room]).name+' ↗',openMeeting:()=>this.openUrl(s.links[me.room]),
+      linkDraft:s.linkDraft,onLinkDraft:e=>this.setState({linkDraft:e.target.value}),
+      leave:()=>this.moveMe('lounge'),
+      hasPerson:!!sel,noPerson:!sel,closePerson:()=>this.setState({sel:null}),
+      legend:Object.keys(this.st).map(k=>({label:this.st[k][0],dot:this.st[k][1],count:s.people.filter(p=>p.status===k).length})),
+      roster:s.people.map(p=>({init:p.id,name:p.id==='TR'?p.name+' (you)':p.name,grad:p.grad,dot:this.st[p.status][1],room:roomName(p.room)+' · '+this.st[p.status][0],onClick:()=>this.setState({sel:p.id})})),
+      toast:s.toast,toastDisplay:s.toast?'block':'none'
+    };
+    if(sel){ const st=this.st[sel.status], mine=sel.id==='TR', sameRoom=sel.room===me.room, k=s.knocked[sel.id];
+      out.sp={init:sel.id,name:sel.name,role:sel.role,dept:sel.dept,grad:sel.grad,ring:st[1],status:st[0],dot:st[1],stBg:st[2],stColor:st[3],
+        room:roomName(sel.room),task:sel.task,time:sel.time,focusNoteDisplay:sel.status==='focus'?'block':'none',actionsDisplay:mine?'none':'flex',
+        knockLabel:k?'Knocked ✓':'Knock',joinLabel:sameRoom?'Same room':'Go to '+roomName(sel.room).split(' ')[0],
+        onKnock:()=>{ this.setState(x=>({knocked:{...x.knocked,[sel.id]:true}})); this.flash(sel.status==='focus'?sel.name.split(' ')[0]+' is in focus — they\u2019ll see your knock later':'You knocked — '+sel.name.split(' ')[0]+' got a ping'); },
+        onJoin:()=>{ if(!sameRoom) this.moveMe(sel.room); }}; }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

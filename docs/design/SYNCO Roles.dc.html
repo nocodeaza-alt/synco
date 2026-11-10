@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;position:relative">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Home</div>
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <span style="font:700 10px Inter;letter-spacing:.5px;color:#9CA3B5">DEMO · VIEW AS</span>
+      <div style="display:flex;background:#F2F3F9;border-radius:10px;padding:3px;gap:2px">
+        <div onClick="{{ toCL }}" style="cursor:pointer;font:700 12px Inter;padding:6px 11px;border-radius:7px;color:{{ tabCL.color }};background:{{ tabCL.bg }};box-shadow:{{ tabCL.shadow }}">C-Level</div>
+        <div onClick="{{ toTL }}" style="cursor:pointer;font:700 12px Inter;padding:6px 11px;border-radius:7px;color:{{ tabTL.color }};background:{{ tabTL.bg }};box-shadow:{{ tabTL.shadow }}">Team Lead</div>
+      </div>
+    </div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <a href="SYNCO Settings.dc.html" title="Settings" style="text-decoration:none;width:36px;height:36px;border-radius:50%;background:{{ meGrad }};color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">{{ meInit }}</a>
+  </div>
+
+  <!-- ================= C-LEVEL ================= -->
+  <sc-if value="{{ isCL }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;overflow-y:auto;padding:26px 30px 40px">
+      <div style="display:flex;align-items:flex-end;gap:16px">
+        <div>
+          <div style="font:800 26px Inter;letter-spacing:-.8px;color:#0F1B2D">Good morning, Vera</div>
+          <div style="margin-top:4px;font:500 13px Inter;color:#9CA3B5">COO · C-Level · oversees Marketing, Development and Sales</div>
+        </div>
+        <a href="SYNCO Flow.dc.html" style="margin-left:auto;height:40px;padding:0 15px;border-radius:11px;background:#6D3FE0;color:#fff;font:700 13px Inter;display:flex;align-items:center;gap:7px;text-decoration:none;box-shadow:0 6px 14px rgba(109,63,224,.28)">&#9733; New priority request</a>
+      </div>
+
+      <div style="margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)"><div style="font:600 12px Inter;color:#9CA3B5">Goals on track</div><div style="margin-top:6px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">2 <span style="font:600 15px Inter;color:#9CA3B5">of 3</span></div><div style="margin-top:4px;font:600 12px Inter;color:#C77E0A">G2 · EMEA needs attention</div></div>
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)"><div style="font:600 12px Inter;color:#9CA3B5">Waiting for your review</div><div style="margin-top:6px;font:800 28px Inter;letter-spacing:-.8px;color:#5B4FE8">{{ clReviewCount }}</div><div style="margin-top:4px;font:600 12px Inter;color:#9CA3B5">final sign-off on your tasks</div></div>
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)"><div style="font:600 12px Inter;color:#9CA3B5">Overloaded people</div><div style="margin-top:6px;font:800 28px Inter;letter-spacing:-.8px;color:#E5484D">1</div><div style="margin-top:4px;font:600 12px Inter;color:#9CA3B5">Sam Park · Development</div></div>
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)"><div style="font:600 12px Inter;color:#9CA3B5">Your open priority requests</div><div style="margin-top:6px;font:800 28px Inter;letter-spacing:-.8px;color:#6D3FE0">{{ clReqOpen }}</div><div style="margin-top:4px;font:600 12px Inter;color:#9CA3B5">waiting on department leads</div></div>
+      </div>
+
+      <div style="margin-top:18px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center"><div style="font:800 16px Inter;color:#0F1B2D">Company goals</div><a href="SYNCO Goals.dc.html" style="margin-left:auto;font:600 13px Inter;text-decoration:none">Open puzzles &rarr;</a></div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:16px">
+              <sc-for list="{{ goals }}" as="g" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="font:800 10px Inter;color:#fff;background:{{ g.color }};padding:3px 8px;border-radius:99px">{{ g.id }}</span>
+                    <span style="font:700 14px Inter;color:#0F1B2D;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</span>
+                    <span style="font:700 10px Inter;color:{{ g.stColor }};background:{{ g.stBg }};padding:3px 8px;border-radius:99px">{{ g.status }}</span>
+                    <span style="font:800 14px Inter;color:#0F1B2D;width:42px;text-align:right">{{ g.pct }}%</span>
+                  </div>
+                  <div style="margin-top:8px;height:10px;border-radius:99px;background:#EEF0F6;overflow:hidden;display:flex">
+                    <div style="width:{{ g.m }}%;background:#5B4FE8"></div><div style="width:{{ g.d }}%;background:#00C896"></div><div style="width:{{ g.s }}%;background:#F5A623"></div>
+                  </div>
+                  <div style="margin-top:6px;font:500 11px Inter;color:#9CA3B5">{{ g.meta }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;display:flex;gap:16px;font:500 12px Inter;color:#6B7385">
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#5B4FE8"></span>Marketing</span>
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#00C896"></span>Development</span>
+              <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#F5A623"></span>Sales</span>
+              <span style="color:#9CA3B5">· bar = pieces done by each department</span>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="font:800 16px Inter;color:#0F1B2D">Departments today</div>
+            <div style="margin-top:12px;display:grid;grid-template-columns:1.3fr 1.1fr 1.2fr .9fr .8fr .9fr;gap:10px;padding:0 4px 8px;border-bottom:1px solid #F0F1F6;font:700 10px Inter;letter-spacing:.4px;color:#9CA3B5">
+              <span>DEPARTMENT</span><span>LEAD</span><span>EFFICIENCY</span><span>BATTERY</span><span>IN REVIEW</span><span>STATUS</span>
+            </div>
+            <sc-for list="{{ depts }}" as="d" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:1.3fr 1.1fr 1.2fr .9fr .8fr .9fr;gap:10px;align-items:center;padding:12px 4px;border-bottom:1px solid #F5F6FA">
+                <span style="display:flex;align-items:center;gap:8px;font:700 13px Inter;color:#0F1B2D"><span style="width:9px;height:9px;border-radius:50%;background:{{ d.color }}"></span>{{ d.name }}</span>
+                <span style="display:flex;align-items:center;gap:7px;font:500 12px Inter;color:#3A4253"><span style="width:22px;height:22px;border-radius:50%;background:{{ d.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ d.leadInit }}</span>{{ d.lead }}</span>
+                <span style="display:flex;align-items:center;gap:7px"><span style="flex:1;height:6px;border-radius:99px;background:#EEF0F6"><span style="display:block;width:{{ d.eff }}%;height:100%;border-radius:99px;background:{{ d.effColor }}"></span></span><span style="font:700 11px Inter;color:{{ d.effColor }}">{{ d.eff }}%</span></span>
+                <span style="display:flex;align-items:center;gap:2px"><span style="width:28px;height:14px;border:1.5px solid {{ d.batColor }};border-radius:3px;padding:1.5px;display:block"><span style="display:block;width:{{ d.bat }}%;height:100%;background:{{ d.batColor }};border-radius:1px"></span></span><span style="width:2px;height:6px;background:{{ d.batColor }};border-radius:0 2px 2px 0;display:block"></span><span style="margin-left:6px;font:600 11px Inter;color:#9CA3B5">{{ d.batText }}</span></span>
+                <span style="font:700 13px Inter;color:#0F1B2D">{{ d.review }}</span>
+                <span><span style="font:700 9px Inter;color:{{ d.stColor }};background:{{ d.stBg }};padding:3px 8px;border-radius:99px">{{ d.status }}</span></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center;gap:8px"><div style="font:800 16px Inter;color:#0F1B2D">Needs your sign-off</div><span style="font:700 11px Inter;color:#fff;background:#5B4FE8;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ clReviewCount }}</span></div>
+            <div style="margin-top:4px;font:400 12px Inter;color:#9CA3B5">Tasks you set. Team Leads have already approved them.</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ clReviews }}" as="r" hint-placeholder-count="2">
+                <div style="border:{{ r.border }};border-radius:13px;padding:12px 13px">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ r.goalColor }};background:{{ r.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.goalColor }}"></span>{{ r.goal }}</span><span style="font:600 10px Inter;color:#9CA3B5">{{ r.dept }} · {{ r.when }}</span></div>
+                  <div style="margin-top:7px;font:700 14px Inter;color:#0F1B2D">{{ r.title }}</div>
+                  <div style="margin-top:7px;display:flex;align-items:center;gap:8px">
+                    <div style="width:22px;height:22px;border-radius:50%;background:{{ r.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ r.init }}</div>
+                    <span style="font:500 12px Inter;color:#6B7385">{{ r.who }}</span>
+                    <span style="margin-left:auto;font:600 11px Inter;color:#5B4FE8;background:#EEEDFB;padding:3px 8px;border-radius:6px">{{ r.file }}</span>
+                  </div>
+                  <div style="margin-top:7px;display:flex;align-items:center;gap:6px;font:600 11px Inter;color:#00936E"><span style="width:14px;height:14px;border-radius:50%;background:#00C896;color:#fff;font:800 8px Inter;display:flex;align-items:center;justify-content:center">&#10003;</span>Stage 1 approved by {{ r.lead }}</div>
+                  <div style="margin-top:10px;display:flex;gap:8px">
+                    <button onClick="{{ r.onApprove }}" style="flex:1;height:36px;border-radius:10px;border:none;background:#00C896;color:#fff;font:700 12px Inter;cursor:pointer">Approve &rarr; Sync Mind</button>
+                    <button onClick="{{ r.onReturn }}" style="flex:1;height:36px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">Return</button>
+                  </div>
+                  <div style="display:{{ r.noteDisplay }};margin-top:10px;padding-top:10px;border-top:1px solid #F0F1F6">
+                    <textarea value="{{ note }}" onInput="{{ onNote }}" placeholder="What needs to change?" style="width:100%;height:58px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:8px 10px;font:500 12px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+                    <div style="margin-top:7px;display:flex;gap:8px"><button onClick="{{ r.onSendBack }}" style="flex:1;height:34px;border-radius:9px;border:none;background:#E5484D;color:#fff;font:700 12px Inter;cursor:pointer">Send back for revision</button><button onClick="{{ onCancelNote }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Cancel</button></div>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ clNoReviews }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1.5px dashed #DDE0EA;border-radius:12px;padding:20px;text-align:center;font:500 13px Inter;color:#B7BCCB">All signed off. Nothing waiting on you.</div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="font:800 16px Inter;color:#0F1B2D">Your priority requests</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ clReqs }}" as="q" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:10px;border:1px solid #F0F1F6;border-radius:11px;padding:10px 12px">
+                  <span style="width:9px;height:9px;border-radius:50%;background:{{ q.deptColor }};flex-shrink:0"></span>
+                  <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ q.title }}</div><div style="font:500 11px Inter;color:#9CA3B5">{{ q.meta }}</div></div>
+                  <span style="font:700 9px Inter;color:{{ q.stColor }};background:{{ q.stBg }};padding:3px 8px;border-radius:99px;white-space:nowrap">{{ q.status }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ================= TEAM LEAD ================= -->
+  <sc-if value="{{ isTL }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow-y:auto;padding:26px 30px 40px">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:12px;height:12px;border-radius:50%;background:#5B4FE8"></span><div style="font:800 26px Inter;letter-spacing:-.8px;color:#0F1B2D">Marketing Team</div><span style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:4px 9px;border-radius:99px">YOU LEAD THIS TEAM</span></div>
+          <div style="margin-top:4px;font:500 13px Inter;color:#9CA3B5">Jane Smith · Content Lead · 3 members</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:12px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:13px;padding:10px 14px;min-width:150px"><div style="font:600 11px Inter;color:#9CA3B5">Team efficiency</div><div style="margin-top:6px;display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:91%;height:100%;border-radius:99px;background:#00C896"></div></div><span style="font:800 13px Inter;color:#00936E">91%</span></div></div>
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:13px;padding:10px 14px;min-width:150px"><div style="font:600 11px Inter;color:#9CA3B5">Team battery</div><div style="margin-top:6px;display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;border-radius:99px;background:#EEF0F6"><div style="width:{{ tlBat }}%;height:100%;border-radius:99px;background:{{ tlBatColor }}"></div></div><span style="font:800 13px Inter;color:{{ tlBatColor }}">{{ tlBat }}%</span></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start">
+
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center;gap:8px"><div style="font:800 15px Inter;color:#0F1B2D">Review queue</div><span style="font:700 11px Inter;color:#fff;background:#5B4FE8;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ tlQueueCount }}</span></div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ tlQueue }}" as="r" hint-placeholder-count="2">
+                <div style="border:{{ r.border }};border-radius:13px;padding:12px 13px">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ r.goalColor }};background:{{ r.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.goalColor }}"></span>{{ r.goal }}</span><span style="font:600 10px Inter;color:#9CA3B5">{{ r.when }}</span></div>
+                  <div style="margin-top:7px;font:700 14px Inter;color:#0F1B2D">{{ r.title }}</div>
+                  <div style="margin-top:7px;display:flex;align-items:center;gap:8px"><div style="width:22px;height:22px;border-radius:50%;background:{{ r.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ r.init }}</div><span style="font:500 12px Inter;color:#6B7385">{{ r.who }}</span><span style="margin-left:auto;font:600 11px Inter;color:#5B4FE8;background:#EEEDFB;padding:3px 8px;border-radius:6px">{{ r.file }}</span></div>
+                  <div style="margin-top:6px;font:600 11px Inter;color:#7B6FF0">{{ r.next }}</div>
+                  <div style="margin-top:10px;display:flex;gap:8px">
+                    <button onClick="{{ r.onApprove }}" style="flex:1;height:36px;border-radius:10px;border:none;background:#00C896;color:#fff;font:700 12px Inter;cursor:pointer">Approve</button>
+                    <button onClick="{{ r.onReturn }}" style="flex:1;height:36px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">Return</button>
+                  </div>
+                  <div style="display:{{ r.noteDisplay }};margin-top:10px;padding-top:10px;border-top:1px solid #F0F1F6">
+                    <textarea value="{{ note }}" onInput="{{ onNote }}" placeholder="What needs to change?" style="width:100%;height:58px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:8px 10px;font:500 12px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+                    <div style="margin-top:7px;display:flex;gap:8px"><button onClick="{{ r.onSendBack }}" style="flex:1;height:34px;border-radius:9px;border:none;background:#E5484D;color:#fff;font:700 12px Inter;cursor:pointer">Send back</button><button onClick="{{ onCancelNote }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Cancel</button></div>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ tlQueueEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1.5px dashed #DDE0EA;border-radius:12px;padding:18px;text-align:center;font:500 13px Inter;color:#B7BCCB">Queue is clear.</div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center;gap:8px"><div style="font:800 15px Inter;color:#0F1B2D">Incoming requests</div><span style="font:700 11px Inter;color:#fff;background:#F5A623;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ tlReqCount }}</span></div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ tlReqs }}" as="q" hint-placeholder-count="2">
+                <div style="border:{{ q.border }};border-radius:13px;padding:12px 13px">
+                  <span style="font:700 9px Inter;color:{{ q.typeColor }};background:{{ q.typeBg }};padding:3px 8px;border-radius:99px">{{ q.type }}</span>
+                  <div style="margin-top:7px;font:700 14px Inter;color:#0F1B2D">{{ q.title }}</div>
+                  <div style="margin-top:5px;font:500 12px Inter;color:#6B7385">{{ q.from }}</div>
+                  <div style="display:{{ q.actionsDisplay }};margin-top:10px;gap:8px">
+                    <button onClick="{{ q.onAccept }}" style="flex:1;height:36px;border-radius:10px;border:none;background:#00C896;color:#fff;font:700 12px Inter;cursor:pointer">Accept</button>
+                    <button onClick="{{ q.onDecline }}" style="flex:1;height:36px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">Decline</button>
+                  </div>
+                  <div style="display:{{ q.declineDisplay }};margin-top:10px;padding-top:10px;border-top:1px solid #F0F1F6">
+                    <textarea value="{{ note }}" onInput="{{ onNote }}" placeholder="Why can't your team take this on?" style="width:100%;height:58px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:8px 10px;font:500 12px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+                    <div style="margin-top:7px;display:flex;gap:8px"><button onClick="{{ q.onConfirm }}" style="flex:1;height:34px;border-radius:9px;border:none;background:#E5484D;color:#fff;font:700 12px Inter;cursor:pointer">Send decline</button><button onClick="{{ onCancelNote }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Cancel</button></div>
+                  </div>
+                  <div style="display:{{ q.doneDisplay }};margin-top:9px;font:700 12px Inter;color:{{ q.doneColor }}">{{ q.doneText }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+          <div style="display:flex;align-items:center"><div style="font:800 15px Inter;color:#0F1B2D">Team today</div><a href="SYNCO Office.dc.html" style="margin-left:auto;font:600 12px Inter;text-decoration:none">Virtual Office &rarr;</a></div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ team }}" as="m" hint-placeholder-count="3">
+              <div style="border:1px solid #ECEEF5;border-radius:13px;padding:12px 13px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="position:relative;width:36px;height:36px;flex-shrink:0"><div style="width:36px;height:36px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">{{ m.init }}</div><div style="position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:{{ m.statusColor }};border:2.5px solid #fff"></div></div>
+                  <div style="flex:1;min-width:0"><div style="font:700 13px Inter;color:#0F1B2D">{{ m.name }}</div><div style="font:500 11px Inter;color:#9CA3B5">{{ m.role }} · {{ m.status }}</div></div>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                    <div style="display:flex;align-items:center;gap:2px"><div style="width:28px;height:14px;border:1.5px solid {{ m.batColor }};border-radius:3px;padding:1.5px"><div style="width:{{ m.bat }}%;height:100%;background:{{ m.batColor }};border-radius:1px"></div></div><div style="width:2px;height:6px;background:{{ m.batColor }};border-radius:0 2px 2px 0"></div></div>
+                    <span style="font:600 9px Inter;color:#9CA3B5">{{ m.load }}</span>
+                  </div>
+                </div>
+                <div style="margin-top:10px;background:{{ m.focusBg }};border-radius:10px;padding:9px 11px">
+                  <div style="font:700 9px Inter;letter-spacing:.4px;color:{{ m.focusLabelColor }}">{{ m.focusLabel }}</div>
+                  <div style="margin-top:3px;font:600 12px Inter;color:#0F1B2D">{{ m.focus }}</div>
+                </div>
+                <div style="margin-top:9px;display:flex;align-items:center;gap:7px"><span style="font:500 10px Inter;color:#9CA3B5;width:58px">Efficiency</span><div style="flex:1;height:5px;border-radius:99px;background:#EEF0F6"><div style="width:{{ m.eff }}%;height:100%;border-radius:99px;background:{{ m.effColor }}"></div></div><span style="font:700 10px Inter;color:{{ m.effColor }}">{{ m.eff }}%</span></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="font:800 15px Inter;color:#0F1B2D">On your desk</div>
+            <div style="margin-top:3px;font:400 12px Inter;color:#9CA3B5">From Owner and C-Level. Pick who does it.</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ desk }}" as="t" hint-placeholder-count="2">
+                <div style="border:1px solid #ECEEF5;border-radius:13px;padding:12px 13px;background:{{ t.bg }}">
+                  <div style="display:flex;align-items:center;gap:6px"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ t.goalColor }};background:{{ t.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ t.goalColor }}"></span>{{ t.goal }}</span><span style="font:700 9px Inter;color:{{ t.srcColor }};background:{{ t.srcBg }};padding:2px 7px;border-radius:99px">{{ t.src }}</span></div>
+                  <div style="margin-top:7px;font:700 14px Inter;color:#0F1B2D">{{ t.title }}</div>
+                  <div style="margin-top:4px;font:500 11px Inter;color:#9CA3B5">Due {{ t.due }}</div>
+                  <div style="display:{{ t.pickDisplay }};margin-top:10px;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ t.opts }}" as="o" hint-placeholder-count="3">
+                      <div onClick="{{ o.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;padding:5px 9px 5px 5px;border-radius:99px;border:1px solid #E5E7F0;background:#fff">
+                        <div style="width:20px;height:20px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 7px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                        <span style="font:600 11px Inter;color:#0F1B2D">{{ o.first }}</span>
+                        <div style="width:18px;height:9px;border:1.5px solid {{ o.batColor }};border-radius:2px;padding:1px"><div style="width:{{ o.bat }}%;height:100%;background:{{ o.batColor }}"></div></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:{{ t.doneDisplay }};margin-top:9px;font:700 12px Inter;color:#00936E">&#10003; Delegated to {{ t.doneName }} · moved to their thread</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(15,27,45,.04)">
+            <div style="display:flex;align-items:center"><div style="font:800 15px Inter;color:#0F1B2D">Marketing's pieces</div><a href="SYNCO Goals.dc.html" style="margin-left:auto;font:600 12px Inter;text-decoration:none">Goals &rarr;</a></div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ tlGoals }}" as="g" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px"><span style="font:800 10px Inter;color:#fff;background:{{ g.color }};padding:3px 8px;border-radius:99px">{{ g.id }}</span><span style="font:600 13px Inter;color:#0F1B2D;flex:1">{{ g.short }}</span><span style="font:700 12px Inter;color:#6B7385">{{ g.text }}</span></div>
+                  <div style="margin-top:7px;display:flex;gap:4px">
+                    <sc-for list="{{ g.pieces }}" as="p" hint-placeholder-count="4"><div style="flex:1;height:8px;border-radius:3px;background:{{ p.bg }};border:{{ p.border }}"></div></sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="display:{{ toastDisplay }};position:absolute;left:50%;bottom:26px;transform:translateX(-50%);background:#0F1B2D;color:#fff;font:600 13px Inter;padding:12px 18px;border-radius:12px;box-shadow:0 12px 30px rgba(15,27,45,.3);animation:fadeUp .25s ease both">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.grads={JS:I,AK:I,LV:I,MC:M,SP:M,RN:M,TR:A,OD:A,OW:'linear-gradient(135deg,#0F1B2D,#34445F)',VK:'linear-gradient(135deg,#8B5CF6,#6D3FE0)',AS:'linear-gradient(135deg,#E5487F,#B83266)'};
+    this.names={JS:'Jane Smith',TR:'Tom Reyes',MC:'Mia Cole',AK:'Alex Kim',SP:'Sam Park',LV:'Lena Vu',OD:'Omar Diaz',RN:'Ria Nair',OW:'Olga White',VK:'Vera Kova',AS:'Ana Silva'};
+    this.goalsMeta={G1:['Launch','#E5487F'],G2:['EMEA','#2E9BE6'],G3:['Onboarding','#8B5CF6']};
+    this.cap=6;
+    this.state={view:(location.hash||'').slice(1)==='lead'?'lead':'clevel',noteFor:null,note:'',toast:'',
+      clReviews:[
+        {id:'c1',title:'Build product API',dept:'Development',a:'SP',lead:'Alex Kim',goal:'G1',when:'25m ago',file:'api-contract-v2.pdf'},
+        {id:'c2',title:'Reseller agreement draft',dept:'Sales',a:'OD',lead:'Omar Diaz',goal:'G2',when:'2h ago',file:'docs.google.com'}
+      ],
+      clReqs:[
+        {title:'One-pager for EMEA partners',to:'Marketing',color:'#5B4FE8',status:'pending',when:'1h ago'},
+        {title:'EU region deployment',to:'Development',color:'#00C896',status:'accepted',when:'3d ago'},
+        {title:'Design-partner contracts',to:'Sales',color:'#F5A623',status:'accepted',when:'4d ago'}
+      ],
+      queue:[
+        {id:'q1',title:'Social media launch calendar',a:'MC',goal:'G1',when:'40m ago',file:'calendar.xlsx',next:'Your approval completes this task'},
+        {id:'q2',title:'In-app tooltip copy',a:'MC',goal:'G3',when:'2h ago',file:'tooltips.docx',next:'Your approval completes this task'},
+        {id:'q3',title:'EMEA positioning one-pager',a:'TR',goal:'G2',when:'3h ago',file:'figma.com',next:'After you: final review by Vera Kova (C-Level)'}
+      ],
+      reqs:[
+        {id:'r1',title:'One-pager for EMEA partners',from:'Vera Kova · C-Level',prio:true,state:'pending'},
+        {id:'r2',title:'Product screenshots for the sales deck',from:'Omar Diaz · Sales',prio:false,state:'pending'}
+      ],
+      desk:[
+        {id:'k1',title:'Write blog announcement',goal:'G1',src:'From Owner',due:'Sep 12',to:null},
+        {id:'k2',title:'Localized landing pages',goal:'G2',src:'★ C-Level',due:'Oct 30',to:null}
+      ],
+      load:{TR:5,MC:2,AS:1}};
+  }
+  flash(t){ this.setState({toast:t}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:''}),2400); }
+  componentWillUnmount(){ clearTimeout(this._t); }
+  view(v){ this.setState({view:v,noteFor:null}); try{ history.replaceState(null,'','#'+v); }catch(e){} }
+  goal(id){ const g=this.goalsMeta[id]; return {goal:id+' · '+g[0],goalColor:g[1],goalBg:g[1]+'1A'}; }
+  bat(load){ const r=Math.max(0,this.cap-load)/this.cap; return {bat:Math.round(r*100),batColor:load>=this.cap?'#E5484D':(r>=.5?'#00C896':(r>=.25?'#F5A623':'#E5484D'))}; }
+  effColor(e){ return e>=85?'#00C896':(e>=70?'#F5A623':'#E5484D'); }
+  renderVals(){
+    const s=this.state, cl=s.view==='clevel';
+    const tab=on=>({color:on?'#0F1B2D':'#6B7385',bg:on?'#fff':'transparent',shadow:on?'0 1px 3px rgba(15,27,45,.12)':'none'});
+    const out={isCL:cl,isTL:!cl,tabCL:tab(cl),tabTL:tab(!cl),toCL:()=>this.view('clevel'),toTL:()=>this.view('lead'),
+      meInit:cl?'VK':'JS',meGrad:cl?this.grads.VK:this.grads.JS,
+      note:s.note,onNote:e=>this.setState({note:e.target.value}),onCancelNote:()=>this.setState({noteFor:null,note:''}),
+      toast:s.toast,toastDisplay:s.toast?'block':'none'};
+    const ret=(id)=>({border:s.noteFor===id?'1px solid #E5484D':'1px solid #ECEEF5',noteDisplay:s.noteFor===id?'block':'none',onReturn:()=>this.setState({noteFor:id,note:''})});
+    if(cl){
+      const gl=[{id:'G1',name:'Launch new product by September 1',m:17,d:17,s:8,status:'On track',meta:'5 of 12 pieces · due Sep 1 · 4 in review'},
+        {id:'G2',name:'Enter the EMEA market in Q4',m:0,d:12,s:13,status:'At risk',meta:'2 of 8 pieces · due Dec 15 · Development is overloaded'},
+        {id:'G3',name:'Cut onboarding time by 30%',m:33,d:0,s:0,status:'On track',meta:'2 of 6 pieces · due Nov 30 · 1 in review'}];
+      Object.assign(out,{
+        goals:gl.map(g=>{ const r=g.status==='At risk'; return {...g,color:this.goalsMeta[g.id][1],pct:g.m+g.d+g.s,stColor:r?'#C77E0A':'#00936E',stBg:r?'rgba(245,166,35,.16)':'rgba(0,200,150,.14)'}; }),
+        depts:[['Marketing','#5B4FE8','JS',91,3.3,3,'On track'],['Development','#00C896','AK',77,6,2,'Overload'],['Sales','#F5A623','OD',90,2,1,'On track']].map(([name,color,l,eff,load,review,st])=>{
+          const b=this.bat(load), over=st==='Overload';
+          return {name,color,lead:this.names[l],leadInit:l,grad:this.grads[l],eff,effColor:this.effColor(eff),...b,batText:Math.round((this.cap-load)*10)/10+' left',review,status:st.toUpperCase(),
+            stColor:over?'#E5484D':'#00936E',stBg:over?'rgba(229,72,77,.12)':'rgba(0,200,150,.14)'}; }),
+        clReviewCount:s.clReviews.length,clNoReviews:!s.clReviews.length,
+        clReviews:s.clReviews.map(r=>({...r,...this.goal(r.goal),...ret(r.id),init:r.a,grad:this.grads[r.a],who:this.names[r.a],
+          onApprove:()=>{ this.setState(x=>({clReviews:x.clReviews.filter(y=>y.id!==r.id)})); this.flash('“'+r.title+'” approved — sent to Sync Mind'); },
+          onSendBack:()=>{ this.setState(x=>({clReviews:x.clReviews.filter(y=>y.id!==r.id),noteFor:null,note:''})); this.flash('Returned to '+this.names[r.a]+' with your notes'); }})),
+        clReqOpen:s.clReqs.filter(q=>q.status==='pending').length,
+        clReqs:s.clReqs.map(q=>{ const p=q.status==='pending'; return {title:q.title,deptColor:q.color,meta:'To '+q.to+' · '+q.when,status:p?'WAITING':'ACCEPTED',stColor:p?'#C77E0A':'#00936E',stBg:p?'rgba(245,166,35,.16)':'rgba(0,200,150,.14)'}; })
+      });
+    } else {
+      const people=[['TR','Designer','In focus','#8B5CF6','Design product launch landing page',88],['MC','Social','Available','#00C896','Social media launch calendar',94],['AS','Designer · new','Onboarding','#C3C9D6','',0]];
+      const team=people.map(([k,role,st,sc,focus,eff])=>{ const l=s.load[k]; return {init:k,name:this.names[k],role,status:st,statusColor:sc,grad:this.grads[k],...this.bat(l),load:l+'/'+this.cap+' tasks',
+        focus:focus||'Finishing onboarding — no tasks yet',focusLabel:focus?'IN FOCUS NOW':'JOINED 2 DAYS AGO',focusBg:focus?'#FFFBF3':'#F7F8FC',focusLabelColor:focus?'#C77E0A':'#9CA3B5',
+        eff:eff||0,effColor:eff?this.effColor(eff):'#C3C9D6'}; });
+      const tot=['TR','MC','AS'].reduce((a,k)=>a+s.load[k],0), tb=Math.round(Math.max(0,1-tot/(this.cap*3))*100);
+      Object.assign(out,{
+        tlBat:tb,tlBatColor:tb>=50?'#00C896':(tb>=25?'#F5A623':'#E5484D'),
+        tlQueueCount:s.queue.length,tlQueueEmpty:!s.queue.length,
+        tlQueue:s.queue.map(r=>({...r,...this.goal(r.goal),...ret(r.id),init:r.a,grad:this.grads[r.a],who:this.names[r.a],
+          onApprove:()=>{ this.setState(x=>({queue:x.queue.filter(y=>y.id!==r.id)})); this.flash(r.next.indexOf('Vera')>-1?'Approved — sent to Vera Kova for final review':'Approved — “'+r.title+'” filed to Sync Mind'); },
+          onSendBack:()=>{ this.setState(x=>({queue:x.queue.filter(y=>y.id!==r.id),noteFor:null,note:''})); this.flash('Returned to '+this.names[r.a]+' — marked Needs Revision'); }})),
+        tlReqCount:s.reqs.filter(q=>q.state==='pending').length,
+        tlReqs:s.reqs.map(q=>{ const pend=q.state==='pending', dec=s.noteFor===q.id;
+          return {title:q.title,from:'From '+q.from,type:q.prio?'★ PRIORITY · C-LEVEL':'REGULAR',typeColor:q.prio?'#fff':'#6B7385',typeBg:q.prio?'#6D3FE0':'#EEF0F6',
+            border:dec?'1px solid #E5484D':'1px solid #ECEEF5',actionsDisplay:pend&&!dec?'flex':'none',declineDisplay:pend&&dec?'block':'none',
+            doneDisplay:pend?'none':'block',doneText:q.state==='accepted'?'✓ Accepted — added to your desk':'Declined — sender notified',doneColor:q.state==='accepted'?'#00936E':'#E5484D',
+            onAccept:()=>{ this.setState(x=>({reqs:x.reqs.map(y=>y.id===q.id?{...y,state:'accepted'}:y),desk:[...x.desk,{id:'k'+Date.now(),title:q.title,goal:'G2',src:q.prio?'★ Priority request':'Request',due:'Oct 24',to:null}]})); this.flash('Request accepted — now on your desk to delegate'); },
+            onDecline:()=>this.setState({noteFor:q.id,note:''}),
+            onConfirm:()=>{ this.setState(x=>({reqs:x.reqs.map(y=>y.id===q.id?{...y,state:'declined'}:y),noteFor:null,note:''})); }}; }),
+        team,
+        desk:s.desk.map(t=>{ const done=!!t.to; const src=t.src.indexOf('★')>-1;
+          return {...t,...this.goal(t.goal),srcColor:src?'#6D3FE0':(t.src==='From Owner'?'#fff':'#C77E0A'),srcBg:src?'#F1EEFD':(t.src==='From Owner'?'#0F1B2D':'rgba(245,166,35,.16)'),
+            bg:done?'#F6FCFA':'#fff',pickDisplay:done?'none':'flex',doneDisplay:done?'block':'none',doneName:done?this.names[t.to]:'',
+            opts:['TR','MC','AS'].map(k=>({init:k,first:this.names[k].split(' ')[0],grad:this.grads[k],...this.bat(s.load[k]),
+              onClick:()=>this.setState(x=>({desk:x.desk.map(y=>y.id===t.id?{...y,to:k}:y),load:{...x.load,[k]:x.load[k]+1}}))}))}; }),
+        tlGoals:[['G1',[ 'done','review','progress','todo']],['G2',['progress','todo']],['G3',['done','review','done']]].map(([id,ps])=>{ const c=this.goalsMeta[id][1];
+          return {id,short:this.goalsMeta[id][0],color:c,text:ps.filter(x=>x==='done').length+' of '+ps.length+' done',
+            pieces:ps.map(x=>({bg:x==='done'?c:(x==='review'?c+'73':(x==='progress'?c+'22':'#F7F8FC')),border:x==='todo'?'1.5px dashed #C9CEDB':'1.5px solid '+c}))}; })
+      });
+    }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

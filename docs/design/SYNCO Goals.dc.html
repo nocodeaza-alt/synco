@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes snapIn{0%{transform:scale(.55);opacity:.2}65%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+  @keyframes hexPulse{0%,100%{opacity:1}50%{opacity:.55}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(91,79,232,0)}50%{box-shadow:0 0 0 8px rgba(91,79,232,.12)}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Goals</div>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <div style="font:500 13px Inter;color:#9CA3B5">REGAGRO · Owner view</div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0F1B2D,#34445F);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">OW</div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+
+    <!-- GOALS RAIL -->
+    <div style="width:300px;flex-shrink:0;background:#fff;border-right:1px solid #ECEEF5;display:flex;flex-direction:column">
+      <div style="padding:20px 18px 12px;display:flex;align-items:center">
+        <div style="font:800 18px Inter;letter-spacing:-.4px;color:#0F1B2D">Goals</div>
+        <button onClick="{{ onNew }}" style="margin-left:auto;height:34px;padding:0 12px;border-radius:10px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">+ New goal</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:0 14px 20px;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ goalList }}" as="g" hint-placeholder-count="3">
+          <div onClick="{{ g.onClick }}" style="cursor:pointer;border:{{ g.border }};background:{{ g.bg }};border-radius:14px;padding:13px 14px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font:800 10px Inter;color:#fff;background:{{ g.color }};padding:3px 8px;border-radius:99px">{{ g.id }}</span>
+              <span style="font:700 10px Inter;color:{{ g.color }}">{{ g.short }}</span>
+              <span style="margin-left:auto;font:800 14px Inter;color:#0F1B2D">{{ g.pctText }}</span>
+            </div>
+            <div style="margin-top:8px;font:600 13px/1.35 Inter;color:#0F1B2D">{{ g.name }}</div>
+            <div style="margin-top:10px;height:6px;border-radius:99px;background:#EEF0F6;overflow:hidden"><div style="width:{{ g.pct }}%;height:100%;border-radius:99px;background:{{ g.color }};transition:width .5s"></div></div>
+            <div style="margin-top:7px;font:500 11px Inter;color:#9CA3B5">{{ g.piecesText }} · due {{ g.due }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- MAIN : VIEW -->
+    <sc-if value="{{ isView }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;min-width:0;overflow-y:auto;padding:26px 32px 40px">
+        <div style="display:flex;align-items:flex-start;gap:20px">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font:800 11px Inter;color:#fff;background:{{ g.color }};padding:4px 10px;border-radius:99px">{{ g.id }} · {{ g.short }}</span>
+              <span style="font:500 12px Inter;color:#9CA3B5">Set by {{ g.ownerName }} · due {{ g.due }} · 3 departments</span>
+            </div>
+            <div style="margin-top:10px;font:800 28px/1.15 Inter;letter-spacing:-.9px;color:#0F1B2D">{{ g.name }}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font:800 40px Inter;letter-spacing:-1.5px;color:{{ g.color }};line-height:1">{{ g.pctText }}</div>
+            <div style="margin-top:4px;font:500 12px Inter;color:#9CA3B5">{{ g.piecesText }}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <button onClick="{{ onStep }}" style="height:40px;padding:0 15px;border-radius:11px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer">Simulate one step</button>
+          <button onClick="{{ onAuto }}" style="height:40px;padding:0 15px;border-radius:11px;border:none;background:{{ autoBg }};color:#fff;font:700 13px Inter;cursor:pointer">{{ autoLabel }}</button>
+          <button onClick="{{ onReset }}" style="height:40px;padding:0 15px;border-radius:11px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 13px Inter;cursor:pointer">Reset</button>
+          <a href="SYNCO Flow.dc.html" style="margin-left:auto;align-self:center;font:600 13px Inter;text-decoration:none">See tasks in Work Flow &rarr;</a>
+        </div>
+
+        <sc-if value="{{ complete }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:16px;display:flex;align-items:center;gap:12px;border-radius:14px;padding:14px 18px;background:#0F1B2D;color:#fff;animation:fadeUp .4s ease both">
+            <div style="width:32px;height:32px;border-radius:10px;background:{{ g.color }};display:flex;align-items:center;justify-content:center;font:800 15px Inter">&#10003;</div>
+            <div><div style="font:800 15px Inter">Goal complete — every piece is in place.</div><div style="font:400 12px Inter;color:rgba(255,255,255,.65)">All approved results were filed to Sync Mind.</div></div>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:18px;background:#fff;border:1px solid #ECEEF5;border-radius:18px;box-shadow:0 2px 12px rgba(15,27,45,.04);padding:34px 24px 26px;display:flex;flex-direction:column;align-items:center">
+          <div style="position:relative;width:{{ boardW }}px;height:{{ boardH }}px">
+            <sc-for list="{{ cells }}" as="c" hint-placeholder-count="12">
+              <div onClick="{{ c.onClick }}" title="{{ c.title }}" style="position:absolute;left:{{ c.x }}px;top:{{ c.y }}px;width:87px;height:100px;cursor:pointer;animation:{{ c.anim }}">
+                <svg width="87" height="100" viewBox="0 0 87 100" style="position:absolute;inset:0;overflow:visible">
+                  <polygon points="43.5,4 83,27 83,73 43.5,96 4,73 4,27" fill="{{ c.fill }}" fill-opacity="{{ c.fillOp }}" stroke="{{ c.stroke }}" stroke-width="{{ c.strokeW }}" stroke-dasharray="{{ c.dash }}" stroke-linejoin="round"></polygon>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 14px Inter;color:{{ c.labelColor }}">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:26px;width:100%;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;padding-top:18px;border-top:1px solid #F0F1F6">
+            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:12px;height:12px;border-radius:4px;background:{{ l.color }}"></div><span style="font:600 13px Inter;color:#0F1B2D">{{ l.name }}</span><span style="font:600 12px Inter;color:#9CA3B5">{{ l.text }}</span></div>
+            </sc-for>
+            <div style="width:1px;height:18px;background:#ECEEF5"></div>
+            <div style="display:flex;align-items:center;gap:14px;font:500 12px Inter;color:#6B7385">
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#0F1B2D"></span>Done</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#0F1B2D;opacity:.45"></span>In review</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;border:2px solid #0F1B2D;background:rgba(15,27,45,.1)"></span>In progress</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;border:2px dashed #C9CEDB"></span>Not started</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PIECE DETAIL -->
+      <div style="width:330px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;padding:22px 22px;overflow-y:auto">
+        <sc-if value="{{ hasPiece }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .25s ease both">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font:700 10px Inter;color:#fff;background:{{ p.deptColor }};padding:4px 10px;border-radius:99px">{{ p.dept }}</span>
+              <span style="font:700 10px Inter;color:{{ p.stageColor }};background:{{ p.stageBg }};padding:4px 10px;border-radius:99px">{{ p.stage }}</span>
+              <div onClick="{{ onClosePiece }}" style="margin-left:auto;width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#6B7385;font:400 17px Inter;cursor:pointer">&times;</div>
+            </div>
+            <div style="margin-top:14px;font:800 19px/1.25 Inter;letter-spacing:-.4px;color:#0F1B2D">{{ p.title }}</div>
+            <div style="margin-top:6px;font:500 12px Inter;color:#9CA3B5">Piece {{ p.num }} of {{ p.total }} in {{ g.id }} · {{ g.short }}</div>
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Assignee</span><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:{{ p.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ p.init }}</div><span style="font:600 13px Inter;color:#0F1B2D">{{ p.name }}</span></div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Source</span><span style="font:700 10px Inter;color:{{ p.srcColor }};background:{{ p.srcBg }};padding:3px 9px;border-radius:99px">{{ p.src }}</span></div>
+            </div>
+            <button onClick="{{ onAdvancePiece }}" style="margin-top:20px;width:100%;height:44px;border-radius:12px;border:none;background:{{ p.btnBg }};color:#fff;font:700 13px Inter;cursor:pointer">{{ p.btn }}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noPiece }}" hint-placeholder-val="{{ true }}">
+          <div style="font:800 16px Inter;color:#0F1B2D">One goal, one puzzle</div>
+          <div style="margin-top:8px;font:400 13px/1.55 Inter;color:#6B7385">Each piece is a task. Its color shows the department doing it. Pieces fill in as work moves forward, and the puzzle is solved when every department has delivered.</div>
+          <div style="margin-top:16px;font:500 12px Inter;color:#9CA3B5">Tap a piece to see its task.</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- MAIN : NEW GOAL / DECOMPOSE -->
+    <sc-if value="{{ isNew }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;min-width:0;overflow-y:auto;padding:26px 32px 40px">
+        <div style="font:800 26px Inter;letter-spacing:-.8px;color:#0F1B2D">New goal</div>
+        <div style="margin-top:6px;font:400 14px Inter;color:#6B7385">Describe the outcome. The AI splits it across departments using your org tree, roles and current workload.</div>
+        <div style="margin-top:18px;display:flex;gap:10px;max-width:900px">
+          <input value="{{ newText }}" onInput="{{ onNewText }}" style="flex:1;min-width:0;height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#fff;padding:0 16px;font:600 15px Inter;color:#0F1B2D;outline:none">
+          <button onClick="{{ onDecompose }}" style="height:50px;padding:0 20px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 14px Inter;cursor:pointer;box-shadow:0 8px 18px rgba(91,79,232,.3)">Decompose with AI &#10022;</button>
+          <button onClick="{{ onCancelNew }}" style="height:50px;padding:0 16px;border-radius:12px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 14px Inter;cursor:pointer">Cancel</button>
+        </div>
+
+        <sc-if value="{{ isAnim }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:24px;background:#fff;border:1px solid #ECEEF5;border-radius:18px;padding:20px;max-width:900px">
+            <div style="position:relative;width:860px;height:460px;margin:0 auto">
+              <svg width="860" height="460" viewBox="0 0 860 460" style="position:absolute;inset:0">
+                <path d="M430 74 C430 130 180 120 180 176" stroke="#5B4FE8" stroke-width="3" fill="none" stroke-dasharray="420" stroke-dashoffset="420" style="animation:draw .9s ease .1s forwards"></path>
+                <path d="M430 74 L430 176" stroke="#00C896" stroke-width="3" fill="none" stroke-dasharray="420" stroke-dashoffset="420" style="animation:draw .9s ease .25s forwards"></path>
+                <path d="M430 74 C430 130 680 120 680 176" stroke="#F5A623" stroke-width="3" fill="none" stroke-dasharray="420" stroke-dashoffset="420" style="animation:draw .9s ease .4s forwards"></path>
+                <path d="M180 224 L180 252 M430 224 L430 252 M680 224 L680 252" stroke="#D5D9E5" stroke-width="2" fill="none" stroke-dasharray="40" stroke-dashoffset="40" style="animation:draw .3s ease 1s forwards"></path>
+                <circle r="5" fill="#5B4FE8"><animateMotion dur="1.4s" begin="1s" repeatCount="indefinite" path="M430 74 C430 130 180 120 180 176"></animateMotion></circle>
+                <circle r="5" fill="#00C896"><animateMotion dur="1.4s" begin="1.15s" repeatCount="indefinite" path="M430 74 L430 176"></animateMotion></circle>
+                <circle r="5" fill="#F5A623"><animateMotion dur="1.4s" begin="1.3s" repeatCount="indefinite" path="M430 74 C430 130 680 120 680 176"></animateMotion></circle>
+              </svg>
+              <div style="position:absolute;left:250px;top:14px;width:360px;min-height:60px;border-radius:14px;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;animation:glow 2s ease-in-out infinite">
+                <div style="font:700 9px Inter;letter-spacing:.5px;color:rgba(255,255,255,.7)">NEW GOAL</div>
+                <div style="margin-top:2px;font:700 14px/1.3 Inter">{{ newText }}</div>
+              </div>
+              <div style="position:absolute;left:90px;top:176px;width:180px;height:48px;border-radius:12px;background:#fff;border:2px solid #5B4FE8;display:flex;align-items:center;justify-content:center;gap:8px;font:700 14px Inter;color:#0F1B2D;animation:fadeUp .35s ease .7s both"><span style="width:9px;height:9px;border-radius:50%;background:#5B4FE8"></span>Marketing</div>
+              <div style="position:absolute;left:340px;top:176px;width:180px;height:48px;border-radius:12px;background:#fff;border:2px solid #00C896;display:flex;align-items:center;justify-content:center;gap:8px;font:700 14px Inter;color:#0F1B2D;animation:fadeUp .35s ease .85s both"><span style="width:9px;height:9px;border-radius:50%;background:#00C896"></span>Development</div>
+              <div style="position:absolute;left:590px;top:176px;width:180px;height:48px;border-radius:12px;background:#fff;border:2px solid #F5A623;display:flex;align-items:center;justify-content:center;gap:8px;font:700 14px Inter;color:#0F1B2D;animation:fadeUp .35s ease 1s both"><span style="width:9px;height:9px;border-radius:50%;background:#F5A623"></span>Sales</div>
+              <div style="position:absolute;left:90px;top:256px;width:180px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ dec0 }}" as="c" hint-placeholder-count="2">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;background:#fff;box-shadow:0 2px 8px rgba(15,27,45,.05);animation:fadeUp .4s ease {{ c.delay }} both"><div style="font:600 12px/1.3 Inter;color:#0F1B2D">{{ c.title }}</div><div style="margin-top:6px;display:flex;align-items:center;gap:6px"><div style="width:18px;height:18px;border-radius:50%;background:{{ c.grad }};color:#fff;font:700 7px Inter;display:flex;align-items:center;justify-content:center">{{ c.init }}</div><span style="font:500 10px Inter;color:#9CA3B5">{{ c.name }}</span></div></div>
+                </sc-for>
+              </div>
+              <div style="position:absolute;left:340px;top:256px;width:180px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ dec1 }}" as="c" hint-placeholder-count="2">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;background:#fff;box-shadow:0 2px 8px rgba(15,27,45,.05);animation:fadeUp .4s ease {{ c.delay }} both"><div style="font:600 12px/1.3 Inter;color:#0F1B2D">{{ c.title }}</div><div style="margin-top:6px;display:flex;align-items:center;gap:6px"><div style="width:18px;height:18px;border-radius:50%;background:{{ c.grad }};color:#fff;font:700 7px Inter;display:flex;align-items:center;justify-content:center">{{ c.init }}</div><span style="font:500 10px Inter;color:#9CA3B5">{{ c.name }}</span></div></div>
+                </sc-for>
+              </div>
+              <div style="position:absolute;left:590px;top:256px;width:180px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ dec2 }}" as="c" hint-placeholder-count="2">
+                  <div style="border:1px solid #ECEEF5;border-radius:11px;padding:9px 11px;background:#fff;box-shadow:0 2px 8px rgba(15,27,45,.05);animation:fadeUp .4s ease {{ c.delay }} both"><div style="font:600 12px/1.3 Inter;color:#0F1B2D">{{ c.title }}</div><div style="margin-top:6px;display:flex;align-items:center;gap:6px"><div style="width:18px;height:18px;border-radius:50%;background:{{ c.grad }};color:#fff;font:700 7px Inter;display:flex;align-items:center;justify-content:center">{{ c.init }}</div><span style="font:500 10px Inter;color:#9CA3B5">{{ c.name }}</span></div></div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;animation:fadeUp .4s ease 1.9s both">
+              <div style="align-self:center;font:500 12px Inter;color:#9CA3B5">6 tasks · 3 departments · each becomes a puzzle piece</div>
+              <button onClick="{{ onCreate }}" style="height:46px;padding:0 20px;border-radius:12px;border:none;background:#0F1B2D;color:#fff;font:700 14px Inter;cursor:pointer">Create goal &amp; puzzle</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    this.depts=[{name:'Marketing',color:'#5B4FE8'},{name:'Development',color:'#00C896'},{name:'Sales',color:'#F5A623'}];
+    this.names={JS:'Jane Smith',TR:'Tom Reyes',MC:'Mia Cole',AK:'Alex Kim',SP:'Sam Park',LV:'Lena Vu',OD:'Omar Diaz',RN:'Ria Nair',OW:'Olga White',VK:'Vera Kova'};
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.grads={JS:I,AK:I,LV:I,MC:M,SP:M,RN:M,TR:A,OD:A,OW:'linear-gradient(135deg,#0F1B2D,#34445F)',VK:'linear-gradient(135deg,#8B5CF6,#6D3FE0)'};
+    const T=(title,d,a,stage,src)=>({title,d,a,stage,src});
+    this.seed=[
+      {id:'G1',name:'Launch new product by September 1',short:'Launch',color:'#E5487F',owner:'OW',due:'Sep 1',tasks:[
+        T('Campaign brief',0,'JS','done','owner'),T('Design launch landing page',0,'TR','progress','tl'),T('Social media launch calendar',0,'MC','review','tl'),T('Write blog announcement',0,'TR','todo','owner'),
+        T('Build product API',1,'SP','progress','clevel'),T('Set up CI pipeline',1,'SP','done','tl'),T('Frontend dashboard shell',1,'LV','review','tl'),T('Release QA pass',1,'LV','todo','tl'),
+        T('Prepare pricing tiers',2,'OD','todo','owner'),T('Draft outreach list',2,'RN','review','req'),T('Sales demo script',2,'RN','done','tl'),T('Design-partner contracts',2,'OD','progress','clevel')]},
+      {id:'G2',name:'Enter the EMEA market in Q4',short:'EMEA',color:'#2E9BE6',owner:'VK',due:'Dec 15',tasks:[
+        T('EMEA positioning one-pager',0,'JS','progress','clevel'),T('Localized landing pages',0,'TR','todo','tl'),T('GDPR data-residency check',1,'AK','done','clevel'),T('EU region deployment',1,'SP','progress','tl'),
+        T('Multi-currency billing',1,'LV','todo','tl'),T('EMEA partner shortlist',2,'OD','done','owner'),T('First 10 EMEA demos',2,'RN','todo','tl'),T('Reseller agreement draft',2,'OD','review','clevel')]},
+      {id:'G3',name:'Cut onboarding time by 30%',short:'Onboarding',color:'#8B5CF6',owner:'OW',due:'Nov 30',tasks:[
+        T('Onboarding video script',0,'MC','done','owner'),T('In-app tooltip copy',0,'JS','review','tl'),T('Welcome email series',0,'MC','done','tl'),
+        T('Empty-state redesign',1,'LV','progress','tl'),T('Import from FigJam',1,'SP','todo','owner'),T('Customer kickoff checklist',2,'RN','progress','tl')]}
+    ];
+    this.decTpl=[['Market positioning & messaging',0,'JS'],['Launch campaign assets',0,'TR'],['Feature build & integration',1,'SP'],['QA & release',1,'LV'],['Pricing & packaging',2,'OD'],['Partner outreach',2,'RN']];
+    this.state={sel:'G1',piece:null,mode:(location.hash==='#new'?'new':'view'),auto:false,justKey:null,newText:'Open a second office in Lisbon by spring',phase:'idle',goals:JSON.parse(JSON.stringify(this.seed))};
+  }
+  componentWillUnmount(){ clearInterval(this._iv); }
+  next(st){ return {todo:'progress',progress:'review',review:'done'}[st]||'done'; }
+  setTask(gid,i,stage){
+    this.setState(s=>({goals:s.goals.map(g=>g.id!==gid?g:{...g,tasks:g.tasks.map((t,j)=>j===i?{...t,stage}:t)}),justKey:gid+':'+i}));
+    clearTimeout(this._jt); this._jt=setTimeout(()=>this.setState({justKey:null}),700);
+  }
+  step(){
+    const g=this.state.goals.find(x=>x.id===this.state.sel); if(!g) return;
+    const open=g.tasks.map((t,i)=>i).filter(i=>g.tasks[i].stage!=='done');
+    if(!open.length){ this.stopAuto(); return; }
+    const i=open[Math.floor(Math.random()*open.length)];
+    this.setTask(g.id,i,this.next(g.tasks[i].stage));
+  }
+  stopAuto(){ clearInterval(this._iv); this._iv=null; if(this.state.auto) this.setState({auto:false}); }
+  toggleAuto(){ if(this.state.auto){ this.stopAuto(); } else { this._iv=setInterval(()=>this.step(),1000); this.setState({auto:true}); } }
+  reset(){
+    this.stopAuto();
+    const seedG=this.seed.find(x=>x.id===this.state.sel);
+    this.setState(s=>({piece:null,goals:s.goals.map(g=>g.id!==s.sel?g:(seedG?JSON.parse(JSON.stringify(seedG)):{...g,tasks:g.tasks.map(t=>({...t,stage:'todo'}))}))}));
+  }
+  create(){
+    const n=this.state.goals.length+1, id='G'+n;
+    const text=(this.state.newText||'New goal').trim();
+    const g={id,name:text,short:text.split(' ').slice(0,2).join(' '),color:'#1FA39A',owner:'OW',due:'Mar 31',
+      tasks:this.decTpl.map(([title,d,a])=>({title,d,a,stage:'todo',src:'owner'}))};
+    this.setState(s=>({goals:[...s.goals,g],sel:id,mode:'view',phase:'idle',piece:null}));
+  }
+  stageStyle(st){
+    if(st==='done') return {l:'Done',c:'#00936E',b:'rgba(0,200,150,.14)'};
+    if(st==='review') return {l:'In Review',c:'#5B4FE8',b:'#EEEDFB'};
+    if(st==='progress') return {l:'In Progress',c:'#C77E0A',b:'rgba(245,166,35,.16)'};
+    return {l:'Not started',c:'#6B7385',b:'#EEF0F6'};
+  }
+  srcStyle(k){
+    if(k==='owner') return {l:'From Owner',c:'#fff',b:'#0F1B2D'};
+    if(k==='clevel') return {l:'★ C-Level priority',c:'#6D3FE0',b:'#F1EEFD'};
+    if(k==='req') return {l:'Request from another dept',c:'#C77E0A',b:'rgba(245,166,35,.16)'};
+    return {l:'Team Lead',c:'#6B7385',b:'#EEF0F6'};
+  }
+  renderVals(){
+    const s=this.state;
+    const stats=g=>{ const n=g.tasks.length, d=g.tasks.filter(t=>t.stage==='done').length, r=g.tasks.filter(t=>t.stage==='review').length; return {n,d,r,pct:Math.round(d/n*100)}; };
+    const goalList=s.goals.map(g=>{ const st=stats(g); const on=s.mode==='view'&&s.sel===g.id;
+      return {id:g.id,short:g.short,name:g.name,color:g.color,due:g.due,pct:st.pct,pctText:st.pct+'%',piecesText:st.d+' of '+st.n+' pieces placed',
+        border:on?'2px solid '+g.color:'1px solid #ECEEF5',bg:on?'#FCFCFF':'#fff',
+        onClick:()=>{ this.stopAuto(); this.setState({sel:g.id,mode:'view',piece:null}); }}; });
+    const out={goalList,isView:s.mode==='view',isNew:s.mode==='new',
+      onNew:()=>{ this.stopAuto(); this.setState({mode:'new',phase:'idle'}); }};
+    if(s.mode==='new'){
+      const dec=d=>this.decTpl.map((x,i)=>({x,i})).filter(o=>o.x[1]===d).map((o,k)=>({title:o.x[0],init:o.x[2],name:this.names[o.x[2]],grad:this.grads[o.x[2]],delay:(1.15+d*.15+k*.12).toFixed(2)+'s'}));
+      return Object.assign(out,{newText:s.newText,isAnim:s.phase==='anim',
+        onNewText:e=>this.setState({newText:e.target.value,phase:'idle'}),
+        onDecompose:()=>{ this.setState({phase:'idle'}); setTimeout(()=>this.setState({phase:'anim'}),30); },
+        onCancelNew:()=>this.setState({mode:'view',phase:'idle'}),
+        onCreate:()=>this.create(),
+        dec0:dec(0),dec1:dec(1),dec2:dec(2)});
+    }
+    const g=s.goals.find(x=>x.id===s.sel)||s.goals[0];
+    const st=stats(g);
+    const n=g.tasks.length, cols=n<=6?3:4, W=87, RS=75, OFF=43.5, rows=Math.ceil(n/cols);
+    const cells=g.tasks.map((t,i)=>{
+      const row=Math.floor(i/cols), col=i%cols, dc=this.depts[t.d].color;
+      const just=s.justKey===g.id+':'+i, selp=s.piece===i;
+      let fill='#F7F8FC',op=1,stroke='#C9CEDB',dash='6 5',label=t.a,lc='#9CA3B5',anim='none';
+      if(t.stage==='done'){ fill=dc; stroke=dc; dash='none'; label='✓'; lc='#fff'; }
+      else if(t.stage==='review'){ fill=dc; op=.45; stroke=dc; dash='none'; lc='#0F1B2D'; }
+      else if(t.stage==='progress'){ fill=dc; op=.13; stroke=dc; dash='none'; lc=dc; anim='hexPulse 1.6s ease-in-out infinite'; }
+      if(just) anim='snapIn .6s cubic-bezier(.34,1.5,.5,1) both';
+      return {x:col*W+(row%2?OFF:0),y:row*RS,fill,fillOp:op,stroke:selp?'#0F1B2D':stroke,strokeW:selp?4:2.5,dash:selp?'none':dash,label,labelColor:lc,anim,
+        title:t.title,onClick:()=>this.setState({piece:i})};
+    });
+    const legend=this.depts.map((d,di)=>{ const ts=g.tasks.filter(t=>t.d===di); return {name:d.name,color:d.color,text:ts.filter(t=>t.stage==='done').length+'/'+ts.length}; });
+    Object.assign(out,{
+      g:{id:g.id,short:g.short,name:g.name,color:g.color,due:g.due,ownerName:this.names[g.owner],pctText:st.pct+'%',piecesText:st.d+' of '+st.n+' placed · '+st.r+' in review'},
+      complete:st.d===st.n,
+      boardW:cols*W+OFF,boardH:(rows-1)*RS+100,cells,legend,
+      onStep:()=>this.step(),onAuto:()=>this.toggleAuto(),onReset:()=>this.reset(),
+      autoLabel:s.auto?'Pause':'Auto-play ▸',autoBg:s.auto?'#E5487F':'#5B4FE8',
+      hasPiece:s.piece!=null&&!!g.tasks[s.piece],noPiece:!(s.piece!=null&&g.tasks[s.piece]),
+      onClosePiece:()=>this.setState({piece:null})
+    });
+    const t=g.tasks[s.piece];
+    if(t){
+      const ss=this.stageStyle(t.stage), sr=this.srcStyle(t.src);
+      out.p={title:t.title,dept:this.depts[t.d].name,deptColor:this.depts[t.d].color,stage:ss.l,stageColor:ss.c,stageBg:ss.b,
+        num:s.piece+1,total:n,init:t.a,name:this.names[t.a],grad:this.grads[t.a],src:sr.l,srcColor:sr.c,srcBg:sr.b,
+        btn:t.stage==='done'?'Piece is in place ✓':'Move to '+this.stageStyle(this.next(t.stage)).l,
+        btnBg:t.stage==='done'?'#C3C9D6':'#5B4FE8'};
+      out.onAdvancePiece=()=>{ if(t.stage!=='done') this.setTask(g.id,s.piece,this.next(t.stage)); };
+    }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

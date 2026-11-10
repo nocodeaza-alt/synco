@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1180px;height:100vh;min-height:780px;display:flex;background:#fff;font-family:'Inter',system-ui,sans-serif;overflow:hidden">
+
+  <!-- LEFT -->
+  <div style="width:46%;max-width:680px;flex-shrink:0;background:linear-gradient(155deg,#5B4FE8 0%,#3B33B0 45%,#0F1B2D 100%);padding:56px;display:flex;flex-direction:column;color:#fff;position:relative;overflow:hidden">
+    <div style="position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);top:-160px;right:-140px"></div>
+    <div style="display:flex;align-items:center;gap:12px;position:relative">
+      <div style="width:40px;height:40px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:5px;background:#5B4FE8;transform:rotate(45deg)"></div></div>
+      <div style="font:800 30px Inter;letter-spacing:-1px">SYNCO</div>
+    </div>
+    <div style="margin-top:auto;position:relative">
+      <div style="font:800 44px/1.08 Inter;letter-spacing:-1.6px;max-width:520px">Your team, always in sync.</div>
+      <div style="margin-top:20px;font:400 18px/1.55 Inter;color:rgba(255,255,255,.8);max-width:460px">Set goals, decompose them with AI, and watch your team execute — visually.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:36px">
+        <div style="padding:10px 17px;border:1px solid rgba(255,255,255,.24);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">Org Tree</div>
+        <div style="padding:10px 17px;border:1px solid rgba(255,255,255,.24);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">AI Decomposition</div>
+        <div style="padding:10px 17px;border:1px solid rgba(255,255,255,.24);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">Virtual Office</div>
+        <div style="padding:10px 17px;border:1px solid rgba(255,255,255,.24);border-radius:999px;font:500 14px Inter;background:rgba(255,255,255,.08)">Brainstorm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div style="flex:1;min-width:0;overflow-y:auto;display:flex;justify-content:center;padding:48px 40px">
+    <div style="width:100%;max-width:440px;margin:auto 0">
+
+      <!-- LOGIN -->
+      <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <div>
+            <div style="font:800 34px Inter;letter-spacing:-1px;color:#0F1B2D">Welcome back</div>
+            <div style="margin-top:8px;font:400 16px Inter;color:#6B7385">Sign in to your SYNCO workspace</div>
+          </div>
+          <sc-if value="{{ resetDone }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;border-radius:12px;padding:12px 14px;background:rgba(0,200,150,.1);border:1px solid rgba(0,200,150,.3);font:600 13px Inter;color:#00936E">
+              <div style="width:22px;height:22px;border-radius:50%;background:#00C896;color:#fff;display:flex;align-items:center;justify-content:center;font:800 11px Inter;flex-shrink:0">&#10003;</div>Password updated. Sign in with your new password.
+            </div>
+          </sc-if>
+          <button onClick="{{ onSignIn }}" style="height:52px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font:600 15px Inter;color:#0F1B2D;cursor:pointer">
+            <span style="width:20px;height:20px;border-radius:5px;border:1px solid #E2E5F0;display:flex;align-items:center;justify-content:center;font:800 13px Inter;color:#4285F4">G</span>Continue with Google
+          </button>
+          <div style="display:flex;align-items:center;gap:16px;color:#9CA3B5;font:400 13px Inter"><div style="flex:1;height:1px;background:#E8EAF2"></div>or sign in with email<div style="flex:1;height:1px;background:#E8EAF2"></div></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Email</label>
+            <input value="{{ email }}" onInput="{{ onEmail }}" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <label style="font:600 13px Inter;color:#0F1B2D">Password</label>
+              <span onClick="{{ toForgot }}" style="font:600 13px Inter;color:#5B4FE8;cursor:pointer">Forgot password?</span>
+            </div>
+            <input type="password" value="{{ pw }}" onInput="{{ onPw }}" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <button onClick="{{ onSignIn }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3)">Sign in</button>
+
+          <div style="border:1px dashed #D9D5F7;background:#FBFAFF;border-radius:14px;padding:12px">
+            <div style="font:700 10px Inter;letter-spacing:.5px;color:#5B4FE8">DEMO · SIGN IN AS</div>
+            <div style="margin-top:4px;font:400 12px Inter;color:#8A91A3">Each role lands on its own start screen.</div>
+            <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+                <div onClick="{{ r.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:11px;background:#fff;border:{{ r.border }}">
+                  <div style="width:28px;height:28px;border-radius:50%;background:{{ r.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ r.k }}</div>
+                  <div style="min-width:0"><div style="font:700 12px Inter;color:#0F1B2D">{{ r.role }}</div><div style="font:500 10px Inter;color:#9CA3B5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.lands }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:center;font:400 14px Inter;color:#6B7385">
+            <div>Don't have an account? <span onClick="{{ toSignup }}" style="color:#5B4FE8;font-weight:600;cursor:pointer">Request access</span></div>
+            <div>Got an invite? <span onClick="{{ toInvite }}" style="color:#5B4FE8;font-weight:600;cursor:pointer">Accept invite</span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SIGN UP / REQUEST ACCESS -->
+      <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <span onClick="{{ toLogin }}" style="font:600 13px Inter;color:#6B7385;cursor:pointer">&larr; Back to sign in</span>
+          <div>
+            <div style="font:800 32px Inter;letter-spacing:-1px;color:#0F1B2D">Get started</div>
+            <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Create a workspace for your company, or ask to join your team's.</div>
+          </div>
+          <div style="display:flex;background:#F2F3F9;border-radius:12px;padding:4px;gap:3px">
+            <div onClick="{{ onModeCreate }}" style="flex:1;text-align:center;padding:10px 0;border-radius:9px;cursor:pointer;font:700 13px Inter;color:{{ mCreate.color }};background:{{ mCreate.bg }};box-shadow:{{ mCreate.shadow }}">Create a workspace</div>
+            <div onClick="{{ onModeJoin }}" style="flex:1;text-align:center;padding:10px 0;border-radius:9px;cursor:pointer;font:700 13px Inter;color:{{ mJoin.color }};background:{{ mJoin.bg }};box-shadow:{{ mJoin.shadow }}">Join my team</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Full name</label>
+            <input value="{{ su.name }}" onInput="{{ su.onName }}" placeholder="Olga White" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Work email</label>
+            <input value="{{ su.email }}" onInput="{{ su.onEmail }}" placeholder="you@company.com" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <sc-if value="{{ isCreate }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:18px">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font:600 13px Inter;color:#0F1B2D">Password</label>
+                <input type="password" value="{{ su.pw }}" onInput="{{ su.onPw }}" placeholder="At least 8 characters" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+                    <sc-for list="{{ suStrength.segs }}" as="g" hint-placeholder-count="4"><div style="height:4px;border-radius:99px;background:{{ g.bg }}"></div></sc-for>
+                  </div>
+                  <span style="font:700 11px Inter;color:{{ suStrength.color }};width:52px;text-align:right">{{ suStrength.label }}</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font:600 13px Inter;color:#0F1B2D">Company name</label>
+                <input value="{{ su.company }}" onInput="{{ su.onCompany }}" placeholder="REGAGRO" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+              </div>
+              <button onClick="{{ onCreate }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3);opacity:{{ createOp }}">Create workspace &rarr;</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isJoin }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:18px">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font:600 13px Inter;color:#0F1B2D">Workspace</label>
+                <input value="{{ su.ws }}" onInput="{{ su.onWs }}" placeholder="Company name or domain" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+                <div style="display:{{ wsFoundDisplay }};align-items:center;gap:8px;font:600 12px Inter;color:#00936E"><div style="width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center">R</div>REGAGRO · 10 people on SYNCO</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label style="font:600 13px Inter;color:#0F1B2D">Note for the admin <span style="font-weight:500;color:#9CA3B5">· optional</span></label>
+                <textarea value="{{ su.note }}" onInput="{{ su.onNote }}" placeholder="I'm joining the Marketing team as a designer." style="height:80px;resize:none;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:12px 16px;font:400 14px/1.45 Inter;color:#0F1B2D;outline:none;width:100%"></textarea>
+              </div>
+              <button onClick="{{ onRequest }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3);opacity:{{ requestOp }}">Request access</button>
+            </div>
+          </sc-if>
+          <div style="font:400 12px/1.5 Inter;color:#9CA3B5;text-align:center">By continuing you agree to the <a href="#" style="font-weight:600;text-decoration:none">Terms</a> and <a href="#" style="font-weight:600;text-decoration:none">Privacy Policy</a>.</div>
+        </div>
+      </sc-if>
+
+      <!-- REQUEST SENT -->
+      <sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <div style="width:56px;height:56px;border-radius:16px;background:rgba(0,200,150,.14);display:flex;align-items:center;justify-content:center"><div style="width:30px;height:30px;border-radius:50%;background:#00C896;color:#fff;font:800 15px Inter;display:flex;align-items:center;justify-content:center">&#10003;</div></div>
+          <div>
+            <div style="font:800 32px Inter;letter-spacing:-1px;color:#0F1B2D">Request sent</div>
+            <div style="margin-top:8px;font:400 15px/1.55 Inter;color:#6B7385">We've let the REGAGRO admins know. You'll get an email at <span style="color:#0F1B2D;font-weight:600">{{ sentEmail }}</span> as soon as they approve.</div>
+          </div>
+          <div style="border:1px solid #ECEEF5;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="font:700 11px Inter;letter-spacing:.5px;color:#9CA3B5">WHAT HAPPENS NEXT</div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:50%;background:#EEEDFB;color:#5B4FE8;font:800 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="font:500 14px/1.45 Inter;color:#3A4253">An admin reviews your request and places you in a department.</div></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:50%;background:#EEEDFB;color:#5B4FE8;font:800 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="font:500 14px/1.45 Inter;color:#3A4253">You receive an invite link by email.</div></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><div style="width:22px;height:22px;border-radius:50%;background:#EEEDFB;color:#5B4FE8;font:800 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="font:500 14px/1.45 Inter;color:#3A4253">You set up your profile and land in your workspace.</div></div>
+          </div>
+          <button onClick="{{ toLogin }}" style="height:50px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:#0F1B2D;font:700 15px Inter;cursor:pointer">Back to sign in</button>
+          <span onClick="{{ toInvite }}" style="text-align:center;font:600 13px Inter;color:#5B4FE8;cursor:pointer">Demo: admin approved — open the invite &rarr;</span>
+        </div>
+      </sc-if>
+
+      <!-- FORGOT -->
+      <sc-if value="{{ isForgot }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <span onClick="{{ toLogin }}" style="font:600 13px Inter;color:#6B7385;cursor:pointer">&larr; Back to sign in</span>
+          <div>
+            <div style="font:800 32px Inter;letter-spacing:-1px;color:#0F1B2D">Reset your password</div>
+            <div style="margin-top:8px;font:400 15px/1.55 Inter;color:#6B7385">Enter the email you use for SYNCO and we'll send you a link to choose a new password.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Email</label>
+            <input value="{{ email }}" onInput="{{ onEmail }}" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <button onClick="{{ onSendReset }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3)">Send reset link</button>
+        </div>
+      </sc-if>
+
+      <!-- FORGOT SENT -->
+      <sc-if value="{{ isForgotSent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <div style="width:56px;height:56px;border-radius:16px;background:#EEEDFB;display:flex;align-items:center;justify-content:center"><div style="width:28px;height:20px;border:2.5px solid #5B4FE8;border-radius:4px;position:relative;overflow:hidden"><div style="position:absolute;left:2px;right:2px;top:-9px;height:16px;border:2.5px solid #5B4FE8;transform:rotate(45deg) scale(.72);border-top:none;border-left:none"></div></div></div>
+          <div>
+            <div style="font:800 32px Inter;letter-spacing:-1px;color:#0F1B2D">Check your inbox</div>
+            <div style="margin-top:8px;font:400 15px/1.55 Inter;color:#6B7385">We sent a reset link to <span style="color:#0F1B2D;font-weight:600">{{ email }}</span>. It expires in 30 minutes.</div>
+          </div>
+          <button onClick="{{ onResend }}" style="height:50px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:{{ resendColor }};font:700 14px Inter;cursor:pointer">{{ resendLabel }}</button>
+          <div style="font:400 13px/1.5 Inter;color:#9CA3B5;text-align:center">No email? Check spam, or <span onClick="{{ toForgot }}" style="color:#5B4FE8;font-weight:600;cursor:pointer">use a different address</span>.</div>
+          <span onClick="{{ toReset }}" style="text-align:center;font:600 13px Inter;color:#5B4FE8;cursor:pointer">Demo: open the reset link &rarr;</span>
+        </div>
+      </sc-if>
+
+      <!-- RESET -->
+      <sc-if value="{{ isReset }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <div>
+            <div style="font:800 32px Inter;letter-spacing:-1px;color:#0F1B2D">Choose a new password</div>
+            <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">For {{ email }}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">New password</label>
+            <input type="password" value="{{ np }}" onInput="{{ onNp }}" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+                <sc-for list="{{ npStrength.segs }}" as="g" hint-placeholder-count="4"><div style="height:4px;border-radius:99px;background:{{ g.bg }}"></div></sc-for>
+              </div>
+              <span style="font:700 11px Inter;color:{{ npStrength.color }};width:52px;text-align:right">{{ npStrength.label }}</span>
+            </div>
+            <div style="margin-top:4px;display:flex;flex-direction:column;gap:5px">
+              <sc-for list="{{ rules }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:8px;font:500 12px Inter;color:{{ r.color }}"><div style="width:16px;height:16px;border-radius:50%;background:{{ r.dot }};color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center">&#10003;</div>{{ r.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Confirm password</label>
+            <input type="password" value="{{ np2 }}" onInput="{{ onNp2 }}" style="height:48px;border-radius:12px;border:{{ np2Border }};background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+            <div style="display:{{ mismatchDisplay }};font:600 12px Inter;color:#E5484D">Passwords don't match</div>
+          </div>
+          <button onClick="{{ onSaveReset }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3);opacity:{{ saveOp }}">Save and sign in</button>
+        </div>
+      </sc-if>
+
+      <!-- ACCEPT INVITE -->
+      <sc-if value="{{ isInvite }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:fadeUp .3s ease both">
+          <div style="border:1px solid #ECEEF5;border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(15,27,45,.06)">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:800 18px Inter;display:flex;align-items:center;justify-content:center">R</div>
+              <div><div style="font:500 13px Inter;color:#6B7385">Olga White invited you to join</div><div style="font:800 20px Inter;letter-spacing:-.4px;color:#0F1B2D">REGAGRO</div></div>
+            </div>
+            <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:#F7F8FC;border-radius:10px;padding:9px 11px"><div style="font:500 11px Inter;color:#9CA3B5">Department</div><div style="margin-top:3px;display:flex;align-items:center;gap:6px;font:700 13px Inter;color:#0F1B2D"><span style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></span>Marketing</div></div>
+              <div style="background:#F7F8FC;border-radius:10px;padding:9px 11px"><div style="font:500 11px Inter;color:#9CA3B5">Team Lead</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">Jane Smith</div></div>
+              <div style="background:#F7F8FC;border-radius:10px;padding:9px 11px"><div style="font:500 11px Inter;color:#9CA3B5">Position</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">Designer</div></div>
+              <div style="background:#F7F8FC;border-radius:10px;padding:9px 11px"><div style="font:500 11px Inter;color:#9CA3B5">Access</div><div style="margin-top:3px;font:700 13px Inter;color:#0F1B2D">Member</div></div>
+            </div>
+            <div style="margin-top:10px;font:500 11px Inter;color:#9CA3B5">Invite expires in 6 days</div>
+          </div>
+          <button onClick="{{ onAccept }}" style="height:50px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font:600 15px Inter;color:#0F1B2D;cursor:pointer">
+            <span style="width:20px;height:20px;border-radius:5px;border:1px solid #E2E5F0;display:flex;align-items:center;justify-content:center;font:800 13px Inter;color:#4285F4">G</span>Continue with Google
+          </button>
+          <div style="display:flex;align-items:center;gap:16px;color:#9CA3B5;font:400 13px Inter"><div style="flex:1;height:1px;background:#E8EAF2"></div>or set a password<div style="flex:1;height:1px;background:#E8EAF2"></div></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Full name</label>
+            <input value="{{ inv.name }}" onInput="{{ inv.onName }}" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Email</label>
+            <input value="ana@regagro.com" disabled style="height:48px;border-radius:12px;border:1px solid #ECEEF5;background:#EEF0F6;padding:0 16px;font:400 15px Inter;color:#6B7385;outline:none;width:100%">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <label style="font:600 13px Inter;color:#0F1B2D">Password</label>
+            <input type="password" value="{{ inv.pw }}" onInput="{{ inv.onPw }}" placeholder="At least 8 characters" style="height:48px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:400 15px Inter;color:#0F1B2D;outline:none;width:100%">
+          </div>
+          <button onClick="{{ onAccept }}" style="height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.3)">Accept &amp; join REGAGRO</button>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const h=(location.hash||'').slice(1);
+    this.screens=['login','signup','sent','forgot','forgotSent','reset','invite'];
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)';
+    this.roles=[
+      {k:'OW',name:'Olga White',role:'Owner',email:'olga@regagro.com',lands:'Work Flow · all departments',href:'SYNCO Flow.dc.html',grad:'linear-gradient(135deg,#0F1B2D,#34445F)'},
+      {k:'VK',name:'Vera Kova',role:'C-Level',email:'vera@regagro.com',lands:'Company overview',href:'SYNCO Roles.dc.html#clevel',grad:'linear-gradient(135deg,#8B5CF6,#6D3FE0)'},
+      {k:'JS',name:'Jane Smith',role:'Team Lead',email:'jane@regagro.com',lands:'Marketing team',href:'SYNCO Roles.dc.html#lead',grad:I},
+      {k:'TR',name:'Tom Reyes',role:'Member',email:'tom@regagro.com',lands:'My Workspace',href:'SYNCO Workspace.dc.html',grad:'linear-gradient(135deg,#F5A623,#D98A0E)'}
+    ];
+    this.state={screen:this.screens.includes(h)?h:'login',role:'OW',email:'olga@regagro.com',pw:'synco-2026',mode:'create',
+      su:{name:'',email:'',pw:'',company:'',ws:'',note:''},sentEmail:'',resendAt:0,np:'',np2:'',resetDone:false,inv:{name:'Ana Silva',pw:''}};
+  }
+  componentDidMount(){ this._t=setInterval(()=>{ if(this.state.screen==='forgotSent') this.forceUpdate(); },1000); }
+  componentWillUnmount(){ clearInterval(this._t); }
+  go(screen,extra){ this.setState({screen,...(extra||{})}); try{ history.replaceState(null,'','#'+screen); }catch(e){} }
+  strength(pw){
+    const sc=[pw.length>=8,/\d/.test(pw),/[a-z]/.test(pw)&&/[A-Z]/.test(pw),/[^A-Za-z0-9]/.test(pw)].filter(Boolean).length;
+    const L=[['','#E5E7F0'],['Weak','#E5484D'],['Fair','#F5A623'],['Good','#00C896'],['Strong','#00936E']][pw?sc:0];
+    return {label:L[0],color:L[1],segs:[0,1,2,3].map(i=>({bg:i<sc&&pw?L[1]:'#E5E7F0'}))};
+  }
+  setSu(p){ this.setState(s=>({su:{...s.su,...p}})); }
+  renderVals(){
+    const s=this.state, scr=s.screen;
+    const tab=on=>({color:on?'#0F1B2D':'#6B7385',bg:on?'#fff':'transparent',shadow:on?'0 1px 3px rgba(15,27,45,.12)':'none'});
+    const role=this.roles.find(r=>r.k===s.role);
+    const su=s.su;
+    const okEmail=/.+@.+\..+/.test(su.email);
+    const np=s.np, rulesOk=[np.length>=8,/\d/.test(np),/[a-z]/.test(np)&&/[A-Z]/.test(np)];
+    const match=np&&s.np2===np, canSave=rulesOk.every(Boolean)&&match;
+    const left=Math.max(0,Math.ceil((s.resendAt-Date.now())/1000));
+    return {
+      isLogin:scr==='login',isSignup:scr==='signup',isSent:scr==='sent',isForgot:scr==='forgot',isForgotSent:scr==='forgotSent',isReset:scr==='reset',isInvite:scr==='invite',
+      email:s.email,pw:s.pw,resetDone:s.resetDone,
+      onEmail:e=>this.setState({email:e.target.value}),onPw:e=>this.setState({pw:e.target.value}),
+      onSignIn:()=>{ location.href=role.href; },
+      roles:this.roles.map(r=>({k:r.k,role:r.role,lands:r.lands,grad:r.grad,border:s.role===r.k?'2px solid #5B4FE8':'1px solid #ECEEF5',
+        onClick:()=>this.setState({role:r.k,email:r.email,resetDone:false})})),
+      toLogin:()=>this.go('login'),toSignup:()=>this.go('signup',{resetDone:false}),toForgot:()=>this.go('forgot',{resetDone:false}),
+      toInvite:()=>this.go('invite'),toReset:()=>this.go('reset',{np:'',np2:''}),
+      mCreate:tab(s.mode==='create'),mJoin:tab(s.mode==='join'),isCreate:s.mode==='create',isJoin:s.mode==='join',
+      onModeCreate:()=>this.setState({mode:'create'}),onModeJoin:()=>this.setState({mode:'join'}),
+      su:{...su,onName:e=>this.setSu({name:e.target.value}),onEmail:e=>this.setSu({email:e.target.value}),onPw:e=>this.setSu({pw:e.target.value}),
+        onCompany:e=>this.setSu({company:e.target.value}),onWs:e=>this.setSu({ws:e.target.value}),onNote:e=>this.setSu({note:e.target.value})},
+      suStrength:this.strength(su.pw),
+      createOp:(su.name&&okEmail&&su.pw.length>=8&&su.company)?1:.45,
+      requestOp:(su.name&&okEmail&&su.ws)?1:.45,
+      wsFoundDisplay:/regagro/i.test(su.ws)?'flex':'none',
+      onCreate:()=>{ if(su.name&&okEmail&&su.pw.length>=8&&su.company) location.href='SYNCO Onboarding.dc.html#1'; },
+      onRequest:()=>{ if(su.name&&okEmail&&su.ws) this.go('sent',{sentEmail:su.email}); },
+      sentEmail:s.sentEmail||'you@regagro.com',
+      onSendReset:()=>{ if(s.email) this.go('forgotSent',{resendAt:Date.now()+30000}); },
+      resendLabel:left?('Resend link in 0:'+String(left).padStart(2,'0')):'Resend link',resendColor:left?'#9CA3B5':'#0F1B2D',
+      onResend:()=>{ if(!left) this.setState({resendAt:Date.now()+30000}); },
+      np:s.np,np2:s.np2,npStrength:this.strength(np),
+      onNp:e=>this.setState({np:e.target.value}),onNp2:e=>this.setState({np2:e.target.value}),
+      rules:[['At least 8 characters',rulesOk[0]],['Contains a number',rulesOk[1]],['Upper and lower case letters',rulesOk[2]]].map(([label,ok])=>({label,color:ok?'#00936E':'#9CA3B5',dot:ok?'#00C896':'#D5D9E5'})),
+      np2Border:s.np2&&!match?'1px solid #E5484D':'1px solid #E5E7F0',mismatchDisplay:s.np2&&!match?'block':'none',
+      saveOp:canSave?1:.45,
+      onSaveReset:()=>{ if(canSave) this.go('login',{resetDone:true,pw:''}); },
+      inv:{...s.inv,onName:e=>this.setState(st=>({inv:{...st.inv,name:e.target.value}})),onPw:e=>this.setState(st=>({inv:{...st.inv,pw:e.target.value}}))},
+      onAccept:()=>{ location.href='SYNCO Onboarding.dc.html#m1'; }
+    };
+  }
+}
+</script>
+</body>
+</html>

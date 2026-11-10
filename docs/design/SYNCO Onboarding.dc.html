@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0F1B2D}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1180px;height:100vh;min-height:800px;background:radial-gradient(circle at 50% 22%,#1c2c47,#0F1B2D 68%);font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+  <div style="height:64px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 28px">
+    <div style="width:28px;height:28px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:11px;border-radius:3px;background:#5B4FE8;transform:rotate(45deg)"></div></div>
+    <div style="font:800 18px Inter;letter-spacing:-.5px;color:#fff">SYNCO</div>
+    <div style="margin-left:14px;font:500 13px Inter;color:rgba(255,255,255,.55)">{{ flowLabel }}</div>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;display:flex;justify-content:center;padding:10px 24px 40px">
+    <div style="margin:auto 0">
+
+      <!-- OWNER STEP 1 -->
+      <sc-if value="{{ is1 }}" hint-placeholder-val="{{ true }}">
+        <div style="width:560px;background:#fff;border-radius:20px;padding:40px 44px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 1 OF 3</div>
+          </div>
+          <div style="margin-top:24px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">Let's set up your workspace</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Tell us a bit about your team to personalize SYNCO.</div>
+          <div style="margin-top:26px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font:600 13px Inter;color:#0F1B2D">Workspace name</label>
+              <input value="{{ ws }}" onInput="{{ onWs }}" style="height:50px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 16px;font:500 15px Inter;color:#0F1B2D;outline:none">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font:600 13px Inter;color:#0F1B2D">Your role</label>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                <sc-for list="{{ roleOpts }}" as="o" hint-placeholder-count="4">
+                  <div onClick="{{ o.onClick }}" style="cursor:pointer;text-align:center;padding:11px 0;border-radius:12px;font:700 13px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font:600 13px Inter;color:#0F1B2D">Company size</label>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                <sc-for list="{{ sizeOpts }}" as="o" hint-placeholder-count="4">
+                  <div onClick="{{ o.onClick }}" style="cursor:pointer;text-align:center;padding:11px 0;border-radius:12px;font:700 13px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:28px;display:flex;justify-content:space-between;font:600 12px Inter;color:#9CA3B5"><span>Progress</span><span>33%</span></div>
+          <div style="margin-top:8px;height:8px;border-radius:99px;background:#EEF0F6;overflow:hidden"><div style="width:33%;height:100%;border-radius:99px;background:linear-gradient(90deg,#5B4FE8,#7B6FF0)"></div></div>
+          <button onClick="{{ next }}" style="margin-top:24px;width:100%;height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Continue</button>
+          <a href="SYNCO Flow.dc.html" style="display:block;margin-top:14px;text-align:center;font:500 14px Inter;color:#9CA3B5;text-decoration:none">Skip for now</a>
+        </div>
+      </sc-if>
+
+      <!-- OWNER STEP 2 — ORG -->
+      <sc-if value="{{ is2 }}" hint-placeholder-val="{{ false }}">
+        <div style="width:1020px;background:#fff;border-radius:20px;padding:36px 40px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 2 OF 3</div>
+          </div>
+          <div style="margin-top:22px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">Map your organization</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Add departments and who leads them. You can refine everything later in the Org Tree editor.</div>
+
+          <div style="margin-top:24px;display:flex;gap:26px">
+            <div style="width:440px;flex-shrink:0;display:flex;flex-direction:column;gap:10px">
+              <div style="display:{{ sugDisplay }};align-items:center;gap:10px;border:1px solid #E2DEF8;background:#F7F5FF;border-radius:12px;padding:11px 13px">
+                <div style="flex:1;min-width:0"><div style="font:700 10px Inter;letter-spacing:.4px;color:#5B4FE8">&#10022; SUGGESTED FOR {{ sizeLabel }} PEOPLE</div><div style="margin-top:3px;font:600 13px Inter;color:#0F1B2D">Marketing, Development, Sales</div></div>
+                <button onClick="{{ useSuggestion }}" style="height:34px;padding:0 12px;border-radius:9px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">Use</button>
+              </div>
+              <div style="display:flex;padding:0 4px;font:700 10px Inter;letter-spacing:.4px;color:#9CA3B5"><span style="width:182px;padding-left:24px">DEPARTMENT</span><span>TEAM LEAD EMAIL</span></div>
+              <sc-for list="{{ depts }}" as="d" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="width:14px;height:14px;border-radius:4px;background:{{ d.color }};flex-shrink:0"></div>
+                  <input value="{{ d.name }}" onInput="{{ d.onName }}" placeholder="Department" style="width:160px;height:42px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:600 14px Inter;color:#0F1B2D;outline:none">
+                  <input value="{{ d.lead }}" onInput="{{ d.onLead }}" placeholder="lead@company.com" style="flex:1;min-width:0;height:42px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:500 13px Inter;color:#0F1B2D;outline:none">
+                  <div onClick="{{ d.onRemove }}" style="width:32px;height:32px;border-radius:9px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#9CA3B5;font:400 17px Inter;cursor:pointer;flex-shrink:0">&times;</div>
+                </div>
+              </sc-for>
+              <div style="display:flex;gap:8px;margin-top:4px">
+                <button onClick="{{ addDept }}" style="flex:1;height:42px;border-radius:11px;border:1.5px dashed #D5D9E5;background:#fff;color:#6B7385;font:700 13px Inter;cursor:pointer">+ Add department</button>
+                <label style="height:42px;padding:0 14px;border-radius:11px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:7px">
+                  <input type="file" accept=".csv,.txt" onChange="{{ onCsv }}" style="display:none">Import CSV
+                </label>
+              </div>
+              <div style="font:400 12px/1.5 Inter;color:#9CA3B5">CSV format: one department per line — <span style="font-family:ui-monospace,monospace;color:#6B7385">Department, lead email</span></div>
+            </div>
+
+            <div style="flex:1;min-width:0;background:#F7F8FC;border:1px solid #ECEEF5;border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center">
+              <div style="align-self:flex-start;font:700 10px Inter;letter-spacing:.5px;color:#9CA3B5">LIVE PREVIEW</div>
+              <div style="margin-top:14px;padding:12px 18px;border-radius:13px;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;display:flex;align-items:center;gap:10px;box-shadow:0 8px 18px rgba(91,79,232,.3)">
+                <div style="width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.2);font:800 13px Inter;display:flex;align-items:center;justify-content:center">{{ wsInitial }}</div>
+                <div><div style="font:700 14px Inter">{{ wsName }}</div><div style="font:500 10px Inter;color:rgba(255,255,255,.7)">You · Owner</div></div>
+              </div>
+              <div style="width:2px;height:20px;background:#CBD0DD"></div>
+              <div style="width:100%;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;border-top:2px solid #CBD0DD;padding-top:0;max-width:540px">
+                <sc-for list="{{ depts }}" as="d" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;align-items:center;animation:pop .35s ease both">
+                    <div style="width:2px;height:16px;background:#CBD0DD"></div>
+                    <div style="width:150px;border-radius:12px;background:#fff;border:1px solid #E9EBF2;border-top:3px solid {{ d.color }};padding:10px 12px;box-shadow:0 3px 10px rgba(15,27,45,.06)">
+                      <div style="font:700 13px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.nameShown }}</div>
+                      <div style="margin-top:6px;display:flex;align-items:center;gap:6px">
+                        <div style="width:20px;height:20px;border-radius:50%;background:{{ d.leadBg }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ d.leadInit }}</div>
+                        <span style="font:500 11px Inter;color:#9CA3B5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.leadShown }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:26px;display:flex;justify-content:space-between;font:600 12px Inter;color:#9CA3B5"><span>Progress</span><span>66%</span></div>
+          <div style="margin-top:8px;height:8px;border-radius:99px;background:#EEF0F6;overflow:hidden"><div style="width:66%;height:100%;border-radius:99px;background:linear-gradient(90deg,#5B4FE8,#7B6FF0)"></div></div>
+          <div style="margin-top:22px;display:flex;gap:10px">
+            <button onClick="{{ back }}" style="height:52px;padding:0 24px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:#0F1B2D;font:700 15px Inter;cursor:pointer">Back</button>
+            <button onClick="{{ next }}" style="flex:1;height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Continue</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- OWNER STEP 3 — INVITE -->
+      <sc-if value="{{ is3 }}" hint-placeholder-val="{{ false }}">
+        <div style="width:680px;background:#fff;border-radius:20px;padding:36px 40px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 3 OF 3</div>
+          </div>
+          <div style="margin-top:22px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">Invite your team</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Pick a department and access level for each person. Click a pill to change it.</div>
+
+          <div style="margin-top:20px;display:flex;gap:8px">
+            <input value="{{ inviteText }}" onInput="{{ onInviteText }}" onKeyDown="{{ onInviteKey }}" placeholder="name@regagro.com — press Enter to add" style="flex:1;min-width:0;height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none">
+            <button onClick="{{ addInvite }}" style="height:46px;padding:0 18px;border-radius:12px;border:none;background:#0F1B2D;color:#fff;font:700 13px Inter;cursor:pointer">Add</button>
+          </div>
+
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto">
+            <sc-for list="{{ invites }}" as="v" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:10px;border:1px solid #ECEEF5;border-radius:12px;padding:8px 10px">
+                <div style="width:30px;height:30px;border-radius:50%;background:#EEEDFB;color:#5B4FE8;font:800 12px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ v.initial }}</div>
+                <div style="flex:1;min-width:0;font:600 13px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.email }}</div>
+                <div onClick="{{ v.onDept }}" title="Change department" style="cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;border:1px solid #E5E7F0;font:700 11px Inter;color:#0F1B2D;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ v.deptColor }}"></span>{{ v.dept }}</div>
+                <div onClick="{{ v.onRole }}" title="Change access" style="cursor:pointer;padding:6px 10px;border-radius:99px;font:700 11px Inter;color:{{ v.roleColor }};background:{{ v.roleBg }};white-space:nowrap">{{ v.role }}</div>
+                <div onClick="{{ v.onRemove }}" style="width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#9CA3B5;font:400 16px Inter;cursor:pointer;flex-shrink:0">&times;</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:16px;border:1px solid #ECEEF5;background:#F7F8FC;border-radius:14px;padding:13px 14px">
+            <div style="font:700 12px Inter;color:#0F1B2D">Or share an invite link</div>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <div style="flex:1;min-width:0;height:40px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;padding:0 12px;display:flex;align-items:center;font:500 13px ui-monospace,monospace;color:#3A4253">{{ inviteLink }}</div>
+              <button onClick="{{ onCopy }}" style="height:40px;padding:0 14px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:{{ copyColor }};font:700 12px Inter;cursor:pointer;white-space:nowrap">{{ copyLabel }}</button>
+            </div>
+            <div style="margin-top:7px;font:400 12px Inter;color:#9CA3B5">People who join by link start as Members. You place them in a department afterwards.</div>
+          </div>
+
+          <div style="margin-top:22px;display:flex;justify-content:space-between;font:600 12px Inter;color:#9CA3B5"><span>Progress</span><span>100%</span></div>
+          <div style="margin-top:8px;height:8px;border-radius:99px;background:#EEF0F6;overflow:hidden"><div style="width:100%;height:100%;border-radius:99px;background:linear-gradient(90deg,#5B4FE8,#7B6FF0)"></div></div>
+          <div style="margin-top:22px;display:flex;gap:10px">
+            <button onClick="{{ back }}" style="height:52px;padding:0 24px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:#0F1B2D;font:700 15px Inter;cursor:pointer">Back</button>
+            <button onClick="{{ next }}" style="flex:1;height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">{{ sendLabel }}</button>
+          </div>
+          <div onClick="{{ next }}" style="margin-top:14px;text-align:center;font:500 14px Inter;color:#9CA3B5;cursor:pointer">I'll invite people later</div>
+        </div>
+      </sc-if>
+
+      <!-- OWNER DONE -->
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+        <div style="width:580px;background:#fff;border-radius:20px;padding:44px;box-shadow:0 30px 80px rgba(0,0,0,.45);text-align:center;animation:fadeUp .35s ease both">
+          <div style="margin:0 auto;width:72px;height:72px;border-radius:22px;background:rgba(0,200,150,.14);display:flex;align-items:center;justify-content:center;animation:pop .5s ease both"><div style="width:42px;height:42px;border-radius:50%;background:#00C896;color:#fff;font:800 20px Inter;display:flex;align-items:center;justify-content:center">&#10003;</div></div>
+          <div style="margin-top:22px;font:800 30px Inter;letter-spacing:-.9px;color:#0F1B2D">{{ wsName }} is ready</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Your org tree is live and invites are on their way.</div>
+          <div style="margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div style="background:#F7F8FC;border-radius:12px;padding:12px"><div style="font:800 22px Inter;color:#0F1B2D">{{ deptCount }}</div><div style="font:500 12px Inter;color:#9CA3B5">departments</div></div>
+            <div style="background:#F7F8FC;border-radius:12px;padding:12px"><div style="font:800 22px Inter;color:#0F1B2D">{{ inviteCount }}</div><div style="font:500 12px Inter;color:#9CA3B5">invites sent</div></div>
+            <div style="background:#F7F8FC;border-radius:12px;padding:12px"><div style="font:800 22px Inter;color:#0F1B2D">{{ myRole }}</div><div style="font:500 12px Inter;color:#9CA3B5">your role</div></div>
+          </div>
+          <div style="margin-top:20px;text-align:left;border:1px solid #E2DEF8;background:#F7F5FF;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+            <div style="width:40px;height:40px;border-radius:12px;background:#5B4FE8;color:#fff;font:700 18px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">&#10022;</div>
+            <div style="flex:1"><div style="font:800 15px Inter;color:#0F1B2D">Set your first goal</div><div style="margin-top:2px;font:400 13px Inter;color:#6B7385">Describe an outcome — the AI splits it across your departments.</div></div>
+          </div>
+          <a href="SYNCO Goals.dc.html#new" style="margin-top:16px;display:flex;align-items:center;justify-content:center;height:52px;border-radius:12px;background:#5B4FE8;color:#fff;font:700 15px Inter;text-decoration:none;box-shadow:0 8px 20px rgba(91,79,232,.32)">Set first goal &rarr;</a>
+          <a href="SYNCO Flow.dc.html" style="display:block;margin-top:14px;font:600 14px Inter;color:#6B7385;text-decoration:none">Explore the Work Flow first</a>
+        </div>
+      </sc-if>
+
+      <!-- MEMBER 1 — WELCOME -->
+      <sc-if value="{{ isM1 }}" hint-placeholder-val="{{ false }}">
+        <div style="width:600px;background:#fff;border-radius:20px;padding:40px 44px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 1 OF 3</div>
+          </div>
+          <div style="margin-top:24px;font:800 30px Inter;letter-spacing:-.9px;color:#0F1B2D">Welcome to REGAGRO, {{ mFirst }}</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Olga White added you to the Marketing team. Here's who you'll work with.</div>
+          <div style="margin-top:22px;border:1px solid #ECEEF5;border-radius:16px;overflow:hidden">
+            <div style="padding:14px 16px;border-left:4px solid #5B4FE8;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F0F1F6">
+              <div style="font:800 16px Inter;color:#0F1B2D">Marketing</div>
+              <div style="font:500 12px Inter;color:#9CA3B5">4 people · part of 3 active goals</div>
+            </div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:11px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">JS</div><div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Jane Smith</div><div style="font:500 12px Inter;color:#9CA3B5">Content Lead</div></div><span style="font:700 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:4px 9px;border-radius:99px">YOUR TEAM LEAD</span></div>
+              <div style="display:flex;align-items:center;gap:11px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#D98A0E);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">TR</div><div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Tom Reyes</div><div style="font:500 12px Inter;color:#9CA3B5">Designer</div></div></div>
+              <div style="display:flex;align-items:center;gap:11px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">MC</div><div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Mia Cole</div><div style="font:500 12px Inter;color:#9CA3B5">Social</div></div></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px">
+            <div style="flex:1;background:#F7F8FC;border-radius:12px;padding:11px 13px"><div style="font:500 11px Inter;color:#9CA3B5">Your position</div><div style="margin-top:3px;font:700 14px Inter;color:#0F1B2D">Designer</div></div>
+            <div style="flex:1;background:#F7F8FC;border-radius:12px;padding:11px 13px"><div style="font:500 11px Inter;color:#9CA3B5">Access level</div><div style="margin-top:3px;font:700 14px Inter;color:#0F1B2D">Member</div></div>
+          </div>
+          <button onClick="{{ next }}" style="margin-top:26px;width:100%;height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Continue</button>
+        </div>
+      </sc-if>
+
+      <!-- MEMBER 2 — PROFILE -->
+      <sc-if value="{{ isM2 }}" hint-placeholder-val="{{ false }}">
+        <div style="width:600px;background:#fff;border-radius:20px;padding:40px 44px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#E2E5F0"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 2 OF 3</div>
+          </div>
+          <div style="margin-top:24px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">Set up your profile</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Your teammates see this in the org tree and the Virtual Office.</div>
+          <div style="margin-top:22px;display:flex;align-items:center;gap:16px">
+            <label style="position:relative;width:76px;height:76px;border-radius:50%;cursor:pointer;flex-shrink:0;background:{{ photoBg }};display:flex;align-items:center;justify-content:center;color:#fff;font:800 24px Inter;box-shadow:0 0 0 4px #EEEDFB">
+              <input type="file" accept="image/*" onChange="{{ onPhoto }}" style="display:none">
+              <span style="display:{{ initialsDisplay }}">{{ mInit }}</span>
+              <div style="position:absolute;right:-2px;bottom:-2px;width:26px;height:26px;border-radius:50%;background:#0F1B2D;border:3px solid #fff;color:#fff;font:700 13px Inter;display:flex;align-items:center;justify-content:center">+</div>
+            </label>
+            <div><div style="font:700 14px Inter;color:#0F1B2D">Profile photo</div><div style="margin-top:2px;font:400 13px Inter;color:#9CA3B5">Click to upload · PNG or JPG</div></div>
+          </div>
+          <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Full name</label><input value="{{ mName }}" onInput="{{ onMName }}" style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+            <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Position</label><input value="{{ mPos }}" onInput="{{ onMPos }}" style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+          </div>
+          <div style="margin-top:16px;font:600 13px Inter;color:#0F1B2D">Time zone</div>
+          <div style="margin-top:8px"><div style="position:relative">
+  <div style="display:flex;align-items:center;gap:10px;height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 6px 0 14px">
+    <span style="font:700 14px Inter;color:#0F1B2D;white-space:nowrap">{{ tz.city }}</span>
+    <span style="font:600 13px Inter;color:#6B7385;white-space:nowrap">{{ tz.offset }}</span>
+    <span style="display:{{ tz.autoDisplay }};font:600 11px Inter;color:#00936E;background:rgba(0,200,150,.12);padding:3px 8px;border-radius:99px;white-space:nowrap">Detected automatically</span>
+    <span style="margin-left:auto;font:500 12px Inter;color:#9CA3B5;white-space:nowrap">{{ tz.local }}</span>
+    <button onClick="{{ tz.toggle }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer;flex-shrink:0">{{ tz.btn }}</button>
+  </div>
+  <div onClick="{{ tz.close }}" style="display:{{ tz.listDisplay }};position:fixed;inset:0;z-index:20"></div>
+  <div style="display:{{ tz.listDisplay }};position:absolute;left:0;right:0;top:52px;z-index:21;background:#fff;border:1px solid #ECEEF5;border-radius:14px;box-shadow:0 16px 40px rgba(15,27,45,.16);padding:8px">
+    <input value="{{ tz.q }}" onInput="{{ tz.onQ }}" placeholder="Search city or country" style="width:100%;height:40px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:500 14px Inter;color:#0F1B2D;outline:none">
+    <div style="margin-top:6px;max-height:230px;overflow-y:auto;display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ tz.list }}" as="z" hint-placeholder-count="6">
+        <div onClick="{{ z.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:{{ z.bg }}">
+          <span style="font:{{ z.weight }} 13px Inter;color:#0F1B2D">{{ z.city }}</span>
+          <span style="font:500 11px Inter;color:#9CA3B5">{{ z.region }}</span>
+          <span style="margin-left:auto;font:600 12px Inter;color:#6B7385">{{ z.offset }}</span>
+        </div>
+      </sc-for>
+      <div style="display:{{ tz.noneDisplay }};padding:14px;text-align:center;font:500 13px Inter;color:#B7BCCB">No matches</div>
+    </div>
+  </div>
+</div></div>
+          <div style="margin-top:16px;font:600 13px Inter;color:#0F1B2D">Working hours</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <sc-for list="{{ hoursOpts }}" as="o" hint-placeholder-count="3">
+              <div onClick="{{ o.onClick }}" style="flex:1;text-align:center;cursor:pointer;padding:10px 0;border-radius:12px;font:700 13px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:26px;display:flex;gap:10px">
+            <button onClick="{{ back }}" style="height:52px;padding:0 24px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:#0F1B2D;font:700 15px Inter;cursor:pointer">Back</button>
+            <button onClick="{{ next }}" style="flex:1;height:52px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;box-shadow:0 8px 20px rgba(91,79,232,.32)">Continue</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- MEMBER 3 — HOW IT WORKS -->
+      <sc-if value="{{ isM3 }}" hint-placeholder-val="{{ false }}">
+        <div style="width:860px;background:#fff;border-radius:20px;padding:40px 44px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:fadeUp .35s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div><div style="width:22px;height:8px;border-radius:99px;background:#5B4FE8"></div></div>
+            <div style="font:600 12px Inter;color:#9CA3B5;letter-spacing:.4px">STEP 3 OF 3</div>
+          </div>
+          <div style="margin-top:24px;font:800 28px Inter;letter-spacing:-.8px;color:#0F1B2D">How work moves in SYNCO</div>
+          <div style="margin-top:8px;font:400 15px Inter;color:#6B7385">Three things to know before your first day.</div>
+          <div style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+            <div style="border:1px solid #ECEEF5;border-radius:16px;padding:18px">
+              <div style="height:84px;border-radius:12px;background:#F7F8FC;position:relative;overflow:hidden">
+                <div style="position:absolute;left:24px;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(#5B4FE8,#F5A623,#00C896)"></div>
+                <div style="position:absolute;left:19px;top:12px;width:13px;height:13px;border-radius:50%;background:#5B4FE8"></div>
+                <div style="position:absolute;left:19px;top:36px;width:13px;height:13px;border-radius:50%;background:#F5A623"></div>
+                <div style="position:absolute;left:19px;top:60px;width:13px;height:13px;border-radius:50%;background:#00C896"></div>
+                <div style="position:absolute;left:44px;right:12px;top:11px;height:14px;border-radius:5px;background:#fff;border:1px solid #ECEEF5"></div>
+                <div style="position:absolute;left:44px;right:28px;top:35px;height:14px;border-radius:5px;background:#fff;border:1px solid #F6E2BE"></div>
+                <div style="position:absolute;left:44px;right:40px;top:59px;height:14px;border-radius:5px;background:#fff;border:1px solid #CFEFE4"></div>
+              </div>
+              <div style="margin-top:14px;font:800 15px Inter;color:#0F1B2D">1 · The Thread</div>
+              <div style="margin-top:6px;font:400 13px/1.5 Inter;color:#6B7385">Each morning, pick the tasks you'll take today. They move down the thread: in focus → done → review.</div>
+            </div>
+            <div style="border:1px solid #ECEEF5;border-radius:16px;padding:18px">
+              <div style="height:84px;border-radius:12px;background:#F7F8FC;display:flex;align-items:center;justify-content:center;gap:8px">
+                <div style="width:44px;height:52px;border-radius:9px;background:#EEEDFB;color:#5B4FE8;font:800 10px Inter;display:flex;align-items:center;justify-content:center">PDF</div>
+                <div style="width:44px;height:52px;border-radius:9px;background:rgba(0,200,150,.14);color:#00936E;font:800 10px Inter;display:flex;align-items:center;justify-content:center">LINK</div>
+                <div style="width:44px;height:52px;border-radius:9px;background:rgba(245,166,35,.16);color:#C77E0A;font:800 10px Inter;display:flex;align-items:center;justify-content:center">IMG</div>
+              </div>
+              <div style="margin-top:14px;font:800 15px Inter;color:#0F1B2D">2 · Attach a result</div>
+              <div style="margin-top:6px;font:400 13px/1.5 Inter;color:#6B7385">A task is done when you attach a doc, link or image. Your Team Lead reviews it, and it's saved to Drive.</div>
+            </div>
+            <div style="border:1px solid #ECEEF5;border-radius:16px;padding:18px">
+              <div style="height:84px;border-radius:12px;background:#F7F8FC;display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="120" height="64" viewBox="0 0 120 64"><polygon points="30,8 46,17 46,35 30,44 14,35 14,17" fill="#5B4FE8"></polygon><polygon points="62,8 78,17 78,35 62,44 46,35 46,17" fill="#00C896" fill-opacity=".45"></polygon><polygon points="94,8 110,17 110,35 94,44 78,35 78,17" fill="none" stroke="#C9CEDB" stroke-width="2" stroke-dasharray="4 3"></polygon><polygon points="46,35 62,44 62,62 46,71 30,62 30,44" fill="#F5A623"></polygon></svg>
+              </div>
+              <div style="margin-top:14px;font:800 15px Inter;color:#0F1B2D">3 · Your piece of the goal</div>
+              <div style="margin-top:6px;font:400 13px/1.5 Inter;color:#6B7385">Every task is one piece of a company goal. When all departments deliver, the puzzle is solved.</div>
+            </div>
+          </div>
+          <div style="margin-top:28px;display:flex;gap:10px">
+            <button onClick="{{ back }}" style="height:52px;padding:0 24px;border-radius:12px;border:1px solid #E2E5F0;background:#fff;color:#0F1B2D;font:700 15px Inter;cursor:pointer">Back</button>
+            <a href="SYNCO Workspace.dc.html" style="flex:1;height:52px;border-radius:12px;background:#5B4FE8;color:#fff;font:700 15px Inter;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 8px 20px rgba(91,79,232,.32)">Open my workspace &rarr;</a>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const h=(location.hash||'').slice(1);
+    this.steps=['1','2','3','done','m1','m2','m3'];
+    this.colors=['#5B4FE8','#00C896','#F5A623','#E5487F','#2E9BE6','#8B5CF6'];
+    this.state={step:this.steps.includes(h)?h:'1',ws:'REGAGRO',role:'Owner',size:'11–50',
+      depts:[{name:'Marketing',lead:'jane@regagro.com'},{name:'Development',lead:'alex@regagro.com'}],
+      invites:[{email:'jane@regagro.com',d:0,r:1},{email:'alex@regagro.com',d:1,r:1},{email:'tom@regagro.com',d:0,r:0},{email:'mia@regagro.com',d:0,r:0},{email:'sam@regagro.com',d:1,r:0}],
+      inviteText:'',copied:false,mName:'Ana Silva',mPos:'Designer',photo:null,tz:this.tzInit(),tzAuto:true,tzOpen:false,tzQ:'',hours:'9:00–17:00'};
+    this.accessRoles=['Member','Team Lead','C-Level'];
+  }
+
+  tzInit(){ let z='Europe/Lisbon'; try{ z=Intl.DateTimeFormat().resolvedOptions().timeZone||z; }catch(e){} return z; }
+  tzAll(){ if(!this._tzAll){ let a=[]; try{ a=Intl.supportedValuesOf('timeZone'); }catch(e){} if(!a.length) a=['Europe/Lisbon','Europe/London','Europe/Berlin','Europe/Moscow','Asia/Almaty','Asia/Dubai','Asia/Tbilisi','America/New_York','America/Sao_Paulo','Asia/Tokyo']; this._tzAll=a.filter(z=>z.indexOf('/')>0&&!/^Etc\//.test(z)); } return this._tzAll; }
+  tzOff(z){ try{ const p=new Intl.DateTimeFormat('en-US',{timeZone:z,timeZoneName:'shortOffset'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName'); return ((p&&p.value)||'GMT').replace('-','−'); }catch(e){ return 'GMT'; } }
+  tzTime(z){ try{ return new Intl.DateTimeFormat('en-GB',{timeZone:z,hour:'2-digit',minute:'2-digit'}).format(new Date()); }catch(e){ return ''; } }
+  tzCity(z){ return z.split('/').pop().replace(/_/g,' '); }
+  tzAlias(z){ return ({'Europe/Moscow':'москва russia россия','Asia/Almaty':'алматы kazakhstan казахстан','Asia/Tashkent':'ташкент uzbekistan узбекистан','Europe/Kyiv':'киев kyiv ukraine украина','Europe/Kiev':'киев ukraine украина','Europe/Minsk':'минск belarus беларусь','Asia/Tbilisi':'тбилиси georgia грузия','Asia/Yerevan':'ереван armenia армения','Asia/Baku':'баку azerbaijan','Asia/Dubai':'дубай uae оаэ','Europe/Istanbul':'стамбул turkey турция','Asia/Yekaterinburg':'екатеринбург russia','Asia/Novosibirsk':'новосибирск russia','Asia/Bishkek':'бишкек kyrgyzstan','Europe/Lisbon':'лиссабон portugal португалия','Europe/London':'лондон uk великобритания','Europe/Berlin':'берлин germany германия','Europe/Riga':'рига latvia','Europe/Tallinn':'таллин estonia','Europe/Vilnius':'вильнюс lithuania','Europe/Warsaw':'варшава poland','Europe/Belgrade':'белград serbia','America/New_York':'нью-йорк usa сша','America/Sao_Paulo':'сан-паулу brazil бразилия','Asia/Bangkok':'бангкок thailand','Asia/Makassar':'бали bali indonesia'})[z]||''; }
+  tzVals(){ const s=this.state, z=s.tz, q=(s.tzQ||'').toLowerCase().trim();
+    const all=this.tzAll(); const list=(q?all.filter(x=>(x.replace(/_/g,' ')+' '+this.tzAlias(x)).toLowerCase().indexOf(q)>-1):all).slice(0,80);
+    return {city:this.tzCity(z),offset:this.tzOff(z),local:'now '+this.tzTime(z),autoDisplay:s.tzAuto?'inline-block':'none',
+      btn:s.tzOpen?'Close':'Change',listDisplay:s.tzOpen?'block':'none',
+      toggle:()=>this.setState({tzOpen:!s.tzOpen,tzQ:''}),close:()=>this.setState({tzOpen:false,tzQ:''}),
+      q:s.tzQ||'',onQ:e=>this.setState({tzQ:e.target.value}),noneDisplay:list.length?'none':'block',
+      list:list.map(x=>({city:this.tzCity(x),region:x.split('/')[0],offset:this.tzOff(x),bg:x===z?'#F2F1FC':'transparent',weight:x===z?700:600,
+        onClick:()=>this.setState({tz:x,tzAuto:x===this.tzInit(),tzOpen:false,tzQ:''})}))}; }
+  go(step){ this.setState({step}); try{ history.replaceState(null,'','#'+step); }catch(e){} }
+  pill(on){ return {color:on?'#fff':'#3A4253',bg:on?'#5B4FE8':'#fff',border:on?'1px solid #5B4FE8':'1px solid #E5E7F0'}; }
+  setDept(i,p){ this.setState(s=>({depts:s.depts.map((d,j)=>j===i?{...d,...p}:d)})); }
+  addInvite(){
+    const v=(this.state.inviteText||'').trim(); if(!/.+@.+/.test(v)) return;
+    this.setState(s=>({invites:[...s.invites,{email:v,d:0,r:0}],inviteText:''}));
+  }
+  onCsv(e){
+    const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const rd=new FileReader();
+    rd.onload=()=>{
+      const rows=String(rd.result).split(/\r?\n/).map(l=>l.split(/[,;\t]/).map(x=>x.trim())).filter(r=>r[0]&&!/^department$/i.test(r[0]));
+      if(rows.length) this.setState({depts:rows.map(r=>({name:r[0],lead:r[1]||''}))});
+    };
+    rd.readAsText(f); e.target.value='';
+  }
+  initials(s){ const p=(s||'').replace(/@.*/,'').split(/[\s._-]+/).filter(Boolean); return ((p[0]||'?')[0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+  renderVals(){
+    const s=this.state, st=s.step, owner=['1','2','3','done'].includes(st);
+    const order=owner?['1','2','3','done']:['m1','m2','m3'];
+    const idx=order.indexOf(st);
+    const dn=s.depts.length?s.depts:[{name:'',lead:''}];
+    const depts=s.depts.map((d,i)=>({name:d.name,lead:d.lead,color:this.colors[i%this.colors.length],
+      nameShown:d.name||'Untitled',leadShown:d.lead||'No lead yet',leadInit:d.lead?this.initials(d.lead):'?',leadBg:d.lead?this.colors[i%this.colors.length]:'#C3C9D6',
+      onName:e=>this.setDept(i,{name:e.target.value}),onLead:e=>this.setDept(i,{lead:e.target.value}),
+      onRemove:()=>this.setState(x=>({depts:x.depts.filter((_,j)=>j!==i)}))}));
+    const hasAllSug=['Marketing','Development','Sales'].every(n=>s.depts.some(d=>d.name.toLowerCase()===n.toLowerCase()));
+    const deptsForInv=s.depts.length?s.depts:[{name:'Unassigned'}];
+    const rc=[['#6B7385','#EEF0F6'],['#5B4FE8','#EEEDFB'],['#6D3FE0','#F1EEFD']];
+    return {
+      flowLabel:owner?'Workspace setup':'Joining REGAGRO',
+      is1:st==='1',is2:st==='2',is3:st==='3',isDone:st==='done',isM1:st==='m1',isM2:st==='m2',isM3:st==='m3',
+      next:()=>this.go(order[Math.min(order.length-1,idx+1)]),
+      back:()=>this.go(order[Math.max(0,idx-1)]),
+      ws:s.ws,onWs:e=>this.setState({ws:e.target.value}),
+      wsName:s.ws||'Your workspace',wsInitial:(s.ws||'W')[0].toUpperCase(),
+      roleOpts:['Owner','C-Level','Team Lead','Member'].map(r=>({label:r,...this.pill(s.role===r),onClick:()=>this.setState({role:r})})),
+      sizeOpts:['1–10','11–50','51–200','200+'].map(r=>({label:r,...this.pill(s.size===r),onClick:()=>this.setState({size:r})})),
+      sizeLabel:s.size,sugDisplay:hasAllSug?'none':'flex',
+      useSuggestion:()=>{ const keep=s.depts.filter(d=>d.name); const add=['Marketing','Development','Sales'].filter(n=>!keep.some(d=>d.name.toLowerCase()===n.toLowerCase())).map(n=>({name:n,lead:n==='Sales'?'omar@regagro.com':''})); this.setState({depts:[...keep,...add]}); },
+      depts,addDept:()=>this.setState(x=>({depts:[...x.depts,{name:'',lead:''}]})),onCsv:e=>this.onCsv(e),
+      inviteText:s.inviteText,onInviteText:e=>this.setState({inviteText:e.target.value}),
+      onInviteKey:e=>{ if(e.key==='Enter') this.addInvite(); },addInvite:()=>this.addInvite(),
+      invites:s.invites.map((v,i)=>{ const d=deptsForInv[v.d%deptsForInv.length]; return {email:v.email,initial:(v.email[0]||'?').toUpperCase(),
+        dept:d.name||'Untitled',deptColor:this.colors[(v.d%deptsForInv.length)%this.colors.length],
+        role:this.accessRoles[v.r],roleColor:rc[v.r][0],roleBg:rc[v.r][1],
+        onDept:()=>this.setState(x=>({invites:x.invites.map((y,j)=>j===i?{...y,d:(y.d+1)%deptsForInv.length}:y)})),
+        onRole:()=>this.setState(x=>({invites:x.invites.map((y,j)=>j===i?{...y,r:(y.r+1)%3}:y)})),
+        onRemove:()=>this.setState(x=>({invites:x.invites.filter((_,j)=>j!==i)}))}; }),
+      inviteLink:(s.ws||'team').toLowerCase().replace(/[^a-z0-9]/g,'')+'.synco.app/join/7Kx2',
+      copyLabel:s.copied?'Copied ✓':'Copy link',copyColor:s.copied?'#00936E':'#0F1B2D',
+      onCopy:()=>{ try{ navigator.clipboard.writeText('https://'+(s.ws||'team').toLowerCase()+'.synco.app/join/7Kx2'); }catch(e){} this.setState({copied:true}); setTimeout(()=>this.setState({copied:false}),1800); },
+      sendLabel:s.invites.length?('Send '+s.invites.length+' invites'):'Finish setup',
+      deptCount:s.depts.length,inviteCount:s.invites.length,myRole:s.role,
+      mName:s.mName,mPos:s.mPos,mFirst:(s.mName||'there').split(' ')[0],mInit:this.initials(s.mName),
+      onMName:e=>this.setState({mName:e.target.value}),onMPos:e=>this.setState({mPos:e.target.value}),
+      photoBg:s.photo?"url('"+s.photo+"') center/cover":'linear-gradient(135deg,#E5487F,#B83266)',initialsDisplay:s.photo?'none':'inline',
+      onPhoto:e=>{ const f=e.target.files&&e.target.files[0]; if(f) this.setState({photo:URL.createObjectURL(f)}); },
+      tz:this.tzVals(),
+      hoursOpts:['9:00–17:00','10:00–18:00','Flexible'].map(t=>({label:t,...this.pill(s.hours===t),onClick:()=>this.setState({hours:t})}))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <a href="SYNCO Settings.dc.html" title="Settings" style="text-decoration:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0F1B2D,#34445F);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">OW</a>
+  </div>
+
+  <div style="flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;padding:14px 24px;display:flex;align-items:center;gap:12px">
+    <a href="SYNCO Settings.dc.html#members" style="font:600 13px Inter;color:#9CA3B5;text-decoration:none">Settings /</a>
+    <div style="font:800 20px Inter;letter-spacing:-.5px;color:#0F1B2D">Org Tree</div>
+    <div style="display:flex;align-items:center;gap:6px;font:600 12px Inter;color:#00936E;margin-left:4px"><span style="width:7px;height:7px;border-radius:50%;background:#00C896"></span>{{ savedText }}</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <div style="height:38px;width:240px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;gap:8px;padding:0 12px">
+        <div style="width:12px;height:12px;border:2px solid #9CA3B5;border-radius:50%;flex-shrink:0"></div>
+        <input value="{{ q }}" onInput="{{ onQ }}" placeholder="Find a person" style="flex:1;min-width:0;border:none;background:transparent;font:500 13px Inter;color:#0F1B2D;outline:none">
+      </div>
+      <button onClick="{{ addPerson }}" style="height:38px;padding:0 14px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer">+ Person</button>
+      <button onClick="{{ addDept }}" style="height:38px;padding:0 14px;border-radius:10px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer">+ Department</button>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <div onClick="{{ clearSel }}" style="flex:1;min-width:0;overflow:auto;background-color:#F7F8FC;background-image:radial-gradient(#DDE0EA 1px,transparent 1px);background-size:20px 20px;padding:30px 30px 60px">
+      <div style="min-width:{{ treeMinW }}px;display:flex;flex-direction:column;align-items:center">
+
+        <div onClick="{{ selOwner }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:14px;background:linear-gradient(135deg,#5B4FE8,#3B33B0);color:#fff;box-shadow:{{ ownerShadow }}">
+          <div style="width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.2);font:800 15px Inter;display:flex;align-items:center;justify-content:center">R</div>
+          <div><div style="font:800 15px Inter">REGAGRO</div><div style="font:500 11px Inter;color:rgba(255,255,255,.75)">Olga White · Owner</div></div>
+        </div>
+        <div style="width:2px;height:18px;background:#CBD0DD"></div>
+        <div style="display:flex;gap:10px">
+          <sc-for list="{{ execs }}" as="p" hint-placeholder-count="1">
+            <div onClick="{{ p.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:#fff;border:{{ p.border }};box-shadow:0 3px 10px rgba(15,27,45,.06);opacity:{{ p.op }}">
+              <div style="width:28px;height:28px;border-radius:50%;background:{{ p.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ p.init }}</div>
+              <div><div style="font:700 13px Inter;color:#0F1B2D">{{ p.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">{{ p.title }} · C-Level</div></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width:2px;height:18px;background:#CBD0DD"></div>
+
+        <div style="position:relative;display:flex;gap:18px;align-items:flex-start">
+          <div style="position:absolute;top:0;height:2px;background:#CBD0DD;left:{{ barInset }};right:{{ barInset }}"></div>
+          <sc-for list="{{ depts }}" as="d" hint-placeholder-count="3">
+            <div onDragOver="{{ d.onDragOver }}" onDrop="{{ d.onDrop }}" style="width:236px;display:flex;flex-direction:column;align-items:center">
+              <div style="width:2px;height:18px;background:#CBD0DD"></div>
+              <div style="width:100%;border-radius:16px;padding:8px;background:{{ d.zoneBg }};outline:{{ d.zoneOutline }};outline-offset:-2px">
+                <div onClick="{{ d.onClick }}" style="cursor:pointer;background:#fff;border:{{ d.border }};border-top:4px solid {{ d.color }};border-radius:13px;padding:11px 13px;box-shadow:0 3px 10px rgba(15,27,45,.06)">
+                  <div style="display:flex;align-items:center"><div style="font:800 14px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.name }}</div><div style="margin-left:auto;font:600 11px Inter;color:#9CA3B5">{{ d.count }}</div></div>
+                </div>
+                <div style="margin-top:8px;display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ d.people }}" as="p" hint-placeholder-count="3">
+                    <div draggable="true" onDragStart="{{ p.onDragStart }}" onDragEnd="{{ p.onDragEnd }}" onClick="{{ p.onClick }}" style="cursor:grab;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:11px;background:#fff;border:{{ p.border }};box-shadow:0 2px 6px rgba(15,27,45,.05);opacity:{{ p.op }}">
+                      <div style="position:relative;width:30px;height:30px;flex-shrink:0"><div style="width:30px;height:30px;border-radius:50%;background:{{ p.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ p.init }}</div><div style="display:{{ p.invitedDisplay }};position:absolute;inset:-2px;border-radius:50%;border:2px dashed #9CA3B5"></div></div>
+                      <div style="flex:1;min-width:0"><div style="font:700 12px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div><div style="font:500 10px Inter;color:#9CA3B5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.title }}</div></div>
+                      <span style="display:{{ p.leadDisplay }};font:800 8px Inter;letter-spacing:.4px;color:#5B4FE8;background:#EEEDFB;padding:3px 6px;border-radius:99px">LEAD</span>
+                      <span style="display:{{ p.invitedDisplay }};font:800 8px Inter;letter-spacing:.4px;color:#6B7385;background:#EEF0F6;padding:3px 6px;border-radius:99px">INVITED</span>
+                    </div>
+                  </sc-for>
+                  <div onClick="{{ d.onAdd }}" style="cursor:pointer;height:34px;border-radius:10px;border:1.5px dashed #D5D9E5;display:flex;align-items:center;justify-content:center;font:600 12px Inter;color:#9CA3B5;background:rgba(255,255,255,.6)">+ Add person</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div style="width:340px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;overflow-y:auto;padding:22px">
+
+      <sc-if value="{{ isPerson }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeUp .2s ease both">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:52px;height:52px;border-radius:50%;background:{{ sp.grad }};color:#fff;font:800 17px Inter;display:flex;align-items:center;justify-content:center">{{ sp.init }}</div>
+            <div style="min-width:0"><div style="font:800 18px Inter;color:#0F1B2D">{{ sp.name }}</div><div style="font:500 12px Inter;color:#9CA3B5">{{ sp.email }}</div></div>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:7px"><label style="font:600 12px Inter;color:#6B7385">Full name</label><input value="{{ sp.name }}" onInput="{{ sp.onName }}" style="height:42px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px"><label style="font:600 12px Inter;color:#6B7385">Position</label><input value="{{ sp.title }}" onInput="{{ sp.onTitle }}" style="height:42px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+          <div style="display:{{ sp.deptDisplay }};flex-direction:column">
+            <div style="margin-top:16px;font:600 12px Inter;color:#6B7385">Department</div>
+            <div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ sp.deptOpts }}" as="o" hint-placeholder-count="3">
+                <div onClick="{{ o.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:99px;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ o.dot }}"></span>{{ o.label }}</div>
+              </sc-for>
+            </div>
+            <div onClick="{{ sp.onLead }}" style="margin-top:14px;cursor:pointer;display:flex;align-items:center;gap:10px;border:1px solid #ECEEF5;border-radius:12px;padding:11px 12px">
+              <div style="width:36px;height:20px;border-radius:99px;background:{{ sp.leadTrack }};position:relative;flex-shrink:0"><div style="position:absolute;top:2px;left:{{ sp.leadKnob }};width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+              <div><div style="font:700 13px Inter;color:#0F1B2D">Team Lead of {{ sp.deptName }}</div><div style="font:500 11px Inter;color:#9CA3B5">Reviews the team's work and delegates tasks</div></div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font:600 12px Inter;color:#6B7385">Access level</div>
+          <div style="margin-top:7px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+            <sc-for list="{{ sp.roleOpts }}" as="o" hint-placeholder-count="3">
+              <div onClick="{{ o.onClick }}" style="cursor:pointer;text-align:center;padding:8px 0;border-radius:10px;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:6px;font:400 11px/1.45 Inter;color:#9CA3B5">{{ sp.roleHint }}</div>
+          <div style="display:{{ sp.invitedDisplay }};margin-top:14px;align-items:center;gap:10px;border-radius:12px;padding:11px 12px;background:#F7F8FC">
+            <div style="flex:1;font:500 12px Inter;color:#6B7385">Invite sent 2 days ago — not accepted yet.</div>
+            <button onClick="{{ sp.onResend }}" style="height:32px;padding:0 11px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 11px Inter;cursor:pointer">{{ sp.resendLabel }}</button>
+          </div>
+          <button onClick="{{ sp.onRemove }}" style="margin-top:20px;width:100%;height:42px;border-radius:11px;border:1px solid {{ sp.rmBorder }};background:{{ sp.rmBg }};color:#E5484D;font:700 13px Inter;cursor:pointer">{{ sp.rmLabel }}</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDept }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeUp .2s ease both">
+          <div style="font:700 10px Inter;letter-spacing:.5px;color:#9CA3B5">DEPARTMENT</div>
+          <input value="{{ sd.name }}" onInput="{{ sd.onName }}" style="margin-top:8px;width:100%;height:46px;border-radius:11px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 13px;font:800 17px Inter;color:#0F1B2D;outline:none">
+          <div style="margin-top:16px;font:600 12px Inter;color:#6B7385">Color</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <sc-for list="{{ sd.colors }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="cursor:pointer;width:30px;height:30px;border-radius:9px;background:{{ c.c }};box-shadow:{{ c.ring }}"></div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:600 12px Inter;color:#6B7385">Team Lead</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+            <sc-for list="{{ sd.leadOpts }}" as="o" hint-placeholder-count="3">
+              <div onClick="{{ o.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:11px;border:{{ o.border }};background:{{ o.bg }}">
+                <div style="width:26px;height:26px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div>
+                <span style="flex:1;font:600 13px Inter;color:#0F1B2D">{{ o.name }}</span>
+                <span style="display:{{ o.checkDisplay }};font:800 12px Inter;color:#5B4FE8">&#10003;</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ sd.noPeople }}" hint-placeholder-val="{{ false }}"><div style="font:500 12px Inter;color:#B7BCCB">Add people to choose a lead.</div></sc-if>
+          </div>
+          <button onClick="{{ sd.onDelete }}" style="margin-top:22px;width:100%;height:42px;border-radius:11px;border:1px solid #F6D2D3;background:#fff;color:#E5484D;font:700 13px Inter;cursor:pointer;opacity:{{ sd.delOp }}">Delete department</button>
+          <div style="display:{{ sd.delHintDisplay }};margin-top:7px;font:500 11px Inter;color:#9CA3B5;text-align:center">Move everyone to another department first.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isNone }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font:800 17px Inter;color:#0F1B2D">Edit your structure</div>
+          <div style="margin-top:8px;font:400 13px/1.55 Inter;color:#6B7385">Changes save instantly and update everyone's permissions, review chains and AI decomposition.</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:11px"><div style="width:28px;height:28px;border-radius:8px;background:#EEEDFB;color:#5B4FE8;font:800 12px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">&#8644;</div><div style="font:500 13px/1.45 Inter;color:#3A4253">Drag a person onto another department to move them.</div></div>
+            <div style="display:flex;gap:11px"><div style="width:28px;height:28px;border-radius:8px;background:#EEEDFB;color:#5B4FE8;font:800 12px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">&#9998;</div><div style="font:500 13px/1.45 Inter;color:#3A4253">Click a person or department to edit it here.</div></div>
+            <div style="display:flex;gap:11px"><div style="width:28px;height:28px;border-radius:8px;background:#EEEDFB;color:#5B4FE8;font:800 12px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">&#9733;</div><div style="font:500 13px/1.45 Inter;color:#3A4253">Making someone Team Lead hands them the review queue.</div></div>
+          </div>
+          <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <div style="background:#F7F8FC;border-radius:11px;padding:10px"><div style="font:800 18px Inter;color:#0F1B2D">{{ statDepts }}</div><div style="font:500 11px Inter;color:#9CA3B5">departments</div></div>
+            <div style="background:#F7F8FC;border-radius:11px;padding:10px"><div style="font:800 18px Inter;color:#0F1B2D">{{ statPeople }}</div><div style="font:500 11px Inter;color:#9CA3B5">people</div></div>
+            <div style="background:#F7F8FC;border-radius:11px;padding:10px"><div style="font:800 18px Inter;color:#0F1B2D">{{ statInvited }}</div><div style="font:500 11px Inter;color:#9CA3B5">invited</div></div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    this.palette=['#5B4FE8','#00C896','#F5A623','#E5487F','#2E9BE6','#8B5CF6'];
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.state={sel:null,q:'',drag:null,over:null,confirmRm:false,resent:false,saved:Date.now(),
+      depts:[{id:'d1',name:'Marketing',color:'#5B4FE8',lead:'JS'},{id:'d2',name:'Development',color:'#00C896',lead:'AK'},{id:'d3',name:'Sales',color:'#F5A623',lead:'OD'}],
+      people:[
+        {id:'VK',name:'Vera Kova',title:'COO',dept:null,role:'C-Level',grad:'linear-gradient(135deg,#8B5CF6,#6D3FE0)'},
+        {id:'JS',name:'Jane Smith',title:'Content Lead',dept:'d1',role:'Team Lead',grad:I},
+        {id:'TR',name:'Tom Reyes',title:'Designer',dept:'d1',role:'Member',grad:A},
+        {id:'MC',name:'Mia Cole',title:'Social',dept:'d1',role:'Member',grad:M},
+        {id:'AS',name:'Ana Silva',title:'Designer',dept:'d1',role:'Member',grad:'linear-gradient(135deg,#E5487F,#B83266)',invited:true},
+        {id:'AK',name:'Alex Kim',title:'Tech Lead',dept:'d2',role:'Team Lead',grad:I},
+        {id:'SP',name:'Sam Park',title:'Backend',dept:'d2',role:'Member',grad:M},
+        {id:'LV',name:'Lena Vu',title:'Frontend',dept:'d2',role:'Member',grad:I},
+        {id:'OD',name:'Omar Diaz',title:'Sales Lead',dept:'d3',role:'Team Lead',grad:A},
+        {id:'RN',name:'Ria Nair',title:'Account Exec',dept:'d3',role:'Member',grad:M}
+      ]};
+    this.n=1;
+  }
+  componentDidMount(){ this._t=setInterval(()=>this.forceUpdate(),15000); }
+  componentWillUnmount(){ clearInterval(this._t); }
+  touch(p){ this.setState({...p,saved:Date.now()}); }
+  init(n){ const p=(n||'?').trim().split(/\s+/); return ((p[0]||'?')[0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+  setP(id,patch){ this.touch({people:this.state.people.map(x=>x.id===id?{...x,...patch}:x)}); }
+  setD(id,patch){ this.touch({depts:this.state.depts.map(x=>x.id===id?{...x,...patch}:x)}); }
+  move(pid,did){
+    const s=this.state, p=s.people.find(x=>x.id===pid); if(!p||p.dept===did) return;
+    const depts=s.depts.map(d=>d.id===p.dept&&d.lead===pid?{...d,lead:null}:d);
+    this.touch({depts,people:s.people.map(x=>x.id===pid?{...x,dept:did,role:x.role==='Team Lead'?'Member':x.role}:x),drag:null,over:null});
+  }
+  setLead(did,pid){
+    const s=this.state, d=s.depts.find(x=>x.id===did);
+    const people=s.people.map(x=>{ if(x.id===pid) return {...x,role:'Team Lead'}; if(d.lead&&x.id===d.lead&&x.id!==pid) return {...x,role:'Member'}; return x; });
+    this.touch({people,depts:s.depts.map(x=>x.id===did?{...x,lead:pid}:x)});
+  }
+  addPerson(did){
+    const s=this.state, d=did||(s.depts[0]&&s.depts[0].id); if(!d) return;
+    const id='N'+(this.n++);
+    this.touch({people:[...s.people,{id,name:'New person',title:'Position',dept:d,role:'Member',grad:'linear-gradient(135deg,#9CA3B5,#6B7385)',invited:true}],sel:{t:'p',id},confirmRm:false});
+  }
+  addDept(){
+    const s=this.state, id='d'+Date.now();
+    this.touch({depts:[...s.depts,{id,name:'New department',color:this.palette[s.depts.length%this.palette.length],lead:null}],sel:{t:'d',id}});
+  }
+  renderVals(){
+    const s=this.state, q=(s.q||'').toLowerCase();
+    const hit=p=>!q||p.name.toLowerCase().indexOf(q)>-1;
+    const isSel=(t,id)=>s.sel&&s.sel.t===t&&s.sel.id===id;
+    const stop=f=>e=>{ if(e&&e.stopPropagation) e.stopPropagation(); f(e); };
+    const ago=Math.round((Date.now()-s.saved)/60000);
+    const n=s.depts.length;
+    const out={
+      savedText:ago<1?'All changes saved':'Saved '+ago+' min ago',
+      q:s.q,onQ:e=>this.setState({q:e.target.value}),
+      addPerson:()=>this.addPerson(s.sel&&s.sel.t==='d'?s.sel.id:null),addDept:()=>this.addDept(),
+      clearSel:()=>this.setState({sel:null,confirmRm:false}),
+      selOwner:stop(()=>this.setState({sel:null})),ownerShadow:'0 8px 20px rgba(91,79,232,.3)',
+      treeMinW:n*254,barInset:n>1?(100/(2*n))+'%':'50%',
+      execs:s.people.filter(p=>p.role==='C-Level'&&!p.dept).map(p=>({init:this.init(p.name),name:p.name,title:p.title,grad:p.grad,op:hit(p)?1:.3,
+        border:isSel('p',p.id)?'2px solid #5B4FE8':'1px solid #E9EBF2',onClick:stop(()=>this.setState({sel:{t:'p',id:p.id},confirmRm:false,resent:false}))})),
+      depts:s.depts.map(d=>{
+        const ps=s.people.filter(p=>p.dept===d.id).sort((a,b)=>(a.id===d.lead?-1:0)-(b.id===d.lead?-1:0));
+        const over=s.over===d.id&&s.drag;
+        return {name:d.name||'Untitled',color:d.color,count:ps.length+(ps.length===1?' person':' people'),
+          border:isSel('d',d.id)?'2px solid #5B4FE8':'1px solid #E9EBF2',
+          zoneBg:over?d.color+'14':'transparent',zoneOutline:over?'2px dashed '+d.color:(s.drag?'2px dashed #D5D9E5':'none'),
+          onClick:stop(()=>this.setState({sel:{t:'d',id:d.id}})),onAdd:stop(()=>this.addPerson(d.id)),
+          onDragOver:e=>{ e.preventDefault(); if(s.over!==d.id) this.setState({over:d.id}); },
+          onDrop:e=>{ e.preventDefault(); if(s.drag) this.move(s.drag,d.id); },
+          people:ps.map(p=>({init:this.init(p.name),name:p.name,title:p.title,grad:p.grad,op:hit(p)?1:.3,
+            border:isSel('p',p.id)?'2px solid #5B4FE8':'1px solid #ECEEF5',
+            leadDisplay:p.id===d.lead?'inline-block':'none',invitedDisplay:p.invited?'block':'none',
+            onClick:stop(()=>this.setState({sel:{t:'p',id:p.id},confirmRm:false,resent:false})),
+            onDragStart:e=>{ try{ e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',p.id); }catch(_){} this.setState({drag:p.id}); },
+            onDragEnd:()=>this.setState({drag:null,over:null})}))};
+      }),
+      isPerson:!!(s.sel&&s.sel.t==='p'),isDept:!!(s.sel&&s.sel.t==='d'),isNone:!s.sel,
+      statDepts:n,statPeople:s.people.length+1,statInvited:s.people.filter(p=>p.invited).length
+    };
+    if(s.sel&&s.sel.t==='p'){
+      const p=s.people.find(x=>x.id===s.sel.id);
+      if(!p){ out.isPerson=false; out.isNone=true; return out; }
+      const d=s.depts.find(x=>x.id===p.dept), isLead=d&&d.lead===p.id;
+      const pill=on=>({color:on?'#fff':'#3A4253',bg:on?'#0F1B2D':'#fff',border:on?'1px solid #0F1B2D':'1px solid #E5E7F0'});
+      const hints={'C-Level':'Sees every department, sends priority requests, gives final sign-off.','Team Lead':'Runs one department: delegates, reviews, accepts requests.','Member':'Works their own thread and attaches results for review.'};
+      out.sp={init:this.init(p.name),name:p.name,title:p.title,grad:p.grad,email:p.name.split(' ')[0].toLowerCase()+'@regagro.com',
+        onName:e=>this.setP(p.id,{name:e.target.value}),onTitle:e=>this.setP(p.id,{title:e.target.value}),
+        deptDisplay:p.role==='C-Level'&&!p.dept?'none':'flex',deptName:d?d.name:'—',
+        deptOpts:s.depts.map(x=>({label:x.name,dot:x.id===p.dept?'#fff':x.color,...pill(x.id===p.dept),onClick:()=>this.move(p.id,x.id)})),
+        leadTrack:isLead?'#5B4FE8':'#D5D9E5',leadKnob:isLead?'18px':'2px',
+        onLead:()=>{ if(!d) return; if(isLead){ this.touch({depts:s.depts.map(x=>x.id===d.id?{...x,lead:null}:x),people:s.people.map(x=>x.id===p.id?{...x,role:'Member'}:x)}); } else this.setLead(d.id,p.id); },
+        roleOpts:['C-Level','Team Lead','Member'].map(r=>({label:r,...pill(p.role===r),onClick:()=>{
+          if(r==='Team Lead'&&d) this.setLead(d.id,p.id);
+          else if(r==='C-Level'){ this.touch({people:s.people.map(x=>x.id===p.id?{...x,role:r,dept:null}:x),depts:s.depts.map(x=>x.lead===p.id?{...x,lead:null}:x)}); }
+          else { const nd=p.dept||(s.depts[0]&&s.depts[0].id); this.touch({people:s.people.map(x=>x.id===p.id?{...x,role:r,dept:nd}:x),depts:s.depts.map(x=>x.lead===p.id?{...x,lead:null}:x)}); }
+        }})),
+        roleHint:hints[p.role],
+        invitedDisplay:p.invited?'flex':'none',resendLabel:s.resent?'Sent ✓':'Resend',onResend:()=>this.setState({resent:true}),
+        rmLabel:s.confirmRm?'Click again to remove '+p.name.split(' ')[0]:'Remove from workspace',rmBg:s.confirmRm?'#FFF1F1':'#fff',rmBorder:s.confirmRm?'#E5484D':'#F6D2D3',
+        onRemove:()=>{ if(!s.confirmRm){ this.setState({confirmRm:true}); return; } this.touch({people:s.people.filter(x=>x.id!==p.id),depts:s.depts.map(x=>x.lead===p.id?{...x,lead:null}:x),sel:null,confirmRm:false}); }};
+    }
+    if(s.sel&&s.sel.t==='d'){
+      const d=s.depts.find(x=>x.id===s.sel.id);
+      if(!d){ out.isDept=false; out.isNone=true; return out; }
+      const ps=s.people.filter(p=>p.dept===d.id);
+      out.sd={name:d.name,onName:e=>this.setD(d.id,{name:e.target.value}),
+        colors:this.palette.map(c=>({c,ring:c===d.color?'0 0 0 3px #fff, 0 0 0 5px '+c:'none',onClick:()=>this.setD(d.id,{color:c})})),
+        leadOpts:ps.map(p=>({init:this.init(p.name),name:p.name,grad:p.grad,border:d.lead===p.id?'2px solid #5B4FE8':'1px solid #ECEEF5',bg:d.lead===p.id?'#F7F5FF':'#fff',checkDisplay:d.lead===p.id?'inline':'none',onClick:()=>this.setLead(d.id,p.id)})),
+        noPeople:!ps.length,delOp:ps.length?.45:1,delHintDisplay:ps.length?'block':'none',
+        onDelete:()=>{ if(ps.length) return; this.touch({depts:s.depts.filter(x=>x.id!==d.id),sel:null}); }};
+    }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

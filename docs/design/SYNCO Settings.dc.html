@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  a{color:#5B4FE8}
+  a:hover{color:#3B33B0}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::placeholder{color:#9CA3B5}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;position:relative">
+
+  <div style="height:60px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:16px;padding:0 22px">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+      <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+    </div>
+    <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+      <a href="SYNCO Flow.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Work Flow</a>
+      <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+      <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+      <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+    </div>
+    <a href="SYNCO Notifications.dc.html" title="Notifications" style="margin-left:auto;position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0F1B2D,#34445F);color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #EEEDFB">OW</div>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <div style="width:250px;flex-shrink:0;background:#fff;border-right:1px solid #ECEEF5;padding:22px 14px">
+      <div style="font:800 20px Inter;letter-spacing:-.5px;color:#0F1B2D;padding:0 8px">Settings</div>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:3px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+          <div onClick="{{ n.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:{{ n.bg }};font:{{ n.weight }} 14px Inter;color:{{ n.color }}">
+            <span style="width:6px;height:6px;border-radius:50%;background:{{ n.dot }}"></span>{{ n.label }}
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:18px;padding:12px;border-radius:12px;background:#F7F8FC">
+        <div style="font:600 11px Inter;color:#9CA3B5">Workspace</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:8px"><div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#00C896,#00936E);color:#fff;font:800 11px Inter;display:flex;align-items:center;justify-content:center">R</div><span style="font:700 13px Inter;color:#0F1B2D">REGAGRO</span></div>
+        <div style="margin-top:4px;font:500 11px Inter;color:#9CA3B5">Signed in as Olga White · Owner</div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:0;overflow-y:auto;padding:28px 36px 60px">
+      <div style="max-width:880px">
+
+        <!-- PROFILE -->
+        <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ true }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Profile</div>
+            <div style="margin-top:4px;font:400 14px Inter;color:#6B7385">How teammates see you across SYNCO.</div>
+            <div style="margin-top:20px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:22px">
+              <div style="display:flex;align-items:center;gap:16px">
+                <label style="position:relative;width:72px;height:72px;border-radius:50%;cursor:pointer;background:{{ photoBg }};color:#fff;font:800 22px Inter;display:flex;align-items:center;justify-content:center">
+                  <input type="file" accept="image/*" onChange="{{ onPhoto }}" style="display:none"><span style="display:{{ initDisplay }}">OW</span>
+                  <div style="position:absolute;right:-2px;bottom:-2px;width:24px;height:24px;border-radius:50%;background:#5B4FE8;border:3px solid #fff;color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">+</div>
+                </label>
+                <div><div style="font:800 17px Inter;color:#0F1B2D">{{ pName }}</div><div style="font:500 13px Inter;color:#9CA3B5">olga@regagro.com · Owner</div></div>
+              </div>
+              <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Full name</label><input value="{{ pName }}" onInput="{{ onPName }}" style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Position</label><input value="{{ pTitle }}" onInput="{{ onPTitle }}" style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none"></div>
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Email</label><input value="olga@regagro.com" disabled style="height:46px;border-radius:12px;border:1px solid #ECEEF5;background:#EEF0F6;padding:0 14px;font:500 14px Inter;color:#6B7385;outline:none"></div>
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Time zone</label><div style="position:relative">
+  <div style="display:flex;align-items:center;gap:10px;height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 6px 0 14px">
+    <span style="font:700 14px Inter;color:#0F1B2D;white-space:nowrap">{{ tz.city }}</span>
+    <span style="font:600 13px Inter;color:#6B7385;white-space:nowrap">{{ tz.offset }}</span>
+    <span style="display:{{ tz.autoDisplay }};font:600 11px Inter;color:#00936E;background:rgba(0,200,150,.12);padding:3px 8px;border-radius:99px;white-space:nowrap">Auto</span>
+    <span style="margin-left:auto;font:500 12px Inter;color:#9CA3B5;white-space:nowrap"></span>
+    <button onClick="{{ tz.toggle }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer;flex-shrink:0">{{ tz.btn }}</button>
+  </div>
+  <div onClick="{{ tz.close }}" style="display:{{ tz.listDisplay }};position:fixed;inset:0;z-index:20"></div>
+  <div style="display:{{ tz.listDisplay }};position:absolute;left:0;right:0;top:52px;z-index:21;background:#fff;border:1px solid #ECEEF5;border-radius:14px;box-shadow:0 16px 40px rgba(15,27,45,.16);padding:8px">
+    <input value="{{ tz.q }}" onInput="{{ tz.onQ }}" placeholder="Search city or country" style="width:100%;height:40px;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 12px;font:500 14px Inter;color:#0F1B2D;outline:none">
+    <div style="margin-top:6px;max-height:230px;overflow-y:auto;display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ tz.list }}" as="z" hint-placeholder-count="6">
+        <div onClick="{{ z.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:{{ z.bg }}">
+          <span style="font:{{ z.weight }} 13px Inter;color:#0F1B2D">{{ z.city }}</span>
+          <span style="font:500 11px Inter;color:#9CA3B5">{{ z.region }}</span>
+          <span style="margin-left:auto;font:600 12px Inter;color:#6B7385">{{ z.offset }}</span>
+        </div>
+      </sc-for>
+      <div style="display:{{ tz.noneDisplay }};padding:14px;text-align:center;font:500 13px Inter;color:#B7BCCB">No matches</div>
+    </div>
+  </div>
+</div></div>
+              </div>
+              <div style="margin-top:18px;font:600 13px Inter;color:#0F1B2D">Interface language</div>
+              <div style="margin-top:8px;display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:3px;width:260px">
+                <div onClick="{{ setEn }}" style="flex:1;text-align:center;cursor:pointer;padding:8px 0;border-radius:8px;font:700 13px Inter;color:{{ en.color }};background:{{ en.bg }};box-shadow:{{ en.shadow }}">English</div>
+                <div onClick="{{ setRu }}" style="flex:1;text-align:center;cursor:pointer;padding:8px 0;border-radius:8px;font:700 13px Inter;color:{{ ru.color }};background:{{ ru.bg }};box-shadow:{{ ru.shadow }}">Русский</div>
+              </div>
+              <div style="margin-top:22px;display:flex;justify-content:flex-end"><button onClick="{{ onSave }}" style="height:44px;padding:0 20px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 14px Inter;cursor:pointer">Save changes</button></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- WORKSPACE -->
+        <sc-if value="{{ isWorkspace }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Workspace</div>
+            <div style="margin-top:4px;font:400 14px Inter;color:#6B7385">Settings that apply to everyone in REGAGRO.</div>
+            <div style="margin-top:20px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:18px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Workspace name</label><input value="{{ wsName }}" onInput="{{ onWsName }}" style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:600 14px Inter;color:#0F1B2D;outline:none"></div>
+                <div style="display:flex;flex-direction:column;gap:7px"><label style="font:600 13px Inter;color:#0F1B2D">Address</label><div style="height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;display:flex;align-items:center;font:500 14px Inter;color:#3A4253">{{ wsUrl }}</div></div>
+              </div>
+              <div onClick="{{ toggleAuto }}" style="cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid #ECEEF5;border-radius:12px;padding:14px">
+                <div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Auto-approve people from @regagro.com</div><div style="margin-top:2px;font:400 12px Inter;color:#9CA3B5">They join as Members without waiting for an admin.</div></div>
+                <div style="width:40px;height:22px;border-radius:99px;background:{{ autoT.track }};position:relative;flex-shrink:0"><div style="position:absolute;top:2px;left:{{ autoT.knob }};width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;border:1px solid #ECEEF5;border-radius:12px;padding:14px">
+                <div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Task capacity per person</div><div style="margin-top:2px;font:400 12px Inter;color:#9CA3B5">A full battery equals this many open tasks. Used for overload warnings and AI suggestions.</div></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <button onClick="{{ capDown }}" style="width:34px;height:34px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;font:700 16px Inter;color:#0F1B2D;cursor:pointer">&minus;</button>
+                  <div style="width:36px;text-align:center;font:800 17px Inter;color:#0F1B2D">{{ cap }}</div>
+                  <button onClick="{{ capUp }}" style="width:34px;height:34px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;font:700 16px Inter;color:#0F1B2D;cursor:pointer">+</button>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;border:1px solid #ECEEF5;border-radius:12px;padding:14px">
+                <div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Default brainstorm length</div><div style="margin-top:2px;font:400 12px Inter;color:#9CA3B5">Can be changed when a session starts.</div></div>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ bsOpts }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.onClick }}" style="cursor:pointer;padding:8px 12px;border-radius:9px;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div></sc-for>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:flex-end"><button onClick="{{ onSave }}" style="height:44px;padding:0 20px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 14px Inter;cursor:pointer">Save changes</button></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- MEMBERS -->
+        <sc-if value="{{ isMembers }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="display:flex;align-items:flex-end">
+              <div><div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Members &amp; roles</div><div style="margin-top:4px;font:400 14px Inter;color:#6B7385">Click a role to change it. Departments are managed in the Org Tree.</div></div>
+              <a href="SYNCO Org Editor.dc.html" style="margin-left:auto;font:600 13px Inter;text-decoration:none">Edit Org Tree &rarr;</a>
+            </div>
+            <div style="margin-top:18px;display:flex;gap:8px">
+              <input value="{{ invEmail }}" onInput="{{ onInvEmail }}" onKeyDown="{{ onInvKey }}" placeholder="Invite by email — name@regagro.com" style="flex:1;height:46px;border-radius:12px;border:1px solid #E5E7F0;background:#fff;padding:0 14px;font:500 14px Inter;color:#0F1B2D;outline:none">
+              <button onClick="{{ onInvite }}" style="height:46px;padding:0 18px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 14px Inter;cursor:pointer">Send invite</button>
+            </div>
+            <div style="margin-top:14px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:2fr 1.2fr 1.1fr .9fr 40px;gap:10px;padding:11px 18px;background:#FBFBFE;border-bottom:1px solid #ECEEF5;font:700 10px Inter;letter-spacing:.4px;color:#9CA3B5"><span>PERSON</span><span>DEPARTMENT</span><span>ROLE</span><span>STATUS</span><span></span></div>
+              <sc-for list="{{ members }}" as="m" hint-placeholder-count="8">
+                <div style="display:grid;grid-template-columns:2fr 1.2fr 1.1fr .9fr 40px;gap:10px;align-items:center;padding:11px 18px;border-bottom:1px solid #F5F6FA">
+                  <div style="display:flex;align-items:center;gap:10px;min-width:0"><div style="width:32px;height:32px;border-radius:50%;background:{{ m.grad }};color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ m.init }}</div><div style="min-width:0"><div style="font:700 13px Inter;color:#0F1B2D">{{ m.name }}</div><div style="font:500 11px Inter;color:#9CA3B5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.email }}</div></div></div>
+                  <span style="display:flex;align-items:center;gap:7px;font:600 13px Inter;color:#3A4253"><span style="width:8px;height:8px;border-radius:50%;background:{{ m.deptColor }}"></span>{{ m.dept }}</span>
+                  <span><span onClick="{{ m.onRole }}" title="{{ m.roleTitle }}" style="cursor:{{ m.roleCursor }};font:700 11px Inter;color:{{ m.roleColor }};background:{{ m.roleBg }};padding:5px 10px;border-radius:99px">{{ m.role }} {{ m.caret }}</span></span>
+                  <span style="font:600 12px Inter;color:{{ m.stColor }}">{{ m.status }}</span>
+                  <span onClick="{{ m.onRemove }}" style="display:{{ m.rmDisplay }};width:28px;height:28px;border-radius:8px;background:#F2F3F9;align-items:center;justify-content:center;color:#9CA3B5;font:400 16px Inter;cursor:pointer">&times;</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- PERMISSIONS -->
+        <sc-if value="{{ isPerms }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Roles &amp; permissions</div>
+            <div style="margin-top:4px;font:400 14px Inter;color:#6B7385">What each access level can do. Changes apply immediately to everyone with that role.</div>
+            <div style="margin-top:18px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:2.4fr repeat(4,1fr);gap:8px;padding:14px 18px;background:#FBFBFE;border-bottom:1px solid #ECEEF5;align-items:center">
+                <span style="font:700 10px Inter;letter-spacing:.4px;color:#9CA3B5">ACTION</span>
+                <span style="text-align:center;font:800 12px Inter;color:#0F1B2D">Owner</span>
+                <span style="text-align:center;font:800 12px Inter;color:#6D3FE0">C-Level</span>
+                <span style="text-align:center;font:800 12px Inter;color:#5B4FE8">Team Lead</span>
+                <span style="text-align:center;font:800 12px Inter;color:#6B7385">Member</span>
+              </div>
+              <sc-for list="{{ perms }}" as="r" hint-placeholder-count="10">
+                <div style="display:grid;grid-template-columns:2.4fr repeat(4,1fr);gap:8px;padding:12px 18px;border-bottom:1px solid #F5F6FA;align-items:center">
+                  <div><div style="font:600 13px Inter;color:#0F1B2D">{{ r.label }}</div><div style="font:400 11px Inter;color:#9CA3B5">{{ r.hint }}</div></div>
+                  <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4">
+                    <div style="display:flex;justify-content:center"><div onClick="{{ c.onClick }}" title="{{ c.title }}" style="cursor:{{ c.cursor }};width:24px;height:24px;border-radius:7px;background:{{ c.bg }};border:{{ c.border }};color:#fff;font:800 12px Inter;display:flex;align-items:center;justify-content:center;opacity:{{ c.op }}">{{ c.mark }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:10px;font:500 12px Inter;color:#9CA3B5">The Owner always has full access.</div>
+          </div>
+        </sc-if>
+
+        <!-- INTEGRATIONS -->
+        <sc-if value="{{ isInteg }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Integrations</div>
+            <div style="margin-top:4px;font:400 14px Inter;color:#6B7385">Connect the tools your team already uses.</div>
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <sc-for list="{{ integ }}" as="g" hint-placeholder-count="4">
+                <div style="background:#fff;border:{{ g.border }};border-radius:16px;padding:18px">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="width:42px;height:42px;border-radius:12px;background:{{ g.bg }};color:{{ g.fg }};font:800 13px Inter;display:flex;align-items:center;justify-content:center">{{ g.mono }}</div>
+                    <div style="flex:1;min-width:0"><div style="font:800 15px Inter;color:#0F1B2D">{{ g.name }}</div><div style="font:600 12px Inter;color:{{ g.stColor }}">{{ g.status }}</div></div>
+                  </div>
+                  <div style="margin-top:10px;font:400 13px/1.5 Inter;color:#6B7385">{{ g.desc }}</div>
+                  <div style="display:{{ g.extraDisplay }};margin-top:12px;border-radius:11px;background:#F7F8FC;padding:10px 12px">
+                    <div style="font:600 11px Inter;color:#9CA3B5">Folder structure</div>
+                    <div style="margin-top:3px;font:600 12px ui-monospace,monospace;color:#3A4253">SYNCO / Department / Task</div>
+                    <div onClick="{{ toggleDriveAuto }}" style="margin-top:10px;cursor:pointer;display:flex;align-items:center;gap:10px"><div style="width:34px;height:20px;border-radius:99px;background:{{ driveT.track }};position:relative;flex-shrink:0"><div style="position:absolute;top:2px;left:{{ driveT.knob }};width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div><span style="font:600 12px Inter;color:#0F1B2D">Save every attached result automatically</span></div>
+                  </div>
+                  <button onClick="{{ g.onClick }}" style="margin-top:14px;height:38px;padding:0 15px;border-radius:10px;border:{{ g.btnBorder }};background:{{ g.btnBg }};color:{{ g.btnColor }};font:700 13px Inter;cursor:pointer">{{ g.btn }}</button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- NOTIFICATIONS -->
+        <sc-if value="{{ isNotif }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .2s ease both">
+            <div style="display:flex;align-items:flex-end"><div><div style="font:800 24px Inter;letter-spacing:-.6px;color:#0F1B2D">Notifications</div><div style="margin-top:4px;font:400 14px Inter;color:#6B7385">Choose what reaches you, and where.</div></div><a href="SYNCO Notifications.dc.html" style="margin-left:auto;font:600 13px Inter;text-decoration:none">Open inbox &rarr;</a></div>
+            <div style="margin-top:18px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:2.6fr repeat(3,1fr);gap:8px;padding:14px 18px;background:#FBFBFE;border-bottom:1px solid #ECEEF5"><span style="font:700 10px Inter;letter-spacing:.4px;color:#9CA3B5">EVENT</span><span style="text-align:center;font:800 12px Inter;color:#0F1B2D">In-app</span><span style="text-align:center;font:800 12px Inter;color:#0F1B2D">Email</span><span style="text-align:center;font:800 12px Inter;color:#0F1B2D">Slack</span></div>
+              <sc-for list="{{ notif }}" as="r" hint-placeholder-count="8">
+                <div style="display:grid;grid-template-columns:2.6fr repeat(3,1fr);gap:8px;padding:12px 18px;border-bottom:1px solid #F5F6FA;align-items:center">
+                  <span style="font:600 13px Inter;color:#0F1B2D">{{ r.label }}</span>
+                  <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="3">
+                    <div style="display:flex;justify-content:center"><div onClick="{{ c.onClick }}" style="cursor:pointer;width:24px;height:24px;border-radius:7px;background:{{ c.bg }};border:{{ c.border }};color:#fff;font:800 12px Inter;display:flex;align-items:center;justify-content:center;opacity:{{ c.op }}">{{ c.mark }}</div></div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;background:#fff;border:1px solid #ECEEF5;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px">
+              <div style="flex:1"><div style="font:700 14px Inter;color:#0F1B2D">Daily digest</div><div style="margin-top:2px;font:400 12px Inter;color:#9CA3B5">One email with yesterday's progress, overloads and open reviews.</div></div>
+              <div style="display:flex;gap:6px"><sc-for list="{{ digestOpts }}" as="o" hint-placeholder-count="4"><div onClick="{{ o.onClick }}" style="cursor:pointer;padding:8px 12px;border-radius:9px;font:700 12px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div></sc-for></div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+  <div style="display:{{ toastDisplay }};position:absolute;left:50%;bottom:26px;transform:translateX(-50%);background:#0F1B2D;color:#fff;font:600 13px Inter;padding:12px 18px;border-radius:12px;box-shadow:0 12px 30px rgba(15,27,45,.3);animation:fadeUp .25s ease both">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const h=(location.hash||'').slice(1);
+    this.tabs=[['profile','Profile'],['workspace','Workspace'],['members','Members & roles'],['permissions','Roles & permissions'],['integrations','Integrations'],['notifications','Notifications']];
+    const I='linear-gradient(135deg,#5B4FE8,#3B33B0)',M='linear-gradient(135deg,#00C896,#00936E)',A='linear-gradient(135deg,#F5A623,#D98A0E)';
+    this.dc={Marketing:'#5B4FE8',Development:'#00C896',Sales:'#F5A623','—':'#C3C9D6'};
+    this.roleList=['C-Level','Team Lead','Member'];
+    this.permRows=[
+      ['Set company goals','Create goals and decompose them with AI',[1,1,0,0]],
+      ['Assign to departments','Hand tasks to Team Leads',[1,1,0,0]],
+      ['Assign to members directly','Skip the Team Lead',[1,1,1,0]],
+      ['Send priority requests','Jump ahead in another team\u2019s queue',[1,1,0,0]],
+      ['Send regular requests','Ask another department for help',[1,1,1,0]],
+      ['Review & approve results','Approve or return work',[1,1,1,0]],
+      ['Edit the org tree','Move people, create departments',[1,0,0,0]],
+      ['Start a brainstorm','Open a timed idea session',[1,1,1,0]],
+      ['Ask Sync Mind','Search and compile approved docs',[1,1,1,1]],
+      ['Manage integrations & billing','Drive, Slack, payment',[1,0,0,0]]
+    ];
+    this.notifRows=['A task is assigned to me','A result needs my review','My task is returned for revision','A new request for my team','My request is accepted or declined','Someone mentions me','A brainstorm starts','A goal is completed'];
+    this.state={tab:this.tabs.some(t=>t[0]===h)?h:'profile',toast:'',pName:'Olga White',pTitle:'Founder & CEO',tz:this.tzInit(),tzAuto:true,tzOpen:false,tzQ:'',photo:null,
+      lang:localStorage.getItem('synco-lang')||'en',wsName:'REGAGRO',auto:true,cap:6,bs:15,invEmail:'',driveAuto:true,digest:'9:00',
+      perms:this.permRows.map(r=>r[2].slice()),
+      notif:this.notifRows.map((_,i)=>[1,i<5?1:0,i===1||i===3?1:0]),
+      integ:{drive:'on',cal:'off',slack:'off',notion:'off'},
+      members:[
+        ['Olga White','olga','Owner','—',0,'linear-gradient(135deg,#0F1B2D,#34445F)'],['Vera Kova','vera','C-Level','—',0,'linear-gradient(135deg,#8B5CF6,#6D3FE0)'],
+        ['Jane Smith','jane','Team Lead','Marketing',0,I],['Tom Reyes','tom','Member','Marketing',0,A],['Mia Cole','mia','Member','Marketing',0,M],['Ana Silva','ana','Member','Marketing',1,'linear-gradient(135deg,#E5487F,#B83266)'],
+        ['Alex Kim','alex','Team Lead','Development',0,I],['Sam Park','sam','Member','Development',0,M],['Lena Vu','lena','Member','Development',0,I],
+        ['Omar Diaz','omar','Team Lead','Sales',0,A],['Ria Nair','ria','Member','Sales',0,M]
+      ].map(([name,u,role,dept,inv,grad])=>({name,email:u+'@regagro.com',role,dept,invited:!!inv,grad}))};
+  }
+  componentWillUnmount(){ clearTimeout(this._t); }
+  flash(t){ this.setState({toast:t}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:''}),2200); }
+
+  tzInit(){ let z='Europe/Lisbon'; try{ z=Intl.DateTimeFormat().resolvedOptions().timeZone||z; }catch(e){} return z; }
+  tzAll(){ if(!this._tzAll){ let a=[]; try{ a=Intl.supportedValuesOf('timeZone'); }catch(e){} if(!a.length) a=['Europe/Lisbon','Europe/London','Europe/Berlin','Europe/Moscow','Asia/Almaty','Asia/Dubai','Asia/Tbilisi','America/New_York','America/Sao_Paulo','Asia/Tokyo']; this._tzAll=a.filter(z=>z.indexOf('/')>0&&!/^Etc\//.test(z)); } return this._tzAll; }
+  tzOff(z){ try{ const p=new Intl.DateTimeFormat('en-US',{timeZone:z,timeZoneName:'shortOffset'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName'); return ((p&&p.value)||'GMT').replace('-','−'); }catch(e){ return 'GMT'; } }
+  tzTime(z){ try{ return new Intl.DateTimeFormat('en-GB',{timeZone:z,hour:'2-digit',minute:'2-digit'}).format(new Date()); }catch(e){ return ''; } }
+  tzCity(z){ return z.split('/').pop().replace(/_/g,' '); }
+  tzAlias(z){ return ({'Europe/Moscow':'москва russia россия','Asia/Almaty':'алматы kazakhstan казахстан','Asia/Tashkent':'ташкент uzbekistan узбекистан','Europe/Kyiv':'киев kyiv ukraine украина','Europe/Kiev':'киев ukraine украина','Europe/Minsk':'минск belarus беларусь','Asia/Tbilisi':'тбилиси georgia грузия','Asia/Yerevan':'ереван armenia армения','Asia/Baku':'баку azerbaijan','Asia/Dubai':'дубай uae оаэ','Europe/Istanbul':'стамбул turkey турция','Asia/Yekaterinburg':'екатеринбург russia','Asia/Novosibirsk':'новосибирск russia','Asia/Bishkek':'бишкек kyrgyzstan','Europe/Lisbon':'лиссабон portugal португалия','Europe/London':'лондон uk великобритания','Europe/Berlin':'берлин germany германия','Europe/Riga':'рига latvia','Europe/Tallinn':'таллин estonia','Europe/Vilnius':'вильнюс lithuania','Europe/Warsaw':'варшава poland','Europe/Belgrade':'белград serbia','America/New_York':'нью-йорк usa сша','America/Sao_Paulo':'сан-паулу brazil бразилия','Asia/Bangkok':'бангкок thailand','Asia/Makassar':'бали bali indonesia'})[z]||''; }
+  tzVals(){ const s=this.state, z=s.tz, q=(s.tzQ||'').toLowerCase().trim();
+    const all=this.tzAll(); const list=(q?all.filter(x=>(x.replace(/_/g,' ')+' '+this.tzAlias(x)).toLowerCase().indexOf(q)>-1):all).slice(0,80);
+    return {city:this.tzCity(z),offset:this.tzOff(z),local:'now '+this.tzTime(z),autoDisplay:s.tzAuto?'inline-block':'none',
+      btn:s.tzOpen?'Close':'Change',listDisplay:s.tzOpen?'block':'none',
+      toggle:()=>this.setState({tzOpen:!s.tzOpen,tzQ:''}),close:()=>this.setState({tzOpen:false,tzQ:''}),
+      q:s.tzQ||'',onQ:e=>this.setState({tzQ:e.target.value}),noneDisplay:list.length?'none':'block',
+      list:list.map(x=>({city:this.tzCity(x),region:x.split('/')[0],offset:this.tzOff(x),bg:x===z?'#F2F1FC':'transparent',weight:x===z?700:600,
+        onClick:()=>this.setState({tz:x,tzAuto:x===this.tzInit(),tzOpen:false,tzQ:''})}))}; }
+  go(t){ this.setState({tab:t}); try{ history.replaceState(null,'','#'+t); }catch(e){} }
+  tog(on){ return {track:on?'#5B4FE8':'#D5D9E5',knob:on?'20px':'2px'}; }
+  seg(on){ return {color:on?'#0F1B2D':'#6B7385',bg:on?'#fff':'transparent',shadow:on?'0 1px 3px rgba(15,27,45,.12)':'none'}; }
+  pill(on){ return {color:on?'#fff':'#3A4253',bg:on?'#5B4FE8':'#fff',border:on?'1px solid #5B4FE8':'1px solid #E5E7F0'}; }
+  box(on,locked){ return {bg:on?(locked?'#9CA3B5':'#5B4FE8'):'#fff',border:on?'none':'1.5px solid #D5D9E5',mark:on?'✓':'',op:locked?.75:1,cursor:locked?'not-allowed':'pointer'}; }
+  setLang(l){ localStorage.setItem('synco-lang',l); this.setState({lang:l}); setTimeout(()=>location.reload(),150); }
+  invite(){ const v=(this.state.invEmail||'').trim(); if(!/.+@.+/.test(v)) return;
+    this.setState(s=>({invEmail:'',members:[...s.members,{name:v.split('@')[0].replace(/^./,c=>c.toUpperCase()),email:v,role:'Member',dept:'—',invited:true,grad:'linear-gradient(135deg,#9CA3B5,#6B7385)'}]})); this.flash('Invite sent to '+v); }
+  renderVals(){
+    const s=this.state, t=s.tab;
+    const init=n=>{ const p=n.split(' '); return ((p[0]||'?')[0]+(p[1]?p[1][0]:'')).toUpperCase(); };
+    const rc={Owner:['#fff','#0F1B2D'],'C-Level':['#6D3FE0','#F1EEFD'],'Team Lead':['#5B4FE8','#EEEDFB'],Member:['#6B7385','#EEF0F6']};
+    const I={drive:['Google Drive','DRV','#E2F6F0','#00936E','Every attached result is saved to the task\u2019s folder.'],cal:['Google Calendar','CAL','#EAF3FD','#2E9BE6','Deadlines and brainstorm sessions appear in your calendar.'],
+      slack:['Slack','SL','#F4EDF7','#7A3E8F','Get review requests and mentions in Slack.'],notion:['Notion','N','#F2F3F5','#0F1B2D','Let Sync Mind read approved Notion pages.']};
+    return {
+      nav:this.tabs.map(([k,l])=>{ const on=t===k; return {label:l,bg:on?'#F2F1FC':'transparent',color:on?'#0F1B2D':'#6B7385',weight:on?700:500,dot:on?'#5B4FE8':'transparent',onClick:()=>this.go(k)}; }),
+      isProfile:t==='profile',isWorkspace:t==='workspace',isMembers:t==='members',isPerms:t==='permissions',isInteg:t==='integrations',isNotif:t==='notifications',
+      toast:s.toast,toastDisplay:s.toast?'block':'none',onSave:()=>this.flash('Changes saved'),
+      pName:s.pName,pTitle:s.pTitle,tz:this.tzVals(),onPName:e=>this.setState({pName:e.target.value}),onPTitle:e=>this.setState({pTitle:e.target.value}),
+      photoBg:s.photo?"url('"+s.photo+"') center/cover":'linear-gradient(135deg,#0F1B2D,#34445F)',initDisplay:s.photo?'none':'inline',
+      onPhoto:e=>{ const f=e.target.files&&e.target.files[0]; if(f) this.setState({photo:URL.createObjectURL(f)}); },
+      en:this.seg(s.lang==='en'),ru:this.seg(s.lang==='ru'),setEn:()=>this.setLang('en'),setRu:()=>this.setLang('ru'),
+      wsName:s.wsName,onWsName:e=>this.setState({wsName:e.target.value}),wsUrl:(s.wsName||'team').toLowerCase().replace(/[^a-z0-9]/g,'')+'.synco.app',
+      autoT:this.tog(s.auto),toggleAuto:()=>this.setState({auto:!s.auto}),
+      cap:s.cap,capDown:()=>this.setState({cap:Math.max(2,s.cap-1)}),capUp:()=>this.setState({cap:Math.min(15,s.cap+1)}),
+      bsOpts:[10,15,30].map(m=>({label:m+' min',...this.pill(s.bs===m),onClick:()=>this.setState({bs:m})})),
+      invEmail:s.invEmail,onInvEmail:e=>this.setState({invEmail:e.target.value}),onInvKey:e=>{ if(e.key==='Enter') this.invite(); },onInvite:()=>this.invite(),
+      members:s.members.map((m,i)=>{ const own=m.role==='Owner'; const c=rc[m.role];
+        return {name:m.name,email:m.email,init:init(m.name),grad:m.grad,dept:m.dept,deptColor:this.dc[m.dept]||'#C3C9D6',
+          role:m.role,caret:own?'':'▾',roleColor:c[0],roleBg:c[1],roleCursor:own?'default':'pointer',roleTitle:own?'Owner role can\u2019t be changed':'Click to change role',
+          onRole:()=>{ if(own) return; const nr=this.roleList[(this.roleList.indexOf(m.role)+1)%3]; this.setState(x=>({members:x.members.map((y,j)=>j===i?{...y,role:nr}:y)})); },
+          status:m.invited?'Invited':'Active',stColor:m.invited?'#C77E0A':'#00936E',rmDisplay:own?'none':'flex',
+          onRemove:()=>{ this.setState(x=>({members:x.members.filter((_,j)=>j!==i)})); this.flash(m.name+' removed from workspace'); }}; }),
+      perms:this.permRows.map(([label,hint],ri)=>({label,hint,cells:[0,1,2,3].map(ci=>{ const locked=ci===0, on=!!s.perms[ri][ci];
+        return {...this.box(on,locked),title:locked?'Owner always has full access':'',onClick:()=>{ if(locked) return; this.setState(x=>({perms:x.perms.map((r,j)=>j===ri?r.map((v,k)=>k===ci?(v?0:1):v):r)})); }}; })})),
+      integ:Object.keys(I).map(k=>{ const [name,mono,bg,fg,desc]=I[k], st=s.integ[k], on=st==='on', busy=st==='busy';
+        return {name,mono,bg,fg,desc,status:on?(k==='drive'?'Connected · olga@regagro.com':'Connected'):(busy?'Connecting…':'Not connected'),stColor:on?'#00936E':'#9CA3B5',
+          border:on?'1px solid #CFEFE4':'1px solid #ECEEF5',extraDisplay:on&&k==='drive'?'block':'none',
+          btn:on?'Disconnect':(busy?'Connecting…':'Connect'),btnBg:on?'#fff':'#0F1B2D',btnColor:on?'#E5484D':'#fff',btnBorder:on?'1px solid #F6D2D3':'none',
+          onClick:()=>{ if(busy) return; if(on){ this.setState(x=>({integ:{...x.integ,[k]:'off'}})); return; }
+            this.setState(x=>({integ:{...x.integ,[k]:'busy'}})); setTimeout(()=>{ this.setState(x=>({integ:{...x.integ,[k]:'on'}})); this.flash(name+' connected'); },900); }}; }),
+      driveT:this.tog(s.driveAuto),toggleDriveAuto:()=>this.setState({driveAuto:!s.driveAuto}),
+      notif:this.notifRows.map((label,ri)=>({label,cells:[0,1,2].map(ci=>{ const on=!!s.notif[ri][ci], dis=ci===2&&s.integ.slack!=='on';
+        return {...this.box(on&&!dis,false),op:dis?.35:1,onClick:()=>{ if(dis){ this.flash('Connect Slack in Integrations first'); return; } this.setState(x=>({notif:x.notif.map((r,j)=>j===ri?r.map((v,k)=>k===ci?(v?0:1):v):r)})); }}; })})),
+      digestOpts:['Off','8:00','9:00','18:00'].map(o=>({label:o,...this.pill(s.digest===o),onClick:()=>this.setState({digest:o})}))
+    };
+  }
+}
+</script>
+</body>
+</html>

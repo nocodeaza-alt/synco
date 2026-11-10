@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes liftIn{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+  @keyframes dropIn{0%{transform:translateY(-38px) scale(.96);opacity:0}58%{transform:translateY(6px) scale(1.015)}100%{transform:translateY(0) scale(1);opacity:1}}
+  @keyframes bulbPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,.4);background:#F5A623}50%{box-shadow:0 0 16px 4px rgba(245,166,35,.55);background:#FFC153}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1240px;height:100vh;min-height:780px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+  <!-- ============ SELECT PROFILE ============ -->
+  <sc-if value="{{ isSelect }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 16%,#ECEAFB,#F7F8FC 56%)">
+      <div style="display:flex;align-items:center;gap:11px">
+        <div style="width:34px;height:34px;border-radius:9px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:13px;height:13px;border-radius:4px;background:#fff;transform:rotate(45deg)"></div></div>
+        <div style="font:800 23px Inter;letter-spacing:-.7px;color:#0F1B2D">SYNCO</div>
+      </div>
+      <div style="margin-top:32px;font:800 33px Inter;letter-spacing:-1px;color:#0F1B2D">Good morning. Who's working?</div>
+      <div style="margin-top:10px;font:400 16px Inter;color:#6B7385">Tap your card to open your personal workspace.</div>
+      <div style="margin-top:38px;display:flex;gap:18px">
+        <sc-for list="{{ userCards }}" as="card" hint-placeholder-count="4">
+          <div onClick="{{ card.onPick }}" style="cursor:pointer;width:188px;background:#fff;border:1px solid #ECEEF5;border-radius:18px;padding:22px;box-shadow:0 4px 16px rgba(15,27,45,.06)" style-hover="box-shadow:0 16px 34px rgba(91,79,232,.16);border-color:#D9D5F7;transform:translateY(-5px)">
+            <div style="position:relative;width:56px;height:56px">
+              <div style="width:56px;height:56px;border-radius:50%;background:{{ card.grad }};color:#fff;font:700 19px Inter;display:flex;align-items:center;justify-content:center">{{ card.initials }}</div>
+              <div style="position:absolute;right:0;bottom:0;width:14px;height:14px;border-radius:50%;background:#00C896;border:3px solid #fff"></div>
+            </div>
+            <div style="margin-top:15px;font:700 17px Inter;color:#0F1B2D">{{ card.name }}</div>
+            <div style="margin-top:3px;font:500 13px Inter;color:#9CA3B5">{{ card.role }}</div>
+            <div style="margin-top:15px;display:flex;align-items:center;gap:8px;padding-top:14px;border-top:1px solid #F0F1F6">
+              <div style="font:700 13px Inter;color:#5B4FE8;background:#EEEDFB;min-width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 7px">{{ card.count }}</div>
+              <span style="font:500 12px Inter;color:#6B7385">open tasks</span>
+              <span style="margin-left:auto;font:700 16px Inter;color:#5B4FE8">&rarr;</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ WORKSPACE ============ -->
+  <sc-if value="{{ isWork }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+      <div style="height:62px;flex-shrink:0;background:#fff;border-bottom:1px solid #ECEEF5;display:flex;align-items:center;gap:15px;padding:0 22px">
+        <div onClick="{{ back }}" style="width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;cursor:pointer;font:600 17px Inter;color:#0F1B2D">&larr;</div>
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:26px;height:26px;border-radius:7px;background:#5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:3px;background:#fff;transform:rotate(45deg)"></div></div>
+          <div style="font:800 17px Inter;letter-spacing:-.5px;color:#0F1B2D">SYNCO</div>
+        </div>
+        <div style="width:1px;height:24px;background:#ECEEF5"></div>
+        <div style="font:700 16px Inter;color:#0F1B2D">My Workspace</div>
+        <div style="margin-left:auto;font:500 13px Inter;color:#9CA3B5">Today · Wed, Jun 24</div>
+        <a href="SYNCO Notifications.dc.html" title="Notifications" style="position:relative;width:38px;height:38px;border-radius:10px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0"><div style="width:14px;height:14px;border:2px solid #6B7385;border-radius:7px 7px 3px 3px"></div><div style="position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:99px;background:#F5A623;border:2px solid #fff;color:#fff;font:800 9px Inter;display:flex;align-items:center;justify-content:center;padding:0 3px">5</div></a>
+    <div style="width:36px;height:36px;border-radius:50%;background:{{ userGrad }};color:#fff;font:700 12px Inter;display:flex;align-items:center;justify-content:center">{{ userInitials }}</div>
+      </div>
+
+      <div style="flex:1;display:flex;min-height:0">
+
+        <!-- THREAD rail -->
+        <div style="width:258px;flex-shrink:0;background:#fff;border-right:1px solid #ECEEF5">
+          <div style="padding:20px 22px 0">
+            <div style="font:700 12px Inter;letter-spacing:.6px;color:#9CA3B5">THE THREAD</div>
+            <div style="margin-top:4px;font:400 12px/1.4 Inter;color:#B7BCCB">Tasks slide down the line as you work them.</div>
+          </div>
+          <div style="position:relative;height:640px;margin-top:14px">
+            <div style="position:absolute;left:40px;top:42px;width:3px;height:556px;border-radius:3px;background:linear-gradient(#5B4FE8,#7B6FF0 34%,#F5A623 58%,#00C896)"></div>
+
+            <div style="position:absolute;left:30px;top:34px;width:23px;height:23px;border-radius:50%;background:#fff;border:2.5px solid #5B4FE8;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:#5B4FE8"></div></div>
+            <div style="position:absolute;left:72px;top:30px"><div style="font:700 14px Inter;color:#0F1B2D">Assigned</div><div style="font:500 12px Inter;color:#9CA3B5">{{ cAssigned }} in backlog</div></div>
+
+            <div style="position:absolute;left:30px;top:222px;width:23px;height:23px;border-radius:50%;background:#fff;border:2.5px solid #F5A623;display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:50% 50% 50% 50%;animation:bulbPulse 1.8s ease-in-out infinite"></div></div>
+            <div style="position:absolute;left:72px;top:218px"><div style="display:flex;align-items:center;gap:6px"><div style="font:700 14px Inter;color:#0F1B2D">In Focus</div><div style="font:600 9px Inter;color:#C77E0A;background:rgba(245,166,35,.16);padding:2px 6px;border-radius:99px">TODAY</div></div><div style="font:500 12px Inter;color:#9CA3B5">{{ cFocus }} in progress</div></div>
+
+            <div style="position:absolute;left:30px;top:410px;width:23px;height:23px;border-radius:50%;background:#fff;border:2.5px solid #00C896;display:flex;align-items:center;justify-content:center;font:700 11px Inter;color:#00936E">&#10003;</div>
+            <div style="position:absolute;left:72px;top:406px"><div style="font:700 14px Inter;color:#0F1B2D">Done</div><div style="font:500 12px Inter;color:#9CA3B5">{{ cDone }} completed</div></div>
+
+            <div style="position:absolute;left:30px;top:566px;width:23px;height:23px;border-radius:50%;background:#0F1B2D;display:flex;align-items:center;justify-content:center;font:600 11px Inter;color:#fff">&#9873;</div>
+            <div style="position:absolute;left:72px;top:562px"><div style="font:700 14px Inter;color:#0F1B2D">For Review</div><div style="font:500 12px Inter;color:#9CA3B5">{{ cReview }} sent to manager</div></div>
+          </div>
+        </div>
+
+        <!-- BANDS -->
+        <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 30px 70px">
+          <div style="font:800 22px Inter;letter-spacing:-.6px;color:#0F1B2D">Good morning, {{ userFirst }}.</div>
+          <div style="margin-top:6px;font:400 14px Inter;color:#6B7385">Pick what you'll tackle today. Each task falls down the thread as it moves forward.</div>
+
+          <!-- Assigned -->
+          <div style="margin-top:24px;display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:#5B4FE8"></div>
+            <div style="font:700 15px Inter;color:#0F1B2D">Assigned to you</div>
+            <div style="font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ cAssigned }}</div>
+            <div style="margin-left:auto;font:500 12px Inter;color:#B7BCCB">sorted by priority</div>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ assigned }}" as="t" hint-placeholder-count="4">
+              <div onClick="{{ t.onOpen }}" style="{{ t.anim }};cursor:pointer;outline:{{ t.outline }};outline-offset:-2px;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #ECEEF5;border-radius:14px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,27,45,.05);position:relative;overflow:hidden">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:{{ t.stripe }}"></div>
+                <div style="flex:1;min-width:0;padding-left:6px">
+                  <div style="font:600 15px Inter;color:#0F1B2D">{{ t.title }}</div>
+                  <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+                    <span style="font:700 10px Inter;color:{{ t.prColor }};background:{{ t.prBg }};padding:3px 9px;border-radius:99px">{{ t.priority }}</span>
+                    <span style="font:600 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:3px 8px;border-radius:6px">{{ t.tag }}</span>
+                    <span style="font:500 12px Inter;color:#9CA3B5">Due {{ t.due }}</span>
+                  </div>
+                </div>
+                <button onClick="{{ t.onTake }}" style="height:40px;padding:0 16px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:0 6px 14px rgba(91,79,232,.26)">Take today <span style="font-size:14px">&darr;</span></button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ emptyAssigned }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1.5px dashed #DDE0EA;border-radius:14px;padding:20px;text-align:center;font:500 13px Inter;color:#B7BCCB">Backlog clear — every task is in motion.</div>
+            </sc-if>
+          </div>
+
+          <!-- In Focus -->
+          <div style="margin-top:26px;display:flex;align-items:center;gap:10px">
+            <div style="width:14px;height:14px;border-radius:50%;background:#F5A623;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(245,166,35,.16)"></div>
+            <div style="font:700 15px Inter;color:#0F1B2D">In focus today</div>
+            <div style="font:700 11px Inter;color:#fff;background:#F5A623;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ cFocus }}</div>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ focus }}" as="t" hint-placeholder-count="0">
+              <div onClick="{{ t.onOpen }}" style="{{ t.anim }};cursor:pointer;outline:{{ t.outline }};outline-offset:-2px;display:flex;align-items:center;gap:14px;background:linear-gradient(#fff,#FFFBF3);border:1px solid #F6E2BE;border-radius:14px;padding:14px 16px;box-shadow:0 6px 18px rgba(245,166,35,.12);position:relative;overflow:hidden">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#F5A623"></div>
+                <div style="width:30px;height:30px;border-radius:9px;background:rgba(245,166,35,.14);display:flex;align-items:center;justify-content:center;margin-left:4px;animation:bulbPulse 1.8s ease-in-out infinite"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:600 15px Inter;color:#0F1B2D">{{ t.title }}</div>
+                  <div style="margin-top:6px;display:flex;align-items:center;gap:8px"><span style="font:700 10px Inter;color:#C77E0A;background:rgba(245,166,35,.16);padding:3px 9px;border-radius:99px">Working now</span><span style="font:500 12px Inter;color:#9CA3B5">Due {{ t.due }}</span><span style="font:600 10px Inter;color:{{ t.delivColor }};background:{{ t.delivBg }};padding:3px 8px;border-radius:6px">{{ t.delivLabel }}</span></div>
+                </div>
+                <button onClick="{{ t.onDone }}" style="height:40px;padding:0 16px;border-radius:11px;border:none;background:#00C896;color:#fff;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:0 6px 14px rgba(0,200,150,.26)">Mark done <span style="font-size:13px">&#10003;</span></button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ emptyFocus }}" hint-placeholder-val="{{ true }}">
+              <div style="border:1.5px dashed #DDE0EA;border-radius:14px;padding:20px;text-align:center;font:500 13px Inter;color:#B7BCCB">Nothing in focus yet — take a task above to start your day.</div>
+            </sc-if>
+          </div>
+
+          <!-- Done -->
+          <div style="margin-top:26px;display:flex;align-items:center;gap:10px">
+            <div style="width:14px;height:14px;border-radius:50%;background:#00C896;display:flex;align-items:center;justify-content:center;color:#fff;font:700 8px Inter">&#10003;</div>
+            <div style="font:700 15px Inter;color:#0F1B2D">Done — ready to send</div>
+            <div style="font:700 11px Inter;color:#fff;background:#00C896;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ cDone }}</div>
+            <sc-if value="{{ hasDone }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ sendAll }}" style="margin-left:auto;height:34px;padding:0 14px;border-radius:9px;border:none;background:#0F1B2D;color:#fff;font:700 12px Inter;cursor:pointer;display:flex;align-items:center;gap:6px">Send all for review &#9873;</button>
+            </sc-if>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ done }}" as="t" hint-placeholder-count="0">
+              <div onClick="{{ t.onOpen }}" style="{{ t.anim }};cursor:pointer;outline:{{ t.outline }};outline-offset:-2px;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #ECEEF5;border-radius:14px;padding:13px 16px;box-shadow:0 2px 10px rgba(15,27,45,.05)">
+                <div style="width:24px;height:24px;border-radius:50%;background:#00C896;display:flex;align-items:center;justify-content:center;color:#fff;font:700 11px Inter">&#10003;</div>
+                <div style="flex:1;min-width:0;font:600 14px Inter;color:#3A4253;text-decoration:line-through;text-decoration-color:#C3C9D6">{{ t.title }}</div>
+                <span style="font:600 10px Inter;color:{{ t.delivColor }};background:{{ t.delivBg }};padding:3px 8px;border-radius:6px;white-space:nowrap">{{ t.delivLabel }}</span>
+                <button onClick="{{ t.onSend }}" style="height:36px;padding:0 14px;border-radius:10px;border:1px solid #CBD0DD;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap">Send for review &#9873;</button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ emptyDone }}" hint-placeholder-val="{{ true }}">
+              <div style="border:1.5px dashed #DDE0EA;border-radius:14px;padding:18px;text-align:center;font:500 13px Inter;color:#B7BCCB">Completed tasks land here, ready to send up the thread.</div>
+            </sc-if>
+          </div>
+
+          <!-- For Review -->
+          <sc-if value="{{ hasReview }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:26px;display:flex;align-items:center;gap:10px">
+              <div style="width:14px;height:14px;border-radius:50%;background:#0F1B2D;display:flex;align-items:center;justify-content:center;color:#fff;font:600 8px Inter">&#9873;</div>
+              <div style="font:700 15px Inter;color:#0F1B2D">With your manager</div>
+              <div style="font:700 11px Inter;color:#fff;background:#0F1B2D;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ cReview }}</div>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ review }}" as="t" hint-placeholder-count="0">
+                <div onClick="{{ t.onOpen }}" style="{{ t.anim }};cursor:pointer;display:flex;align-items:center;gap:14px;background:#0F1B2D;border-radius:14px;padding:14px 16px;box-shadow:0 8px 20px rgba(15,27,45,.2)">
+                  <div style="width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;font:600 12px Inter">&#9873;</div>
+                  <div style="flex:1;min-width:0;font:600 14px Inter;color:#fff">{{ t.title }}</div>
+                  <div style="display:flex;align-items:center;gap:7px;font:600 11px Inter;color:#FFC153"><div style="width:7px;height:7px;border-radius:50%;background:#F5A623"></div>Awaiting review</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- TASK CARD PANEL -->
+        <sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="width:404px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;display:flex;flex-direction:column;min-height:0">
+            <div style="flex-shrink:0;padding:18px 22px 14px;border-bottom:1px solid #F0F1F6">
+              <div style="display:flex;align-items:center;gap:7px">
+                <span style="font:700 10px Inter;color:{{ pStageColor }};background:{{ pStageBg }};padding:4px 10px;border-radius:99px">{{ pStageLabel }}</span>
+                <span style="font:700 10px Inter;color:{{ pPrColor }};background:{{ pPrBg }};padding:4px 10px;border-radius:99px">{{ pPriority }}</span>
+                <span style="font:600 10px Inter;color:#5B4FE8;background:#EEEDFB;padding:4px 9px;border-radius:6px">{{ pTag }}</span>
+                <div onClick="{{ closePanel }}" style="margin-left:auto;width:30px;height:30px;border-radius:9px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#6B7385;font:400 18px Inter;cursor:pointer">&times;</div>
+              </div>
+              <div style="margin-top:13px;font:800 20px/1.25 Inter;letter-spacing:-.4px;color:#0F1B2D">{{ pTitle }}</div>
+            </div>
+
+            <div style="flex:1;overflow-y:auto;padding:16px 22px 22px;min-height:0">
+              <div style="font:400 14px/1.55 Inter;color:#5A6276">{{ pDesc }}</div>
+
+              <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:10px 12px;min-width:0"><div style="font:500 11px Inter;color:#9CA3B5">Assignee</div><div style="margin-top:6px;display:flex;align-items:center;gap:7px;font:700 13px Inter;color:#0F1B2D;min-width:0"><div style="width:22px;height:22px;border-radius:50%;background:{{ meGrad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ meInit }}</div><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ meName }}</span></div></div>
+                <div style="background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:10px 12px;min-width:0"><div style="font:500 11px Inter;color:#9CA3B5">Assigned by</div><div style="margin-top:6px;display:flex;align-items:center;gap:7px;font:700 13px Inter;color:#0F1B2D;min-width:0"><div style="width:22px;height:22px;border-radius:50%;background:{{ byGrad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ byInit }}</div><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ byName }}</span></div></div>
+                <div style="background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:10px 12px;min-width:0"><div style="font:500 11px Inter;color:#9CA3B5">Deadline</div><div style="margin-top:6px;display:flex;align-items:center;gap:7px;font:700 13px Inter;color:#0F1B2D;min-width:0"><span>{{ pDue }}</span></div></div>
+                <div style="background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:10px 12px;min-width:0"><div style="font:500 11px Inter;color:#9CA3B5">Time in progress</div><div style="margin-top:6px;display:flex;align-items:center;gap:7px;font:700 13px Inter;color:#0F1B2D;min-width:0"><span>{{ pTime }}</span></div></div>
+              </div>
+
+              <!-- RESULT -->
+              <div style="margin-top:20px;border:{{ delivBorder }};border-radius:16px;padding:14px;background:{{ delivBg }}">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="font:800 14px Inter;color:#0F1B2D">Result</div>
+                  <span style="font:700 9px Inter;letter-spacing:.4px;color:#5B4FE8;background:#EEEDFB;padding:3px 7px;border-radius:99px">REQUIRED</span>
+                  <div style="margin-left:auto;font:600 11px Inter;color:#9CA3B5">{{ delivCount }}</div>
+                </div>
+                <div style="margin-top:4px;font:400 12px/1.45 Inter;color:#8A91A3">Attach what you produced — a document, a link or an image. This is what your manager reviews.</div>
+                <div style="display:{{ delivWarnDisplay }};margin-top:10px;font:600 12px Inter;color:#E5484D">Attach a result before marking this task done.</div>
+
+                <div style="display:{{ uploaderDisplay }}">
+                  <div style="margin-top:12px;display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+                    <div onClick="{{ tabs.doc.onClick }}" style="flex:1;text-align:center;padding:8px 0;border-radius:8px;cursor:pointer;font:600 12px Inter;color:{{ tabs.doc.color }};background:{{ tabs.doc.bg }};box-shadow:{{ tabs.doc.shadow }}">Document</div>
+                    <div onClick="{{ tabs.link.onClick }}" style="flex:1;text-align:center;padding:8px 0;border-radius:8px;cursor:pointer;font:600 12px Inter;color:{{ tabs.link.color }};background:{{ tabs.link.bg }};box-shadow:{{ tabs.link.shadow }}">Link</div>
+                    <div onClick="{{ tabs.img.onClick }}" style="flex:1;text-align:center;padding:8px 0;border-radius:8px;cursor:pointer;font:600 12px Inter;color:{{ tabs.img.color }};background:{{ tabs.img.bg }};box-shadow:{{ tabs.img.shadow }}">Image</div>
+                  </div>
+                  <label onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}" style="display:{{ showDoc }};margin-top:10px;border:1.5px dashed {{ dropBorder }};background:{{ dropBg }};border-radius:12px;padding:20px 14px;text-align:center;cursor:pointer">
+                  <input type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip" onChange="{{ onDocFile }}" style="display:none">
+                  <div style="margin:0 auto;width:26px;height:32px;border:2px solid #5B4FE8;border-radius:5px;position:relative"><div style="position:absolute;left:5px;right:5px;top:9px;height:2px;background:#5B4FE8;border-radius:1px"></div><div style="position:absolute;left:5px;right:8px;top:15px;height:2px;background:#5B4FE8;border-radius:1px"></div></div>
+                  <div style="margin-top:10px;font:600 13px Inter;color:#0F1B2D">Drop a file or <span style="color:#5B4FE8">browse</span></div>
+                  <div style="margin-top:3px;font:500 11px Inter;color:#9CA3B5">PDF, DOCX, XLSX, PPTX · up to 50 MB</div>
+                </label>
+                  <div style="display:{{ showLink }};margin-top:10px">
+                    <div style="display:flex;gap:8px">
+                      <input value="{{ linkText }}" onInput="{{ onLinkInput }}" onKeyDown="{{ onLinkKey }}" placeholder="Paste a link — Figma, Google Docs, Notion…" style="flex:1;min-width:0;height:42px;border-radius:11px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 13px;font:500 13px Inter;color:#0F1B2D;outline:none">
+                      <button onClick="{{ onAddLink }}" style="height:42px;padding:0 16px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer">Add</button>
+                    </div>
+                  </div>
+                  <label onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}" style="display:{{ showImg }};margin-top:10px;border:1.5px dashed {{ dropBorder }};background:{{ dropBg }};border-radius:12px;padding:20px 14px;text-align:center;cursor:pointer">
+                  <input type="file" multiple accept="image/*" onChange="{{ onImgFile }}" style="display:none">
+                  <div style="margin:0 auto;width:34px;height:28px;border:2px solid #5B4FE8;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;right:5px;top:4px;width:6px;height:6px;border-radius:50%;background:#5B4FE8"></div><div style="position:absolute;left:3px;bottom:-6px;width:16px;height:16px;background:#5B4FE8;transform:rotate(45deg)"></div></div>
+                  <div style="margin-top:10px;font:600 13px Inter;color:#0F1B2D">Drop an image or <span style="color:#5B4FE8">browse</span></div>
+                  <div style="margin-top:3px;font:500 11px Inter;color:#9CA3B5">PNG, JPG, GIF · screenshots welcome</div>
+                </label>
+                </div>
+
+                <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ deliv }}" as="a" hint-placeholder-count="0">
+                    <div style="display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #ECEEF5;border-radius:12px;padding:8px 10px">
+                      <div style="width:42px;height:42px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font:800 9px Inter;color:{{ a.kindColor }};{{ a.thumb }}">{{ a.kindLabel }}</div>
+                      <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.name }}</div><div style="font:500 11px Inter;color:#9CA3B5">{{ a.meta }}</div></div>
+                      <div onClick="{{ a.onRemove }}" style="display:{{ a.removeDisplay }};width:26px;height:26px;border-radius:8px;background:#F2F3F9;align-items:center;justify-content:center;color:#9CA3B5;font:400 15px Inter;cursor:pointer;flex-shrink:0">&times;</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:{{ driveDisplay }};margin-top:10px;align-items:center;gap:10px;border-radius:12px;padding:10px 12px;background:#fff;border:1px solid #DDEFE8">
+                  <div style="width:30px;height:24px;border-radius:5px;background:#E2F6F0;position:relative;flex-shrink:0"><div style="position:absolute;left:0;top:-4px;width:13px;height:6px;border-radius:3px 3px 0 0;background:#00C896"></div><div style="position:absolute;right:6px;bottom:6px;width:8px;height:8px;border-radius:50%;background:#00C896"></div></div>
+                  <div style="flex:1;min-width:0"><div style="font:700 12px Inter;color:#00936E">Saved to Google Drive</div><div style="font:500 11px Inter;color:#8A91A3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ drivePath }}</div></div>
+                  <a href="https://drive.google.com" target="_blank" style="font:700 12px Inter;color:#5B4FE8;text-decoration:none;white-space:nowrap">Open &#8599;</a>
+                </div>
+              </div>
+
+              <!-- COMMENTS -->
+              <div style="margin-top:20px;font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">COMMENTS</div>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:14px">
+                <sc-for list="{{ comments }}" as="c" hint-placeholder-count="0">
+                  <div style="display:flex;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:{{ c.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ c.init }}</div><div style="min-width:0"><div style="display:flex;align-items:center;gap:8px"><span style="font:600 12px Inter;color:#0F1B2D">{{ c.name }}</span><span style="font:500 10px Inter;color:#9CA3B5">{{ c.when }}</span></div><div style="margin-top:3px;font:400 13px/1.45 Inter;color:#3A4253">{{ c.text }}</div></div></div>
+                </sc-for>
+                <sc-if value="{{ noComments }}" hint-placeholder-val="{{ false }}">
+                  <div style="font:400 13px Inter;color:#B7BCCB">No comments yet.</div>
+                </sc-if>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px">
+                <input value="{{ commentText }}" onInput="{{ onCommentInput }}" onKeyDown="{{ onCommentKey }}" placeholder="Write a comment…" style="flex:1;min-width:0;height:40px;border-radius:11px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 13px;font:400 13px Inter;color:#0F1B2D;outline:none">
+                <button onClick="{{ onSendComment }}" style="width:40px;height:40px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer">&uarr;</button>
+              </div>
+            </div>
+
+            <div style="flex-shrink:0;padding:14px 22px;border-top:1px solid #ECEEF5">
+              <div style="display:{{ hintDisplay }};margin-bottom:8px;font:500 12px Inter;color:#9CA3B5;text-align:center">{{ primaryHint }}</div>
+              <button onClick="{{ onPrimary }}" style="width:100%;height:48px;border-radius:12px;border:none;background:{{ primaryBg }};color:{{ primaryColor }};font:700 15px Inter;cursor:pointer">{{ primaryLabel }}</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    this.grads={JS:'linear-gradient(135deg,#5B4FE8,#3B33B0)',TR:'linear-gradient(135deg,#F5A623,#D98A0E)',MC:'linear-gradient(135deg,#00C896,#00936E)',AK:'linear-gradient(135deg,#5B4FE8,#3B33B0)',OW:'linear-gradient(135deg,#0F1B2D,#34445F)'};
+    this.names={JS:'Jane Smith',TR:'Tom Reyes',MC:'Mia Cole',AK:'Alex Kim',OW:'Olga White'};
+    this.people=[
+      {initials:'JS',name:'Jane Smith',first:'Jane',role:'Content Lead',mgr:'OW',dept:'Marketing'},
+      {initials:'TR',name:'Tom Reyes',first:'Tom',role:'Designer',mgr:'JS',dept:'Marketing'},
+      {initials:'MC',name:'Mia Cole',first:'Mia',role:'Social',mgr:'JS',dept:'Marketing'},
+      {initials:'AK',name:'Alex Kim',first:'Alex',role:'Tech Lead',mgr:'OW',dept:'Development'}
+    ];
+    this.seeds={
+      TR:[
+        {id:1,title:'Design product launch landing page',priority:'High',tag:'Design',due:'Sep 8',stage:'assigned',desc:'Responsive landing page for the September launch: hero, feature highlights, pricing and the request-access CTA.',comments:[{a:'JS',when:'2h ago',text:'Hero copy is approved — keep the CTA above the fold.'}]},
+        {id:2,title:'Refresh brand illustration set',priority:'Medium',tag:'Design',due:'Sep 11',stage:'assigned',desc:'Update the 12 spot illustrations to the new palette and line weight.',comments:[]},
+        {id:3,title:'Social ad creative — round 2',priority:'High',tag:'Social',due:'Sep 9',stage:'assigned',desc:'Three variants for LinkedIn and Instagram based on round-1 feedback.',comments:[{a:'MC',when:'yesterday',text:'Variant B performed best — lean into that layout.'}]},
+        {id:4,title:'Update component library tokens',priority:'Low',tag:'Design',due:'Sep 15',stage:'assigned',desc:'Sync color and radius tokens with the latest brand guidelines.',comments:[]},
+        {id:5,title:'Email template visual polish',priority:'Medium',tag:'Content',due:'Sep 12',stage:'assigned',desc:'Tighten spacing and typography on the launch email template.',comments:[]},
+        {id:6,title:'Pitch deck cover concepts',priority:'Low',tag:'Design',due:'Sep 18',stage:'assigned',desc:'Two or three cover directions for the investor update deck.',comments:[]}
+      ]
+    };
+    this.state={picked:null,tasks:[],openId:null,tab:'doc',linkText:'',commentText:'',needDeliv:false,dragOver:false};
+  }
+  componentDidMount(){ this._t=setInterval(()=>{ if(this.state.tasks.some(t=>t.stage==='focus')) this.forceUpdate(); },30000); }
+  componentWillUnmount(){ clearInterval(this._t); }
+  defaultSeed(){
+    return [
+      {id:1,title:'Draft weekly priorities',priority:'High',tag:'Planning',due:'Sep 8',stage:'assigned'},
+      {id:2,title:'Review incoming requests',priority:'Medium',tag:'Ops',due:'Sep 10',stage:'assigned'},
+      {id:3,title:'Sync notes for standup',priority:'Low',tag:'Team',due:'Sep 9',stage:'assigned'},
+      {id:4,title:'Close out last sprint items',priority:'Medium',tag:'Ops',due:'Sep 12',stage:'assigned'}
+    ];
+  }
+  pick(i){
+    const seed=(this.seeds[i]||this.defaultSeed()).map(t=>({desc:'Details for this task are provided by your manager.',comments:[],...t,deliv:[],started:null,enter:false}));
+    this.setState({picked:i,tasks:seed,openId:null,needDeliv:false});
+  }
+  upd(id,fn){ this.setState(s=>({tasks:s.tasks.map(t=>t.id===id?fn(t):t)})); }
+  move(id,to){
+    const t=this.state.tasks.find(x=>x.id===id); if(!t) return;
+    if(to==='done'&&t.deliv.length===0){ this.setState({openId:id,needDeliv:true}); return; }
+    this.upd(id,x=>({...x,stage:to,enter:true,started:to==='focus'?Date.now():x.started}));
+    if(to==='done') this.setState({needDeliv:false});
+    setTimeout(()=>this.upd(id,x=>({...x,enter:false})),650);
+  }
+  sendAll(){
+    const ids=this.state.tasks.filter(t=>t.stage==='done').map(t=>t.id);
+    this.setState(s=>({tasks:s.tasks.map(t=>ids.includes(t.id)?{...t,stage:'review',enter:true}:t)}));
+    setTimeout(()=>{ this.setState(s=>({tasks:s.tasks.map(t=>({...t,enter:false}))})); },650);
+  }
+  open(id){ this.setState({openId:id,needDeliv:false,linkText:'',commentText:''}); }
+  size(b){ return b<1048576?Math.max(1,Math.round(b/1024))+' KB':(b/1048576).toFixed(1)+' MB'; }
+  addFiles(files,kind){
+    const id=this.state.openId; if(!id||!files||!files.length) return;
+    const arr=[...files].map(f=>{
+      const img=kind==='img'||(f.type&&f.type.indexOf('image/')===0);
+      return {kind:img?'img':'doc',name:f.name,meta:(img?'Image':'Document')+' · '+this.size(f.size)+' · synced to Drive',src:img?URL.createObjectURL(f):null};
+    });
+    this.upd(id,t=>({...t,deliv:[...t.deliv,...arr]}));
+    this.setState({needDeliv:false,dragOver:false});
+  }
+  addLink(){
+    const id=this.state.openId; let v=(this.state.linkText||'').trim(); if(!id||!v) return;
+    if(!/^https?:\/\//i.test(v)) v='https://'+v;
+    let host=v; try{ const u=new URL(v); host=u.hostname.replace(/^www\./,'')+(u.pathname.length>1?u.pathname:''); }catch(e){}
+    this.upd(id,t=>({...t,deliv:[...t.deliv,{kind:'link',name:host,meta:'Link · saved to Drive',src:v}]}));
+    this.setState({linkText:'',needDeliv:false});
+  }
+  removeDeliv(i){ const id=this.state.openId; this.upd(id,t=>({...t,deliv:t.deliv.filter((_,j)=>j!==i)})); }
+  addComment(){
+    const id=this.state.openId; const v=(this.state.commentText||'').trim(); if(!id||!v) return;
+    const me=this.state.picked;
+    this.upd(id,t=>({...t,comments:[...t.comments,{a:me,when:'just now',text:v}]}));
+    this.setState({commentText:''});
+  }
+  prStyle(p){
+    if(p==='High') return {prColor:'#E5484D',prBg:'rgba(229,72,77,.12)',stripe:'#E5484D'};
+    if(p==='Medium') return {prColor:'#C77E0A',prBg:'rgba(245,166,35,.16)',stripe:'#F5A623'};
+    return {prColor:'#6B7385',prBg:'#EEF0F6',stripe:'#C3C9D6'};
+  }
+  stageStyle(k){
+    if(k==='assigned') return {l:'Assigned',c:'#5B4FE8',b:'#EEEDFB'};
+    if(k==='focus') return {l:'In Focus',c:'#C77E0A',b:'rgba(245,166,35,.16)'};
+    if(k==='done') return {l:'Done',c:'#00936E',b:'rgba(0,200,150,.14)'};
+    return {l:'In Review',c:'#fff',b:'#0F1B2D'};
+  }
+  elapsed(t){
+    if(!t.started) return t.stage==='assigned'?'Not started':'—';
+    const m=Math.max(0,Math.floor((Date.now()-t.started)/60000)); return Math.floor(m/60)+'h '+(m%60)+'m';
+  }
+  renderVals(){
+    const s=this.state, picked=s.picked;
+    const userCards=this.people.map(p=>{
+      const seed=(this.seeds[p.initials]||this.defaultSeed());
+      return {initials:p.initials,name:p.name,role:p.role,grad:this.grads[p.initials],count:seed.length,onPick:()=>this.pick(p.initials)};
+    });
+    if(!picked) return {isSelect:true,isWork:false,userCards,panelOpen:false};
+    const me=this.people.find(p=>p.initials===picked);
+    const prOrder={High:0,Medium:1,Low:2};
+    const byStage=st=>s.tasks.filter(t=>t.stage===st).sort((a,b)=>prOrder[a.priority]-prOrder[b.priority]);
+    const drop='animation:dropIn .6s cubic-bezier(.34,1.4,.5,1) both';
+    const stop=f=>e=>{ if(e&&e.stopPropagation) e.stopPropagation(); f(); };
+    const map=(arr,extra)=>arr.map(t=>{
+      const n=t.deliv.length;
+      return {...t,...this.prStyle(t.priority),anim:t.enter?drop:'',
+        outline:s.openId===t.id?'2px solid #5B4FE8':'none',
+        onOpen:()=>this.open(t.id),
+        delivLabel:n?(n+' result'+(n>1?'s':'')):'No result yet',
+        delivColor:n?'#00936E':'#9CA3B5',delivBg:n?'rgba(0,200,150,.12)':'#F2F3F9',
+        ...extra(t)};
+    });
+    const assigned=map(byStage('assigned'),t=>({onTake:stop(()=>this.move(t.id,'focus'))}));
+    const focus=map(byStage('focus'),t=>({onDone:stop(()=>this.move(t.id,'done'))}));
+    const done=map(byStage('done'),t=>({onSend:stop(()=>this.move(t.id,'review'))}));
+    const review=map(byStage('review'),()=>({}));
+    const out={
+      isSelect:false,isWork:true,
+      userName:me.name,userFirst:me.first,userInitials:me.initials,userGrad:this.grads[picked],
+      back:()=>this.setState({picked:null,tasks:[],openId:null}),
+      assigned,focus,done,review,
+      cAssigned:assigned.length,cFocus:focus.length,cDone:done.length,cReview:review.length,
+      emptyAssigned:assigned.length===0,emptyFocus:focus.length===0,emptyDone:done.length===0,
+      hasDone:done.length>0,hasReview:review.length>0,
+      sendAll:()=>this.sendAll(),
+      panelOpen:false
+    };
+    const t=s.tasks.find(x=>x.id===s.openId);
+    if(!t) return out;
+    const st=this.stageStyle(t.stage), pr=this.prStyle(t.priority);
+    const locked=t.stage==='review'||t.stage==='done';
+    const hasD=t.deliv.length>0;
+    const tabObj=k=>({bg:s.tab===k?'#fff':'transparent',color:s.tab===k?'#0F1B2D':'#6B7385',shadow:s.tab===k?'0 1px 3px rgba(15,27,45,.12)':'none',onClick:()=>this.setState({tab:k})});
+    let primary;
+    if(t.stage==='assigned') primary={label:'Take today ↓',bg:'#5B4FE8',color:'#fff',hint:'',go:()=>this.move(t.id,'focus')};
+    else if(t.stage==='focus') primary={label:'Mark done ✓',bg:hasD?'#00C896':'#C3C9D6',color:'#fff',hint:hasD?'':'Attach a result to complete this task',go:()=>this.move(t.id,'done')};
+    else if(t.stage==='done') primary={label:'Send for review ⚑',bg:'#0F1B2D',color:'#fff',hint:'',go:()=>this.move(t.id,'review')};
+    else primary={label:'Awaiting manager review',bg:'#EEF0F6',color:'#6B7385',hint:'',go:()=>{}};
+    Object.assign(out,{
+      panelOpen:true,
+      closePanel:()=>this.setState({openId:null,needDeliv:false}),
+      pTitle:t.title,pDesc:t.desc,pStageLabel:st.l,pStageColor:st.c,pStageBg:st.b,
+      pPriority:t.priority,pPrColor:pr.prColor,pPrBg:pr.prBg,pTag:t.tag,pDue:t.due,pTime:this.elapsed(t),
+      meName:me.name,meInit:me.initials,meGrad:this.grads[picked],
+      byName:this.names[me.mgr],byInit:me.mgr,byGrad:this.grads[me.mgr],
+      driveDisplay:hasD?'flex':'none',
+      drivePath:'SYNCO / '+me.dept+' / '+t.title,
+      delivCount:hasD?(t.deliv.length+' attached'):'Nothing attached',
+      delivBorder:s.needDeliv?'1.5px solid #E5484D':'1px solid #E2DEF8',
+      delivBg:s.needDeliv?'#FFF7F7':'#FBFAFF',
+      delivWarnDisplay:s.needDeliv?'block':'none',
+      uploaderDisplay:locked?'none':'block',
+      tabs:{doc:tabObj('doc'),link:tabObj('link'),img:tabObj('img')},
+      showDoc:s.tab==='doc'?'block':'none',showLink:s.tab==='link'?'block':'none',showImg:s.tab==='img'?'block':'none',
+      dropBorder:s.dragOver?'#5B4FE8':'#D5D9E5',dropBg:s.dragOver?'#F4F2FE':'#fff',
+      onDragOver:e=>{ e.preventDefault(); if(!this.state.dragOver) this.setState({dragOver:true}); },
+      onDragLeave:()=>this.setState({dragOver:false}),
+      onDrop:e=>{ e.preventDefault(); this.addFiles(e.dataTransfer&&e.dataTransfer.files,this.state.tab==='img'?'img':'doc'); },
+      onDocFile:e=>{ this.addFiles(e.target.files,'doc'); e.target.value=''; },
+      onImgFile:e=>{ this.addFiles(e.target.files,'img'); e.target.value=''; },
+      linkText:s.linkText,
+      onLinkInput:e=>this.setState({linkText:e.target.value}),
+      onLinkKey:e=>{ if(e.key==='Enter') this.addLink(); },
+      onAddLink:()=>this.addLink(),
+      deliv:t.deliv.map((a,i)=>{
+        const ext=a.kind==='doc'?((a.name.split('.').pop()||'DOC').toUpperCase().slice(0,4)):'';
+        return {name:a.name,meta:a.meta,
+          kindLabel:a.kind==='img'?'':(a.kind==='link'?'LINK':ext),
+          kindColor:a.kind==='link'?'#00936E':'#5B4FE8',
+          thumb:a.kind==='img'?"background:url('"+a.src+"') center/cover":(a.kind==='link'?'background:rgba(0,200,150,.12)':'background:#EEEDFB'),
+          removeDisplay:locked?'none':'flex',
+          onRemove:()=>this.removeDeliv(i)};
+      }),
+      comments:t.comments.map(c=>({init:c.a,grad:this.grads[c.a],name:this.names[c.a],when:c.when,text:c.text})),
+      noComments:t.comments.length===0,
+      commentText:s.commentText,
+      onCommentInput:e=>this.setState({commentText:e.target.value}),
+      onCommentKey:e=>{ if(e.key==='Enter') this.addComment(); },
+      onSendComment:()=>this.addComment(),
+      primaryLabel:primary.label,primaryBg:primary.bg,primaryColor:primary.color,
+      primaryHint:primary.hint,hintDisplay:primary.hint?'block':'none',
+      onPrimary:primary.go
+    });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

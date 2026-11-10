@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./i18n.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F8FC}
+  input,textarea,button{font-family:'Inter',system-ui,sans-serif}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D8DCE8;border-radius:99px}
+  @keyframes sagePulse{0%,100%{box-shadow:0 0 0 0 rgba(123,111,240,.0)}50%{box-shadow:0 0 26px 6px rgba(123,111,240,.28)}}
+  @keyframes panelIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes returnIn{0%{transform:translateY(-16px);opacity:.3}60%{transform:translateY(3px)}100%{transform:translateY(0);opacity:1}}
+  @keyframes dash{to{stroke-dashoffset:-16}}
+</style>
+</helmet>
+
+<div style="width:100%;min-width:1180px;height:100vh;min-height:820px;background:#F7F8FC;font-family:'Inter',system-ui,sans-serif;display:flex;overflow:hidden">
+
+  <!-- ============ MAIN FLOW ============ -->
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <!-- header -->
+    <div style="flex-shrink:0;padding:22px 30px 14px;border-bottom:1px solid #ECEEF5;background:#fff">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="display:flex;background:#F2F3F9;border-radius:11px;padding:4px;gap:2px">
+          <div style="font:600 13px Inter;color:#0F1B2D;background:#fff;padding:7px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(15,27,45,.1)">Work Flow</div>
+          <a href="SYNCO Assign.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Assign Work</a>
+          <a href="SYNCO Goals.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Goals</a>
+          <a href="SYNCO Brainstorm.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Brainstorm</a>
+      <a href="SYNCO Office.dc.html" style="text-decoration:none;font:600 13px Inter;color:#6B7385;padding:7px 14px;border-radius:8px">Office</a>
+        </div>
+        <div style="font:500 13px Inter;color:#9CA3B5">Dashboard / Department Flow</div>
+      </div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:12px">
+        <div style="font:800 23px Inter;letter-spacing:-.7px;color:#0F1B2D">REGAGRO · Work Flow</div>
+        <div style="font:500 13px Inter;color:#9CA3B5">Each department runs its own thread — all reviewed work flows into Sync Mind.</div>
+        <button onClick="{{ onRequests }}" style="margin-left:auto;height:38px;padding:0 14px;border-radius:11px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer;display:flex;align-items:center;gap:8px">Requests <span style="font:800 11px Inter;color:#fff;background:#F5A623;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ reqPending }}</span></button>
+      </div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font:700 11px Inter;letter-spacing:.4px;color:#9CA3B5;margin-right:2px">GOAL</span>
+        <sc-for list="{{ goalPills }}" as="g" hint-placeholder-count="4">
+          <div onClick="{{ g.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:{{ g.bg }};border:{{ g.border }};font:700 12px Inter;color:{{ g.color }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ g.dot }}"></span>{{ g.label }}<span style="font:600 11px Inter;opacity:.7">{{ g.count }}</span></div>
+        </sc-for>
+        <a href="SYNCO Goals.dc.html" style="margin-left:6px;font:600 12px Inter;text-decoration:none">View goal puzzles &rarr;</a>
+      </div>
+    </div>
+
+    <!-- scroll canvas -->
+    <div style="flex:1;overflow:auto;padding:30px 0 40px">
+      <div style="position:relative;width:1000px;margin:0 auto">
+
+        <!-- ===== COLUMN 0 — Marketing ===== -->
+        <div style="position:absolute;left:0;top:0;width:310px;height:620px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECEEF5;border-radius:13px;padding:12px 14px;box-shadow:0 2px 8px rgba(15,27,45,.05);position:relative;z-index:3">
+            <div style="width:11px;height:11px;border-radius:50%;background:#5B4FE8"></div>
+            <div style="font:700 15px Inter;color:#0F1B2D">Marketing</div>
+            <div style="margin-left:auto;font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ d0Count }}</div>
+          </div>
+          <div style="position:relative;flex:1;margin-top:10px">
+            <div style="position:absolute;left:21px;top:-6px;bottom:-30px;width:2px;background:#E0E3EE"></div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <sc-for list="{{ t0 }}" as="t" hint-placeholder-count="4">
+                <div onClick="{{ t.onClick }}" style="position:relative;padding-left:38px;cursor:pointer;opacity:{{ t.opacity }};transition:opacity .2s">
+                  <div style="position:absolute;left:14px;top:22px;width:16px;height:16px;border-radius:50%;background:{{ t.nodeColor }};border:3px solid #fff;box-shadow:0 0 0 1px #E0E3EE;z-index:2"></div>
+                  <div style="background:#fff;border:{{ t.border }};border-radius:12px;padding:11px 13px;box-shadow:{{ t.shadow }}{{ t.anim }}">
+                    <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ t.goalColor }};background:{{ t.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ t.goalColor }}"></span>{{ t.goalLabel }}</span><span style="font:700 9px Inter;color:{{ t.srcColor }};background:{{ t.srcBg }};border:{{ t.srcBorder }};padding:2px 7px;border-radius:99px">{{ t.srcLabel }}</span></div>
+                    <div style="font:600 13px/1.3 Inter;color:#0F1B2D">{{ t.title }}</div>
+                    <div style="margin-top:9px;display:flex;align-items:center;gap:7px">
+                      <span style="font:700 9px Inter;color:{{ t.stageColor }};background:{{ t.stageBg }};padding:3px 8px;border-radius:99px">{{ t.stageLabel }}</span>
+                      <span style="font:500 11px Inter;color:#9CA3B5">{{ t.time }}</span>
+                      <div style="margin-left:auto;width:22px;height:22px;border-radius:50%;background:{{ t.aGrad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ t.aInit }}</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ r0.onClick }}" style="position:absolute;left:0;right:0;bottom:-30px;padding-left:38px;cursor:pointer">
+              <div style="position:absolute;left:11px;bottom:14px;width:22px;height:22px;border-radius:7px;background:#0F1B2D;display:flex;align-items:center;justify-content:center;color:#fff;font:600 11px Inter;z-index:2">&#9873;</div>
+              <div style="display:flex;align-items:center;gap:10px;background:{{ r0.bg }};border:{{ r0.border }};border-radius:12px;padding:10px 13px;box-shadow:{{ r0.shadow }}">
+                <div style="width:30px;height:30px;border-radius:50%;background:{{ r0.grad }};color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center">{{ r0.initials }}</div>
+                <div style="min-width:0"><div style="font:700 12px Inter;color:#0F1B2D">{{ r0.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">Reviewer · {{ r0.role }}</div></div>
+                <div style="margin-left:auto;text-align:right"><div style="font:700 13px Inter;color:#5B4FE8">{{ r0.docCount }}</div><div style="font:500 9px Inter;color:#9CA3B5">in review</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== COLUMN 1 — Development ===== -->
+        <div style="position:absolute;left:345px;top:0;width:310px;height:620px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECEEF5;border-radius:13px;padding:12px 14px;box-shadow:0 2px 8px rgba(15,27,45,.05);position:relative;z-index:3">
+            <div style="width:11px;height:11px;border-radius:50%;background:#00C896"></div>
+            <div style="font:700 15px Inter;color:#0F1B2D">Development</div>
+            <div style="margin-left:auto;font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ d1Count }}</div>
+          </div>
+          <div style="position:relative;flex:1;margin-top:10px">
+            <div style="position:absolute;left:21px;top:-6px;bottom:-30px;width:2px;background:#E0E3EE"></div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <sc-for list="{{ t1 }}" as="t" hint-placeholder-count="3">
+                <div onClick="{{ t.onClick }}" style="position:relative;padding-left:38px;cursor:pointer;opacity:{{ t.opacity }};transition:opacity .2s">
+                  <div style="position:absolute;left:14px;top:22px;width:16px;height:16px;border-radius:50%;background:{{ t.nodeColor }};border:3px solid #fff;box-shadow:0 0 0 1px #E0E3EE;z-index:2"></div>
+                  <div style="background:#fff;border:{{ t.border }};border-radius:12px;padding:11px 13px;box-shadow:{{ t.shadow }}{{ t.anim }}">
+                    <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ t.goalColor }};background:{{ t.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ t.goalColor }}"></span>{{ t.goalLabel }}</span><span style="font:700 9px Inter;color:{{ t.srcColor }};background:{{ t.srcBg }};border:{{ t.srcBorder }};padding:2px 7px;border-radius:99px">{{ t.srcLabel }}</span></div>
+                    <div style="font:600 13px/1.3 Inter;color:#0F1B2D">{{ t.title }}</div>
+                    <div style="margin-top:9px;display:flex;align-items:center;gap:7px">
+                      <span style="font:700 9px Inter;color:{{ t.stageColor }};background:{{ t.stageBg }};padding:3px 8px;border-radius:99px">{{ t.stageLabel }}</span>
+                      <span style="font:500 11px Inter;color:#9CA3B5">{{ t.time }}</span>
+                      <div style="margin-left:auto;width:22px;height:22px;border-radius:50%;background:{{ t.aGrad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ t.aInit }}</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ r1.onClick }}" style="position:absolute;left:0;right:0;bottom:-30px;padding-left:38px;cursor:pointer">
+              <div style="position:absolute;left:11px;bottom:14px;width:22px;height:22px;border-radius:7px;background:#0F1B2D;display:flex;align-items:center;justify-content:center;color:#fff;font:600 11px Inter;z-index:2">&#9873;</div>
+              <div style="display:flex;align-items:center;gap:10px;background:{{ r1.bg }};border:{{ r1.border }};border-radius:12px;padding:10px 13px;box-shadow:{{ r1.shadow }}">
+                <div style="width:30px;height:30px;border-radius:50%;background:{{ r1.grad }};color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center">{{ r1.initials }}</div>
+                <div style="min-width:0"><div style="font:700 12px Inter;color:#0F1B2D">{{ r1.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">Reviewer · {{ r1.role }}</div></div>
+                <div style="margin-left:auto;text-align:right"><div style="font:700 13px Inter;color:#5B4FE8">{{ r1.docCount }}</div><div style="font:500 9px Inter;color:#9CA3B5">in review</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== COLUMN 2 — Sales ===== -->
+        <div style="position:absolute;left:690px;top:0;width:310px;height:620px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #ECEEF5;border-radius:13px;padding:12px 14px;box-shadow:0 2px 8px rgba(15,27,45,.05);position:relative;z-index:3">
+            <div style="width:11px;height:11px;border-radius:50%;background:#F5A623"></div>
+            <div style="font:700 15px Inter;color:#0F1B2D">Sales</div>
+            <div style="margin-left:auto;font:700 11px Inter;color:#6B7385;background:#EEF0F6;min-width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ d2Count }}</div>
+          </div>
+          <div style="position:relative;flex:1;margin-top:10px">
+            <div style="position:absolute;left:21px;top:-6px;bottom:-30px;width:2px;background:#E0E3EE"></div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <sc-for list="{{ t2 }}" as="t" hint-placeholder-count="2">
+                <div onClick="{{ t.onClick }}" style="position:relative;padding-left:38px;cursor:pointer;opacity:{{ t.opacity }};transition:opacity .2s">
+                  <div style="position:absolute;left:14px;top:22px;width:16px;height:16px;border-radius:50%;background:{{ t.nodeColor }};border:3px solid #fff;box-shadow:0 0 0 1px #E0E3EE;z-index:2"></div>
+                  <div style="background:#fff;border:{{ t.border }};border-radius:12px;padding:11px 13px;box-shadow:{{ t.shadow }}{{ t.anim }}">
+                    <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ t.goalColor }};background:{{ t.goalBg }};padding:2px 7px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ t.goalColor }}"></span>{{ t.goalLabel }}</span><span style="font:700 9px Inter;color:{{ t.srcColor }};background:{{ t.srcBg }};border:{{ t.srcBorder }};padding:2px 7px;border-radius:99px">{{ t.srcLabel }}</span></div>
+                    <div style="font:600 13px/1.3 Inter;color:#0F1B2D">{{ t.title }}</div>
+                    <div style="margin-top:9px;display:flex;align-items:center;gap:7px">
+                      <span style="font:700 9px Inter;color:{{ t.stageColor }};background:{{ t.stageBg }};padding:3px 8px;border-radius:99px">{{ t.stageLabel }}</span>
+                      <span style="font:500 11px Inter;color:#9CA3B5">{{ t.time }}</span>
+                      <div style="margin-left:auto;width:22px;height:22px;border-radius:50%;background:{{ t.aGrad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ t.aInit }}</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ r2.onClick }}" style="position:absolute;left:0;right:0;bottom:-30px;padding-left:38px;cursor:pointer">
+              <div style="position:absolute;left:11px;bottom:14px;width:22px;height:22px;border-radius:7px;background:#0F1B2D;display:flex;align-items:center;justify-content:center;color:#fff;font:600 11px Inter;z-index:2">&#9873;</div>
+              <div style="display:flex;align-items:center;gap:10px;background:{{ r2.bg }};border:{{ r2.border }};border-radius:12px;padding:10px 13px;box-shadow:{{ r2.shadow }}">
+                <div style="width:30px;height:30px;border-radius:50%;background:{{ r2.grad }};color:#fff;font:700 11px Inter;display:flex;align-items:center;justify-content:center">{{ r2.initials }}</div>
+                <div style="min-width:0"><div style="font:700 12px Inter;color:#0F1B2D">{{ r2.name }}</div><div style="font:500 10px Inter;color:#9CA3B5">Reviewer · {{ r2.role }}</div></div>
+                <div style="margin-left:auto;text-align:right"><div style="font:700 13px Inter;color:#5B4FE8">{{ r2.docCount }}</div><div style="font:500 9px Inter;color:#9CA3B5">in review</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== CONVERGENCE ===== -->
+        <div style="position:absolute;left:0;top:620px;width:1000px;height:260px">
+          <svg width="1000" height="260" viewBox="0 0 1000 260" style="position:absolute;inset:0">
+            <path d="M155 0 C 155 90, 500 70, 500 150" stroke="#5B4FE8" stroke-width="2.5" fill="none" opacity=".55" stroke-dasharray="6 8" style="animation:dash 1.1s linear infinite"/>
+            <path d="M500 0 C 500 90, 500 80, 500 150" stroke="#00C896" stroke-width="2.5" fill="none" opacity=".55" stroke-dasharray="6 8" style="animation:dash 1.1s linear infinite"/>
+            <path d="M845 0 C 845 90, 500 70, 500 150" stroke="#F5A623" stroke-width="2.5" fill="none" opacity=".55" stroke-dasharray="6 8" style="animation:dash 1.1s linear infinite"/>
+          </svg>
+
+          <div onClick="{{ onSage }}" style="position:absolute;left:280px;top:140px;width:440px;cursor:pointer;background:linear-gradient(135deg,#1C2541,#0F1B2D);border-radius:18px;padding:20px 22px;box-shadow:{{ sageShadow }};animation:sagePulse 3s ease-in-out infinite;display:flex;align-items:center;gap:16px;border:{{ sageBorder }}">
+            <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7B6FF0,#5B4FE8);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(91,79,232,.4)">
+              <div style="width:24px;height:24px;border:2.5px solid #fff;border-radius:7px;position:relative"><div style="position:absolute;inset:4px;border:2px solid rgba(255,255,255,.6);border-radius:3px"></div></div>
+            </div>
+            <div style="min-width:0">
+              <div style="display:flex;align-items:center;gap:8px"><div style="font:800 17px Inter;color:#fff;letter-spacing:-.3px">Sync Mind</div><div style="font:700 9px Inter;color:#7B6FF0;background:rgba(123,111,240,.18);padding:3px 8px;border-radius:99px">AI · KNOWLEDGE BASE</div></div>
+              <div style="margin-top:5px;font:400 12px/1.45 Inter;color:rgba(255,255,255,.66)">All approved docs land here. Ask Sync Mind to compile a set by theme or task.</div>
+            </div>
+            <div style="margin-left:auto;font:700 18px Inter;color:#7B6FF0;flex-shrink:0">&rarr;</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RIGHT PANEL ============ -->
+  <sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ true }}">
+  <div style="width:388px;flex-shrink:0;background:#fff;border-left:1px solid #ECEEF5;height:100vh;min-height:820px;display:flex;flex-direction:column">
+
+    <!-- TASK DETAIL -->
+    <sc-if value="{{ showTask }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;height:100%;animation:panelIn .22s ease both">
+        <div style="flex:1;overflow-y:auto;padding:22px 24px;min-height:0">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font:700 10px Inter;color:{{ task.stageColor }};background:{{ task.stageBg }};padding:4px 10px;border-radius:99px">{{ task.stageLabel }}</span>
+            <div onClick="{{ closePanel }}" style="width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#9CA3B5;font:400 16px Inter;cursor:pointer">&times;</div>
+          </div>
+          <div style="margin-top:15px;font:800 20px/1.25 Inter;letter-spacing:-.4px;color:#0F1B2D">{{ task.title }}</div>
+          <div style="margin-top:12px;font:400 14px/1.55 Inter;color:#6B7385">{{ task.desc }}</div>
+
+          <!-- time tracked -->
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <div style="flex:1;background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:12px 14px">
+              <div style="font:500 11px Inter;color:#9CA3B5">Time in progress</div>
+              <div style="margin-top:4px;display:flex;align-items:baseline;gap:5px"><span style="font:800 19px Inter;color:#0F1B2D">{{ task.time }}</span></div>
+            </div>
+            <div style="flex:1;background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:12px 14px">
+              <div style="font:500 11px Inter;color:#9CA3B5">Deadline</div>
+              <div style="margin-top:4px;font:700 15px Inter;color:#0F1B2D">{{ task.deadline }}</div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:13px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Responsible</span><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:{{ task.aGrad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center">{{ task.aInit }}</div><span style="font:600 13px Inter;color:#0F1B2D">{{ task.aName }}</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Priority</span><span style="font:700 10px Inter;color:{{ task.prColor }};background:{{ task.prBg }};padding:3px 10px;border-radius:99px">{{ task.priority }}</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Goal</span><span style="display:flex;align-items:center;gap:5px;font:700 10px Inter;color:{{ task.goalColor }};background:{{ task.goalBg }};padding:3px 10px;border-radius:99px"><span style="width:7px;height:7px;border-radius:50%;background:{{ task.goalColor }}"></span>{{ task.goalLabel }}</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Source</span><span style="font:700 10px Inter;color:{{ task.srcColor }};background:{{ task.srcBg }};border:{{ task.srcBorder }};padding:3px 10px;border-radius:99px">{{ task.srcLabel }}</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 13px Inter;color:#9CA3B5">Tag</span><span style="font:600 11px Inter;color:#5B4FE8;background:#EEEDFB;padding:3px 9px;border-radius:6px">{{ task.tag }}</span></div>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">REVIEW CHAIN</div>
+          <div style="margin-top:4px;font:400 12px/1.45 Inter;color:#9CA3B5">{{ task.chainNote }}</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column">
+            <sc-for list="{{ task.chain }}" as="ch" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px">
+                <div style="display:flex;flex-direction:column;align-items:center;width:26px;flex-shrink:0">
+                  <div style="width:26px;height:26px;border-radius:50%;background:{{ ch.dotBg }};border:2px solid {{ ch.dotBorder }};color:{{ ch.dotColor }};font:800 11px Inter;display:flex;align-items:center;justify-content:center">{{ ch.mark }}</div>
+                  <div style="width:2px;flex:1;min-height:12px;background:{{ ch.lineColor }};display:{{ ch.lineDisplay }}"></div>
+                </div>
+                <div style="padding-bottom:14px;min-width:0">
+                  <div style="font:700 9px Inter;letter-spacing:.4px;color:#9CA3B5">{{ ch.stepLabel }}</div>
+                  <div style="margin-top:4px;display:flex;align-items:center;gap:7px"><div style="width:20px;height:20px;border-radius:50%;background:{{ ch.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ ch.init }}</div><span style="font:600 13px Inter;color:#0F1B2D">{{ ch.name }}</span><span style="font:500 11px Inter;color:#9CA3B5">{{ ch.role }}</span></div>
+                  <div style="margin-top:3px;font:700 11px Inter;color:{{ ch.stateColor }}">{{ ch.state }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">COMMENTS</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ task.comments }}" as="c" hint-placeholder-count="2">
+              <div style="display:flex;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:{{ c.grad }};color:#fff;font:700 10px Inter;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ c.initials }}</div><div><div style="display:flex;align-items:center;gap:8px"><span style="font:600 12px Inter;color:#0F1B2D">{{ c.name }}</span><span style="font:500 10px Inter;color:#9CA3B5">{{ c.when }}</span></div><div style="margin-top:3px;font:400 13px/1.45 Inter;color:#3A4253">{{ c.text }}</div></div></div>
+            </sc-for>
+            <sc-if value="{{ task.noComments }}" hint-placeholder-val="{{ false }}">
+              <div style="font:400 13px Inter;color:#B7BCCB">No comments yet.</div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="padding:14px 24px;border-top:1px solid #ECEEF5;display:flex;gap:10px;align-items:center">
+          <input placeholder="Add a comment…" style="flex:1;height:42px;border-radius:11px;border:1px solid #E5E7F0;background:#F7F8FC;padding:0 14px;font:400 13px Inter;color:#0F1B2D;outline:none">
+          <button style="height:42px;width:42px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 16px Inter;cursor:pointer">&uarr;</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- REVIEWER DOCS -->
+    <sc-if value="{{ showReviewer }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:22px 24px;animation:panelIn .22s ease both">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font:700 10px Inter;color:#fff;background:#0F1B2D;padding:4px 10px;border-radius:99px">REVIEWER QUEUE</span>
+          <div onClick="{{ closePanel }}" style="width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#9CA3B5;font:400 16px Inter;cursor:pointer">&times;</div>
+        </div>
+        <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+          <div style="width:46px;height:46px;border-radius:50%;background:{{ rev.grad }};color:#fff;font:700 16px Inter;display:flex;align-items:center;justify-content:center">{{ rev.initials }}</div>
+          <div><div style="font:800 18px Inter;color:#0F1B2D">{{ rev.name }}</div><div style="font:500 13px Inter;color:#9CA3B5">{{ rev.role }} · {{ rev.dept }}</div></div>
+        </div>
+        <div style="margin-top:20px;display:flex;align-items:center;gap:8px"><div style="font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">DOCUMENTS IN REVIEW</div><div style="font:700 10px Inter;color:#6B7385;background:#EEF0F6;min-width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ rev.count }}</div></div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ rev.queue }}" as="d" hint-placeholder-count="1">
+            <div style="border:1px solid #ECEEF5;border-radius:13px;padding:13px 14px;box-shadow:0 2px 8px rgba(15,27,45,.04)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:34px;height:34px;border-radius:9px;background:#EEEDFB;display:flex;align-items:center;justify-content:center;font:700 10px Inter;color:#5B4FE8">DOC</div>
+                <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">{{ d.title }}</div><div style="font:500 11px Inter;color:#9CA3B5">from {{ d.from }}</div><div style="margin-top:3px;font:700 10px Inter;color:#7B6FF0">{{ d.stageNote }}</div></div>
+                <div style="width:8px;height:8px;border-radius:50%;background:#F5A623"></div>
+              </div>
+              <div style="margin-top:11px;display:flex;gap:8px">
+                <button onClick="{{ d.onApprove }}" style="flex:1;height:38px;border-radius:10px;border:none;background:#00C896;color:#fff;font:700 12px Inter;cursor:pointer">Approve &rarr; Sync Mind</button>
+                <button onClick="{{ d.onReq }}" style="flex:1;height:38px;border-radius:10px;border:{{ d.reqBorder }};background:{{ d.reqBg }};color:{{ d.reqColor }};font:700 12px Inter;cursor:pointer">Request changes</button>
+              </div>
+              <div style="display:{{ d.reqDisplay }};margin-top:11px;padding-top:12px;border-top:1px solid #F0F1F6">
+                <div style="font:600 11px Inter;color:#6B7385">Notes for {{ d.from }}</div>
+                <textarea onInput="{{ d.onReqText }}" value="{{ d.reqText }}" placeholder="What needs to change before this can be approved?" style="margin-top:7px;width:100%;height:68px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:9px 11px;font:500 13px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+                <div style="margin-top:8px;display:flex;gap:8px">
+                  <button onClick="{{ d.onSend }}" style="flex:1;height:38px;border-radius:10px;border:none;background:#5B4FE8;color:#fff;font:700 12px Inter;cursor:pointer">Send back to {{ d.from }} &#8617;</button>
+                  <button onClick="{{ d.onCancel }}" style="height:38px;padding:0 14px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ rev.empty }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1.5px dashed #DDE0EA;border-radius:12px;padding:22px;text-align:center;font:500 13px Inter;color:#B7BCCB">Review queue is clear.</div>
+          </sc-if>
+        </div>
+        <div style="margin-top:16px;font:400 12px/1.5 Inter;color:#B7BCCB">Approve to release a document into Sync Mind's knowledge base — or send it back with notes, and it returns to the team thread marked &ldquo;Needs Revision&rdquo;.</div>
+      </div>
+    </sc-if>
+
+    <!-- REQUESTS -->
+    <sc-if value="{{ showRequests }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;height:100%;animation:panelIn .22s ease both">
+        <div style="flex:1;overflow-y:auto;padding:22px 24px;min-height:0">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font:700 10px Inter;color:#fff;background:#F5A623;padding:4px 10px;border-radius:99px">REQUESTS</span>
+            <div onClick="{{ closePanel }}" style="width:28px;height:28px;border-radius:8px;background:#F2F3F9;display:flex;align-items:center;justify-content:center;color:#9CA3B5;font:400 16px Inter;cursor:pointer">&times;</div>
+          </div>
+          <div style="margin-top:14px;font:800 19px Inter;letter-spacing:-.4px;color:#0F1B2D">Requests between departments</div>
+          <div style="margin-top:6px;font:400 12px/1.5 Inter;color:#8A91A3">Team Leads send regular requests. Only C-Level can send priority requests. The receiving team accepts, or declines with a reason.</div>
+
+          <div style="margin-top:16px;border:1px solid #ECEEF5;border-radius:14px;padding:14px;background:#FBFBFE">
+            <div style="font:800 13px Inter;color:#0F1B2D">New request</div>
+            <div style="margin-top:14px;font:600 11px Inter;color:#6B7385">Send as</div>
+            <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
+              <sc-for list="{{ rq.asOpts }}" as="o" hint-placeholder-count="3">
+                <div onClick="{{ o.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:10px;background:#fff;border:{{ o.border }}"><div style="width:24px;height:24px;border-radius:50%;background:{{ o.grad }};color:#fff;font:700 9px Inter;display:flex;align-items:center;justify-content:center">{{ o.init }}</div><span style="font:600 12px Inter;color:#0F1B2D">{{ o.name }}</span><span style="margin-left:auto;font:600 10px Inter;color:#9CA3B5">{{ o.role }}</span></div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;font:600 11px Inter;color:#6B7385">To department</div>
+            <div style="margin-top:6px;display:flex;gap:6px">
+              <sc-for list="{{ rq.toOpts }}" as="o" hint-placeholder-count="3">
+                <div onClick="{{ o.onClick }}" style="flex:1;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 0;border-radius:10px;background:{{ o.bg }};border:{{ o.border }};font:700 11px Inter;color:{{ o.color }};opacity:{{ o.op }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ o.dot }}"></span>{{ o.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;font:600 11px Inter;color:#6B7385">What do you need?</div>
+            <input value="{{ rq.title }}" onInput="{{ rq.onTitle }}" placeholder="e.g. Product screenshots for the partner deck" style="margin-top:6px;width:100%;height:40px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;padding:0 12px;font:500 13px Inter;color:#0F1B2D;outline:none">
+            <div style="margin-top:14px;font:600 11px Inter;color:#6B7385">Type</div>
+            <div style="margin-top:6px;display:flex;background:#F2F3F9;border-radius:10px;padding:3px;gap:2px">
+              <div onClick="{{ rq.onRegular }}" style="flex:1;text-align:center;padding:7px 0;border-radius:8px;cursor:pointer;font:700 12px Inter;color:{{ rq.regColor }};background:{{ rq.regBg }}">Regular</div>
+              <div onClick="{{ rq.onPrio }}" style="flex:1;text-align:center;padding:7px 0;border-radius:8px;cursor:pointer;font:700 12px Inter;color:{{ rq.prioColor }};background:{{ rq.prioBg }};opacity:{{ rq.prioOp }}">&#9733; Priority</div>
+            </div>
+            <div style="margin-top:6px;font:500 11px Inter;color:#9CA3B5">{{ rq.prioHint }}</div>
+            <div style="margin-top:14px;font:600 11px Inter;color:#6B7385">Goal</div>
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ rq.goalOpts }}" as="o" hint-placeholder-count="4">
+                <div onClick="{{ o.onClick }}" style="cursor:pointer;padding:5px 10px;border-radius:99px;font:700 11px Inter;color:{{ o.color }};background:{{ o.bg }};border:{{ o.border }}">{{ o.label }}</div>
+              </sc-for>
+            </div>
+            <button onClick="{{ rq.onSend }}" style="margin-top:14px;width:100%;height:42px;border-radius:11px;border:none;background:#5B4FE8;color:#fff;font:700 13px Inter;cursor:pointer;opacity:{{ rq.sendOp }}">Send request &rarr;</button>
+          </div>
+
+          <div style="margin-top:20px;display:flex;align-items:center;gap:8px"><div style="font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">WAITING FOR A DECISION</div><div style="font:700 10px Inter;color:#fff;background:#F5A623;min-width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ reqPending }}</div></div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ rq.pending }}" as="r" hint-placeholder-count="2">
+              <div style="border:{{ r.border }};border-radius:13px;padding:12px 13px;background:#fff;box-shadow:0 2px 8px rgba(15,27,45,.04)">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <span style="font:700 9px Inter;color:{{ r.typeColor }};background:{{ r.typeBg }};padding:3px 8px;border-radius:99px">{{ r.typeLabel }}</span>
+                  <span style="display:flex;align-items:center;gap:4px;font:700 9px Inter;color:{{ r.goalColor }};background:{{ r.goalBg }};padding:3px 8px;border-radius:99px"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.goalColor }}"></span>{{ r.goalLabel }}</span>
+                </div>
+                <div style="margin-top:8px;font:600 13px/1.35 Inter;color:#0F1B2D">{{ r.title }}</div>
+                <div style="margin-top:7px;display:flex;align-items:center;gap:7px"><div style="width:20px;height:20px;border-radius:50%;background:{{ r.grad }};color:#fff;font:700 8px Inter;display:flex;align-items:center;justify-content:center">{{ r.init }}</div><span style="font:500 11px Inter;color:#6B7385">{{ r.route }}</span></div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                  <button onClick="{{ r.onAccept }}" style="flex:1;height:36px;border-radius:10px;border:none;background:#00C896;color:#fff;font:700 12px Inter;cursor:pointer">Accept &rarr; To Do</button>
+                  <button onClick="{{ r.onDecline }}" style="flex:1;height:36px;border-radius:10px;border:1px solid #E5E7F0;background:#fff;color:#0F1B2D;font:700 12px Inter;cursor:pointer">Decline</button>
+                </div>
+                <div style="display:{{ r.declineDisplay }};margin-top:10px;padding-top:10px;border-top:1px solid #F0F1F6">
+                  <textarea value="{{ declineText }}" onInput="{{ onDeclineText }}" placeholder="Why can't your team take this on? The sender will see this." style="width:100%;height:60px;resize:none;border-radius:10px;border:1px solid #E5E7F0;background:#F7F8FC;padding:9px 11px;font:500 12px/1.4 Inter;color:#0F1B2D;outline:none"></textarea>
+                  <div style="margin-top:7px;display:flex;gap:8px">
+                    <button onClick="{{ r.onConfirmDecline }}" style="flex:1;height:34px;border-radius:9px;border:none;background:#E5484D;color:#fff;font:700 12px Inter;cursor:pointer">Send decline</button>
+                    <button onClick="{{ onCancelDecline }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid #E5E7F0;background:#fff;color:#6B7385;font:700 12px Inter;cursor:pointer">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ rq.noPending }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1.5px dashed #DDE0EA;border-radius:12px;padding:18px;text-align:center;font:500 12px Inter;color:#B7BCCB">No open requests.</div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">HISTORY</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ rq.history }}" as="r" hint-placeholder-count="1">
+              <div style="border:1px solid #F0F1F6;border-radius:11px;padding:10px 12px">
+                <div style="display:flex;align-items:center;gap:7px"><span style="font:700 9px Inter;color:{{ r.stColor }};background:{{ r.stBg }};padding:3px 8px;border-radius:99px">{{ r.stLabel }}</span><span style="font:600 12px Inter;color:#0F1B2D;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.title }}</span></div>
+                <div style="margin-top:5px;font:500 11px/1.4 Inter;color:#8A91A3">{{ r.detail }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SAGE AGENT -->
+    <sc-if value="{{ showSage }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;height:100%;animation:panelIn .22s ease both">
+        <div style="padding:22px 24px;background:linear-gradient(135deg,#1C2541,#0F1B2D);flex-shrink:0">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font:700 10px Inter;color:#7B6FF0;background:rgba(123,111,240,.18);padding:4px 10px;border-radius:99px">AI KNOWLEDGE AGENT</span>
+            <div onClick="{{ closePanel }}" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font:400 16px Inter;cursor:pointer">&times;</div>
+          </div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:12px">
+            <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#7B6FF0,#5B4FE8);display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;border:2.5px solid #fff;border-radius:6px;position:relative"><div style="position:absolute;inset:3px;border:1.5px solid rgba(255,255,255,.6);border-radius:2px"></div></div></div>
+            <div><div style="font:800 18px Inter;color:#fff">Sync Mind</div><div style="font:500 12px Inter;color:rgba(255,255,255,.6)">{{ sageDocCount }} approved docs indexed</div></div>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow-y:auto;padding:20px 24px;min-height:0">
+          <div style="font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">ASK SYNC MIND</div>
+          <div style="margin-top:10px;font:400 13px/1.5 Inter;color:#6B7385">Describe a theme or task. Sync Mind pulls only the related approved docs from every department and assembles them.</div>
+          <textarea onInput="{{ onQuery }}" value="{{ sageQuery }}" style="margin-top:12px;width:100%;height:84px;resize:none;border-radius:12px;border:1px solid #E5E7F0;background:#F7F8FC;padding:12px 14px;font:500 14px/1.45 Inter;color:#0F1B2D;outline:none"></textarea>
+          <button onClick="{{ onCompile }}" style="margin-top:12px;width:100%;height:48px;border-radius:12px;border:none;background:#5B4FE8;color:#fff;font:700 15px Inter;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 18px rgba(91,79,232,.3)">Compile document set <span style="font-size:15px">&#10022;</span></button>
+
+          <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ sageChips }}" as="ch" hint-placeholder-count="3">
+              <div onClick="{{ ch.onPick }}" style="cursor:pointer;font:500 12px Inter;color:#5B4FE8;background:#EEEDFB;padding:7px 12px;border-radius:99px">{{ ch.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ hasCompiled }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:22px;padding-top:18px;border-top:1px solid #ECEEF5">
+              <div style="display:flex;align-items:center;gap:8px"><div style="font:700 12px Inter;color:#0F1B2D;letter-spacing:.3px">COMPILED SET</div><div style="font:700 10px Inter;color:#00936E;background:rgba(0,200,150,.14);padding:3px 9px;border-radius:99px">{{ compiledCount }} docs</div></div>
+              <div style="margin-top:10px;font:400 13px/1.55 Inter;color:#3A4253;background:#F7F8FC;border:1px solid #ECEEF5;border-radius:12px;padding:13px 14px">{{ compiledSummary }}</div>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ compiled }}" as="d" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:11px;border:1px solid #ECEEF5;border-radius:12px;padding:11px 13px;box-shadow:0 2px 8px rgba(15,27,45,.04)">
+                    <div style="width:8px;height:8px;border-radius:50%;background:{{ d.color }}"></div>
+                    <div style="flex:1;min-width:0"><div style="font:600 13px Inter;color:#0F1B2D">{{ d.title }}</div><div style="font:500 11px Inter;color:#9CA3B5">{{ d.dept }} · {{ d.tag }}</div></div>
+                    <div style="font:700 11px Inter;color:#5B4FE8">&darr;</div>
+                  </div>
+                </sc-for>
+              </div>
+              <button style="margin-top:14px;width:100%;height:44px;border-radius:11px;border:1px solid #CBD0DD;background:#fff;color:#0F1B2D;font:700 13px Inter;cursor:pointer">Export bundle</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const G={indigo:'linear-gradient(135deg,#5B4FE8,#3B33B0)',mint:'linear-gradient(135deg,#00C896,#00936E)',amber:'linear-gradient(135deg,#F5A623,#D98A0E)',navy:'linear-gradient(135deg,#0F1B2D,#34445F)',violet:'linear-gradient(135deg,#8B5CF6,#6D3FE0)'};
+    this.grads={JS:G.indigo,AK:G.indigo,LV:G.indigo,MC:G.mint,SP:G.mint,RN:G.mint,TR:G.amber,OD:G.amber,OW:G.navy,VK:G.violet};
+    this.names={JS:'Jane Smith',TR:'Tom Reyes',MC:'Mia Cole',AK:'Alex Kim',SP:'Sam Park',LV:'Lena Vu',OD:'Omar Diaz',RN:'Ria Nair',OW:'Olga White',VK:'Vera Kova'};
+    this.roles={OW:'Owner',VK:'COO · C-Level',JS:'Marketing Lead',AK:'Tech Lead',OD:'Sales Lead',TR:'Designer',MC:'Social',SP:'Backend',LV:'Frontend',RN:'Account Exec'};
+    this.goals=[{id:'G1',short:'Launch',color:'#E5487F'},{id:'G2',short:'EMEA',color:'#2E9BE6'},{id:'G3',short:'Onboarding',color:'#8B5CF6'}];
+    this.depts=[
+      {name:'Marketing',color:'#5B4FE8',reviewer:{initials:'JS',role:'Content Lead'},
+        tasks:[
+          {id:'m1',title:'Design product launch landing page',stage:'progress',a:'TR',time:'6h 10m',deadline:'Sep 8, 2026',priority:'High',tag:'Design',goal:'G1',src:'tl',desc:'Build the responsive landing page for the September launch — hero, feature highlights, pricing, and the request-access CTA.',comments:[{a:'JS',when:'2h ago',text:'Hero copy approved — keep the CTA above the fold.'},{a:'TR',when:'just now',text:'On it. First draft ready for review by EOD.'}]},
+          {id:'m2',title:'Social media launch calendar',stage:'review',a:'MC',time:'3h 05m',deadline:'Sep 6, 2026',priority:'Medium',tag:'Social',goal:'G1',src:'tl',desc:'Six-week posting plan across LinkedIn, X and Instagram tied to the launch milestones.',comments:[{a:'JS',when:'5h ago',text:'Looks solid, sending to review.'}]},
+          {id:'m3',title:'Write blog announcement',stage:'todo',a:'TR',time:'0h 00m',deadline:'Sep 12, 2026',priority:'High',tag:'Content',goal:'G1',src:'owner',desc:'Long-form launch announcement for the company blog with product framing and customer quotes.',comments:[]},
+          {id:'m4',title:'Welcome email series',stage:'done',a:'MC',time:'8h 40m',deadline:'Aug 28, 2026',priority:'Medium',tag:'Content',goal:'G3',src:'tl',desc:'Three-email welcome sequence for new workspaces.',comments:[{a:'JS',when:'3d ago',text:'Approved and archived.'}]}
+        ]},
+      {name:'Development',color:'#00C896',reviewer:{initials:'AK',role:'Tech Lead'},
+        tasks:[
+          {id:'d1',title:'Build product API',stage:'progress',a:'SP',time:'12h 30m',deadline:'Sep 9, 2026',priority:'High',tag:'Backend',goal:'G1',src:'clevel',desc:'Core REST + webhook API powering the new product surface, with auth and rate limiting.',comments:[{a:'VK',when:'1h ago',text:'Add pagination to the /tasks endpoint before review.'}]},
+          {id:'d2',title:'Empty-state redesign',stage:'review',a:'LV',time:'5h 15m',deadline:'Sep 11, 2026',priority:'Medium',tag:'Frontend',goal:'G3',src:'tl',desc:'Replace the blank dashboard with a guided 3-step start.',comments:[{a:'LV',when:'1h ago',text:'Ready — submitting for review.'}]},
+          {id:'d3',title:'EU region deployment',stage:'done',a:'SP',time:'4h 00m',deadline:'Sep 2, 2026',priority:'High',tag:'DevOps',goal:'G2',src:'clevel',desc:'Move workspace data for EU customers to the Frankfurt region.',comments:[{a:'VK',when:'2d ago',text:'Verified. Done.'}]}
+        ]},
+      {name:'Sales',color:'#F5A623',reviewer:{initials:'OD',role:'Sales Lead'},
+        tasks:[
+          {id:'s1',title:'Prepare pricing tiers',stage:'todo',a:'OD',time:'0h 00m',deadline:'Sep 10, 2026',priority:'High',tag:'Pricing',goal:'G1',src:'owner',desc:'Three-tier pricing with feature gating and an enterprise contact path.',comments:[]},
+          {id:'s2',title:'Draft outreach list',stage:'review',a:'RN',time:'2h 45m',deadline:'Sep 8, 2026',priority:'Medium',tag:'Outreach',goal:'G2',src:'req',fromDept:0,desc:'Marketing asked for a segmented prospect list to target with the EMEA campaign.',comments:[{a:'JS',when:'1d ago',text:'We need this to plan the EMEA ads.'},{a:'RN',when:'20m ago',text:'First pass done — sending for review.'}]}
+        ]}
+    ];
+    this.chips=['Everything launch-related for September','Pricing + go-to-market docs only','All approved technical specs'];
+    this.compiledData=[
+      {title:'Launch landing page spec',dept:'Marketing',tag:'Design',color:'#5B4FE8'},
+      {title:'Welcome email series',dept:'Marketing',tag:'Content',color:'#5B4FE8'},
+      {title:'Product API contract',dept:'Development',tag:'Backend',color:'#00C896'},
+      {title:'Pricing tiers v1',dept:'Sales',tag:'Pricing',color:'#F5A623'}
+    ];
+    this.state={ sel:{kind:'task',dept:0,id:'m1'}, sageQuery:'Combine all launch-related documents for the September release', compiled:false, reqDoc:null, reqText:'', justId:null, goalFilter:null,
+      reqs:[
+        {id:'q1',from:'OD',fromDept:2,to:1,title:'Add Stripe test mode for demo accounts',prio:false,goal:'G1',status:'pending'},
+        {id:'q2',from:'VK',fromDept:null,to:0,title:'One-pager for EMEA partners',prio:true,goal:'G2',status:'pending'},
+        {id:'q3',from:'JS',fromDept:0,to:2,title:'Share top-20 prospect logos for a case study',prio:false,goal:'G1',status:'declined',reason:'Clients haven\'t approved logo use yet — revisit in October.',by:'OD'}
+      ],
+      rf:{as:'VK',to:1,title:'',prio:false,goal:'G2'}, declining:null, declineText:'' };
+    this.tlDept={JS:0,AK:1,OD:2};
+  }
+  stage(k){
+    if(k==='todo') return {label:'To Do',color:'#6B7385',bg:'#EEF0F6',node:'#C3C9D6'};
+    if(k==='progress') return {label:'In Progress',color:'#C77E0A',bg:'rgba(245,166,35,.16)',node:'#F5A623'};
+    if(k==='review') return {label:'In Review',color:'#5B4FE8',bg:'#EEEDFB',node:'#5B4FE8'};
+    if(k==='review2') return {label:'Final Review',color:'#6D3FE0',bg:'#F1EEFD',node:'#8B5CF6'};
+    if(k==='revision') return {label:'Needs Revision',color:'#E5484D',bg:'rgba(229,72,77,.12)',node:'#E5484D'};
+    return {label:'Done',color:'#00936E',bg:'rgba(0,200,150,.14)',node:'#00C896'};
+  }
+  pr(p){
+    if(p==='High') return {prColor:'#E5484D',prBg:'rgba(229,72,77,.12)'};
+    if(p==='Medium') return {prColor:'#C77E0A',prBg:'rgba(245,166,35,.16)'};
+    return {prColor:'#6B7385',prBg:'#EEF0F6'};
+  }
+  goalOf(id){ const g=this.goals.find(x=>x.id===id)||{id:'—',short:'No goal',color:'#9CA3B5'}; return {goalLabel:g.id+' · '+g.short,goalColor:g.color,goalBg:g.color+'1A'}; }
+  src(t){
+    if(t.src==='owner') return {srcLabel:'From Owner',srcColor:'#fff',srcBg:'#0F1B2D',srcBorder:'1px solid #0F1B2D'};
+    if(t.src==='clevel') return {srcLabel:'★ C-Level',srcColor:'#6D3FE0',srcBg:'#F1EEFD',srcBorder:'1px solid #F1EEFD'};
+    if(t.src==='req') return {srcLabel:'Request · '+this.depts[t.fromDept].name,srcColor:'#C77E0A',srcBg:'#fff',srcBorder:'1px solid rgba(245,166,35,.55)'};
+    if(t.src==='reqP') return {srcLabel:'★ Priority request',srcColor:'#6D3FE0',srcBg:'#fff',srcBorder:'1px solid #CFC8F7'};
+    return {srcLabel:'Team Lead',srcColor:'#6B7385',srcBg:'#EEF0F6',srcBorder:'1px solid #EEF0F6'};
+  }
+  isReq(t){ return t.src==='req'||t.src==='reqP'; }
+  sender(t,di){ if(this.isReq(t)) return t.src==='reqP'?'VK':this.depts[t.fromDept].reviewer.initials; return t.src==='owner'?'OW':(t.src==='clevel'?'VK':this.depts[di].reviewer.initials); }
+  chain(t,di){
+    const tl=this.depts[di].reviewer.initials, snd=this.sender(t,di);
+    let steps,note;
+    if(this.isReq(t)){ steps=[[t.a,'EXECUTOR'],[tl,'STAGE 1 · TEAM LEAD, '+this.depts[di].name.toUpperCase()],[snd,'STAGE 2 · FINAL · REQUESTER']]; note='Two-stage review: this team\'s lead checks first, then the requester signs off.'; }
+    else { steps=[[t.a,'EXECUTOR'],[snd,'REVIEWER · ASSIGNED THIS TASK']]; note='Whoever assigned the task reviews it.'; }
+    const cur={todo:0,progress:0,revision:0,review:1,review2:2,done:steps.length}[t.stage];
+    return {note,steps:steps.map(([init,label],k)=>{
+      const done=k<cur, now=k===cur;
+      return {init,name:this.names[init],role:this.roles[init]||'',grad:this.grads[init],stepLabel:label,
+        mark:done?'✓':String(k+1),dotBg:done?'#00C896':'#fff',dotBorder:done?'#00C896':(now?'#5B4FE8':'#D5D9E5'),dotColor:done?'#fff':(now?'#5B4FE8':'#9CA3B5'),
+        lineColor:done?'#00C896':'#E0E3EE',lineDisplay:k===steps.length-1?'none':'block',
+        state:done?(k===0?'Submitted':'Approved'):(now?(k===0?(t.stage==='revision'?'Revising after feedback':(t.stage==='todo'?'Not started':'Working on it')):'Reviewing now'):'Waiting'),
+        stateColor:done?'#00936E':(now?'#5B4FE8':'#9CA3B5')};
+    })};
+  }
+  selTask(d,id){ this.setState({sel:{kind:'task',dept:d,id}}); }
+  selRev(d){ this.setState({sel:{kind:'reviewer',dept:d},reqDoc:null}); }
+  selSage(){ this.setState({sel:{kind:'sage'}}); }
+  close(){ this.setState({sel:{kind:null}}); }
+  queue(di){
+    const own=this.depts[di].tasks.filter(t=>t.stage==='review').map(t=>({d:di,t,note:this.isReq(t)?'Stage 1 of 2 · then '+this.names[this.sender(t,di)]:''}));
+    const foreign=[];
+    this.depts.forEach((dp,dj)=>dp.tasks.forEach(t=>{ if(t.stage==='review2'&&t.src==='req'&&t.fromDept===di) foreign.push({d:dj,t,note:'Final review · your team requested this from '+dp.name}); }));
+    return own.concat(foreign);
+  }
+  mapCol(di){
+    const s=this.state, sel=s.sel;
+    return this.depts[di].tasks.map(t=>{
+      const st=this.stage(t.stage);
+      const active=sel.kind==='task'&&sel.dept===di&&sel.id===t.id;
+      const just=s.justId===t.id, jc=t.stage==='revision'?'#E5484D':'#5B4FE8';
+      return {title:t.title,stageLabel:st.label,stageColor:st.color,stageBg:st.bg,nodeColor:st.node,time:t.time,
+        aInit:t.a,aGrad:this.grads[t.a],...this.goalOf(t.goal),...this.src(t),
+        opacity:s.goalFilter&&t.goal!==s.goalFilter?.22:1,
+        onClick:()=>this.selTask(di,t.id),
+        border:active?'2px solid #5B4FE8':(just?'1.5px solid '+jc:'1px solid #ECEEF5'),
+        shadow:active?'0 8px 22px rgba(91,79,232,.2)':(just?'0 8px 22px '+jc+'33':'0 2px 8px rgba(15,27,45,.05)'),
+        anim:just?';animation:returnIn .6s ease both':''};
+    });
+  }
+  flash(id){ this.setState({justId:id}); clearTimeout(this._jt); this._jt=setTimeout(()=>this.setState({justId:null}),1200); }
+  openReq(d,id){ this.setState({reqDoc:d+':'+id,reqText:''}); }
+  cancelReq(){ this.setState({reqDoc:null,reqText:''}); }
+  approveDoc(d,id){ const t=this.depts[d].tasks.find(x=>x.id===id); if(!t) return; t.stage=(this.isReq(t)&&t.stage==='review')?'review2':'done'; this.setState({reqDoc:null,reqText:''}); this.flash(id); }
+  sendBack(d,id,revDi){
+    const t=this.depts[d].tasks.find(x=>x.id===id); if(!t) return;
+    t.stage='revision';
+    const note=(this.state.reqText&&this.state.reqText.trim())||'Please revise and resubmit.';
+    t.comments=[...t.comments,{a:this.depts[revDi].reviewer.initials,when:'just now',text:note}];
+    this.setState({reqDoc:null,reqText:''}); this.flash(id);
+  }
+  revVal(di){
+    const sel=this.state.sel, r=this.depts[di].reviewer;
+    const active=sel.kind==='reviewer'&&sel.dept===di;
+    return {name:this.names[r.initials],initials:r.initials,role:r.role,grad:this.grads[r.initials],docCount:this.queue(di).length,
+      onClick:()=>this.selRev(di),bg:active?'#F4F2FE':'#fff',border:active?'2px solid #5B4FE8':'1px solid #ECEEF5',
+      shadow:active?'0 8px 22px rgba(91,79,232,.18)':'0 2px 8px rgba(15,27,45,.05)'};
+  }
+  setRf(p){ this.setState(s=>({rf:{...s.rf,...p}})); }
+  sendReq(){
+    const rf=this.state.rf, title=(rf.title||'').trim(); if(!title) return;
+    const fromDept=rf.as==='VK'?null:this.tlDept[rf.as]; if(fromDept===rf.to) return;
+    const r={id:'q'+Date.now(),from:rf.as,fromDept,to:rf.to,title,prio:rf.as==='VK'&&rf.prio,goal:rf.goal,status:'pending'};
+    this.setState(s=>({reqs:[r,...s.reqs],rf:{...s.rf,title:''}}));
+  }
+  acceptReq(id){
+    const r=this.state.reqs.find(x=>x.id===id); if(!r) return;
+    const tl=this.depts[r.to].reviewer.initials, nid='t'+Date.now();
+    this.depts[r.to].tasks.push({id:nid,title:r.title,stage:'todo',a:tl,time:'0h 00m',deadline:'Sep 14, 2026',priority:r.prio?'High':'Medium',tag:'Request',goal:r.goal,src:r.prio?'reqP':'req',fromDept:r.fromDept,
+      desc:'Requested by '+this.names[r.from]+(r.fromDept!=null?' ('+this.depts[r.fromDept].name+')':' (C-Level)')+'. Accepted by '+this.names[tl]+' — assign it to a team member to start.',comments:[]});
+    this.setState(s=>({reqs:s.reqs.map(x=>x.id===id?{...x,status:'accepted',by:tl}:x),declining:null}));
+    this.flash(nid);
+  }
+  declineReq(id){
+    const r=this.state.reqs.find(x=>x.id===id); if(!r) return;
+    const reason=(this.state.declineText||'').trim()||'No capacity this sprint.';
+    this.setState(s=>({reqs:s.reqs.map(x=>x.id===id?{...x,status:'declined',reason,by:this.depts[r.to].reviewer.initials}:x),declining:null,declineText:''}));
+  }
+  reqsVals(){
+    const s=this.state, rf=s.rf, canPrio=rf.as==='VK', fromDept=rf.as==='VK'?null:this.tlDept[rf.as];
+    const ok=(rf.title||'').trim()&&fromDept!==rf.to;
+    const route=r=>this.names[r.from]+' · '+(r.fromDept!=null?this.depts[r.fromDept].name:'C-Level')+' → '+this.depts[r.to].name;
+    return {
+      asOpts:['VK','JS','OD'].map(k=>({init:k,name:this.names[k],role:this.roles[k],grad:this.grads[k],border:rf.as===k?'2px solid #5B4FE8':'1px solid #ECEEF5',
+        onClick:()=>this.setRf({as:k,prio:k==='VK'?rf.prio:false,to:this.tlDept[k]===rf.to?(rf.to+1)%3:rf.to})})),
+      toOpts:this.depts.map((d,i)=>{ const own=i===fromDept, on=rf.to===i; return {label:d.name,dot:d.color,op:own?.35:1,
+        bg:on?'#0F1B2D':'#fff',color:on?'#fff':'#3A4253',border:on?'1px solid #0F1B2D':'1px solid #E5E7F0',onClick:()=>{ if(!own) this.setRf({to:i}); }}; }),
+      title:rf.title,onTitle:e=>this.setRf({title:e.target.value}),
+      onRegular:()=>this.setRf({prio:false}),onPrio:()=>{ if(canPrio) this.setRf({prio:true}); },
+      regBg:!rf.prio?'#fff':'transparent',regColor:!rf.prio?'#0F1B2D':'#6B7385',
+      prioBg:rf.prio?'#6D3FE0':'transparent',prioColor:rf.prio?'#fff':'#6B7385',prioOp:canPrio?1:.4,
+      prioHint:canPrio?(rf.prio?'Priority — jumps ahead of Team Lead tasks in their queue.':'Regular — queued after the team\'s own priorities.'):'Only C-Level can send priority requests. Team Lead requests are always regular.',
+      goalOpts:this.goals.map(g=>({label:g.id+' · '+g.short,color:rf.goal===g.id?'#fff':g.color,bg:rf.goal===g.id?g.color:'#fff',border:'1px solid '+(rf.goal===g.id?g.color:'#E5E7F0'),onClick:()=>this.setRf({goal:g.id})})),
+      onSend:()=>this.sendReq(),sendOp:ok?1:.45,
+      pending:s.reqs.filter(r=>r.status==='pending').map(r=>({title:r.title,init:r.from,grad:this.grads[r.from],route:route(r),...this.goalOf(r.goal),
+        typeLabel:r.prio?'★ PRIORITY · C-LEVEL':'REGULAR',typeColor:r.prio?'#fff':'#6B7385',typeBg:r.prio?'#6D3FE0':'#EEF0F6',
+        border:s.declining===r.id?'1px solid #E5484D':'1px solid #ECEEF5',declineDisplay:s.declining===r.id?'block':'none',
+        onAccept:()=>this.acceptReq(r.id),onDecline:()=>this.setState({declining:r.id,declineText:''}),onConfirmDecline:()=>this.declineReq(r.id)})),
+      noPending:!s.reqs.some(r=>r.status==='pending'),
+      history:s.reqs.filter(r=>r.status!=='pending').map(r=>({title:r.title,
+        stLabel:r.status==='accepted'?'ACCEPTED':'DECLINED',stColor:r.status==='accepted'?'#00936E':'#E5484D',stBg:r.status==='accepted'?'rgba(0,200,150,.14)':'rgba(229,72,77,.1)',
+        detail:route(r)+(r.status==='declined'?' · “'+r.reason+'” — '+this.names[r.by]:' · added to '+this.depts[r.to].name+' To Do')}))
+    };
+  }
+  renderVals(){
+    const s=this.state, sel=s.sel;
+    const all=this.depts.reduce((a,d)=>a.concat(d.tasks),[]);
+    const pill=(on,color)=>({bg:on?color:'#fff',color:on?'#fff':'#3A4253',border:'1px solid '+(on?color:'#E5E7F0'),dot:on?'#fff':color});
+    const base={
+      t0:this.mapCol(0),t1:this.mapCol(1),t2:this.mapCol(2),
+      d0Count:this.depts[0].tasks.length,d1Count:this.depts[1].tasks.length,d2Count:this.depts[2].tasks.length,
+      r0:this.revVal(0),r1:this.revVal(1),r2:this.revVal(2),
+      goalPills:[{label:'All goals',count:all.length,...pill(!s.goalFilter,'#0F1B2D'),onClick:()=>this.setState({goalFilter:null})}]
+        .concat(this.goals.map(g=>({label:g.id+' · '+g.short,count:all.filter(t=>t.goal===g.id).length,...pill(s.goalFilter===g.id,g.color),onClick:()=>this.setState({goalFilter:s.goalFilter===g.id?null:g.id})}))),
+      reqPending:s.reqs.filter(r=>r.status==='pending').length,
+      onRequests:()=>this.setState({sel:{kind:'requests'}}),
+      onSage:()=>this.selSage(),
+      sageBorder:sel.kind==='sage'?'2px solid #7B6FF0':'2px solid transparent',
+      sageShadow:sel.kind==='sage'?'0 16px 40px rgba(123,111,240,.4)':'0 12px 30px rgba(15,27,45,.25)',
+      closePanel:()=>this.close(),
+      panelOpen:!!(sel&&sel.kind),
+      showTask:false,showReviewer:false,showSage:false,showRequests:false
+    };
+    if(sel.kind==='task'){
+      const t=this.depts[sel.dept].tasks.find(x=>x.id===sel.id);
+      const st=this.stage(t.stage), pr=this.pr(t.priority), ch=this.chain(t,sel.dept);
+      base.showTask=true;
+      base.task={title:t.title,desc:t.desc,stageLabel:st.label,stageColor:st.color,stageBg:st.bg,
+        time:t.time,deadline:t.deadline,aName:this.names[t.a],aInit:t.a,aGrad:this.grads[t.a],
+        priority:t.priority,prColor:pr.prColor,prBg:pr.prBg,tag:t.tag,...this.goalOf(t.goal),...this.src(t),
+        chain:ch.steps,chainNote:ch.note,
+        comments:t.comments.map(c=>({initials:c.a,grad:this.grads[c.a],name:this.names[c.a],when:c.when,text:c.text})),
+        noComments:t.comments.length===0};
+    } else if(sel.kind==='reviewer'){
+      const di=sel.dept, r=this.depts[di].reviewer, open=s.reqDoc, txt=s.reqText||'';
+      const queue=this.queue(di).map(({d,t,note})=>{
+        const isOpen=open===(d+':'+t.id);
+        return {id:t.id,title:t.title,from:this.names[t.a],stageNote:note,reqDisplay:isOpen?'block':'none',reqText:txt,
+          reqBorder:isOpen?'1px solid #E5484D':'1px solid #E5E7F0',reqBg:isOpen?'rgba(229,72,77,.08)':'#fff',reqColor:isOpen?'#E5484D':'#0F1B2D',
+          onApprove:()=>this.approveDoc(d,t.id),onReq:()=>this.openReq(d,t.id),onSend:()=>this.sendBack(d,t.id,di),
+          onReqText:e=>this.setState({reqText:e.target.value}),onCancel:()=>this.cancelReq()};
+      });
+      base.showReviewer=true;
+      base.rev={name:this.names[r.initials],initials:r.initials,role:r.role,grad:this.grads[r.initials],dept:this.depts[di].name,queue,count:queue.length,empty:queue.length===0};
+    } else if(sel.kind==='requests'){
+      base.showRequests=true;
+      base.rq=this.reqsVals();
+      base.declineText=s.declineText;
+      base.onDeclineText=e=>this.setState({declineText:e.target.value});
+      base.onCancelDecline=()=>this.setState({declining:null,declineText:''});
+    } else if(sel.kind==='sage'){
+      base.showSage=true;
+      base.sageQuery=s.sageQuery;
+      base.sageDocCount=12;
+      base.onQuery=e=>this.setState({sageQuery:e.target.value});
+      base.onCompile=()=>this.setState({compiled:true});
+      base.sageChips=this.chips.map(c=>({label:c,onPick:()=>this.setState({sageQuery:c,compiled:false})}));
+      base.hasCompiled=s.compiled;
+      base.compiled=this.compiledData;
+      base.compiledCount=this.compiledData.length;
+      base.compiledSummary='Assembled '+this.compiledData.length+' approved documents spanning Marketing, Development and Sales that match your request — deduplicated and ordered by launch milestone.';
+    }
+    return base;
+  }
+}
+</script>
+</body>
+</html>

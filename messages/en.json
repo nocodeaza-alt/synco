@@ -31,7 +31,9 @@
     "syncMind": "Sync Mind",
     "brainstorm": "Brainstorm",
     "office": "Office",
-    "home": "Home"
+    "home": "Home",
+    "overview": "Overview",
+    "myTeam": "My Team"
   },
   "auth": {
     "login": {

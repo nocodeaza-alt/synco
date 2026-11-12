@@ -1,7 +1,9 @@
 export const dynamic = 'force-dynamic'
 
-import { createServiceClient } from '@/lib/supabase/server'
+import { createServiceClient, getCurrentUserInfo } from '@/lib/supabase/server'
 import { GoalsClient } from '@/components/goals/GoalsClient'
+import { TopBar } from '@/components/layout/TopBar'
+import { LanguageSwitch } from '@/components/layout/LanguageSwitch'
 import type { TaskRow, MemberRow } from '@/types/app'
 import { initialsFor } from '@/lib/utils/avatar'
 
@@ -18,7 +20,10 @@ type DeptInfo = { id: string; name: string; color: string }
 
 export default async function GoalsPage() {
   try {
-    const supabase = await createServiceClient()
+    const [supabase, currentUser] = await Promise.all([
+      createServiceClient(),
+      getCurrentUserInfo(),
+    ])
 
     const { data: workspaceData } = await supabase
       .from('workspaces')
@@ -145,12 +150,16 @@ export default async function GoalsPage() {
     })
 
     return (
-      <GoalsClient
-        goals={goalRows}
-        departments={departments}
-        members={memberRows}
-        workspaceId={workspaceId}
-      />
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#F7F8FC' }}>
+        <TopBar role={currentUser.role} userName={currentUser.name} unreadCount={currentUser.unreadCount} />
+        <GoalsClient
+          goals={goalRows}
+          departments={departments}
+          members={memberRows}
+          workspaceId={workspaceId}
+        />
+        <LanguageSwitch />
+      </div>
     )
   } catch (err) {
     console.error('[GoalsPage] error:', err)

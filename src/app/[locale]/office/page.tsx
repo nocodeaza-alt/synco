@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { createServiceClient } from '@/lib/supabase/server'
+import { createServiceClient, getCurrentUserInfo } from '@/lib/supabase/server'
 import { OfficeClient } from '@/components/office/OfficeClient'
 import { TopBar } from '@/components/layout/TopBar'
 import { LanguageSwitch } from '@/components/layout/LanguageSwitch'
@@ -8,7 +8,7 @@ import { LanguageSwitch } from '@/components/layout/LanguageSwitch'
 export default async function OfficePage() {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const supabase: any = await createServiceClient()
+    const [supabase, currentUser] = await Promise.all([createServiceClient(), getCurrentUserInfo()]) as [any, Awaited<ReturnType<typeof getCurrentUserInfo>>]
     const { data: ws } = await supabase.from('workspaces').select('id, name').limit(1).single()
     const wid = ws?.id ?? ''
 
@@ -44,7 +44,7 @@ export default async function OfficePage() {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#F7F8FC' }}>
-        <TopBar locale="en" role="owner" userName="Olga White" />
+        <TopBar role={currentUser.role} userName={currentUser.name} unreadCount={currentUser.unreadCount} />
         <OfficeClient
           workspaceId={wid}
           workspaceName={ws?.name ?? 'REGAGRO HQ'}

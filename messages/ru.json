@@ -31,7 +31,9 @@
     "syncMind": "Синк Майнд",
     "brainstorm": "Брейншторм",
     "office": "Офис",
-    "home": "Главная"
+    "home": "Главная",
+    "overview": "Обзор",
+    "myTeam": "Моя команда"
   },
   "auth": {
     "login": {

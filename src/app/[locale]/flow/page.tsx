@@ -1,7 +1,9 @@
 export const dynamic = 'force-dynamic'
 
-import { createServiceClient } from '@/lib/supabase/server'
+import { createServiceClient, getCurrentUserInfo } from '@/lib/supabase/server'
 import { FlowClient } from '@/components/flow/FlowClient'
+import { TopBar } from '@/components/layout/TopBar'
+import { LanguageSwitch } from '@/components/layout/LanguageSwitch'
 import type { DeptColumn, TaskRow, RequestRow } from '@/types/app'
 import { initialsFor } from '@/lib/utils/avatar'
 
@@ -21,7 +23,10 @@ type RequestPartial = {
 
 export default async function FlowPage() {
   try {
-    const supabase = await createServiceClient()
+    const [supabase, currentUser] = await Promise.all([
+      createServiceClient(),
+      getCurrentUserInfo(),
+    ])
 
     const workspaceResult = await supabase
       .from('workspaces')
@@ -170,11 +175,15 @@ export default async function FlowPage() {
     })
 
     return (
-      <FlowClient
-        deptColumns={deptColumns}
-        requests={requests}
-        workspaceId={workspaceId}
-      />
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#F7F8FC' }}>
+        <TopBar role={currentUser.role} userName={currentUser.name} unreadCount={currentUser.unreadCount} />
+        <FlowClient
+          deptColumns={deptColumns}
+          requests={requests}
+          workspaceId={workspaceId}
+        />
+        <LanguageSwitch />
+      </div>
     )
   } catch (err) {
     console.error('[FlowPage] error:', err)

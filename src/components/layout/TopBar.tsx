@@ -26,8 +26,26 @@ const ownerTabs = [
   { key: 'office', href: 'office' },
 ]
 
+const cLevelTabs = [
+  { key: 'overview', href: 'roles/clevel' },
+  { key: 'workFlow', href: 'flow' },
+  { key: 'goals', href: 'goals' },
+  { key: 'syncMind', href: 'syncmind' },
+  { key: 'brainstorm', href: 'brainstorm' },
+  { key: 'office', href: 'office' },
+]
+
+const teamLeadTabs = [
+  { key: 'myTeam', href: 'roles/lead' },
+  { key: 'workFlow', href: 'flow' },
+  { key: 'goals', href: 'goals' },
+  { key: 'syncMind', href: 'syncmind' },
+  { key: 'brainstorm', href: 'brainstorm' },
+  { key: 'office', href: 'office' },
+]
+
 const memberTabs = [
-  { key: 'home', href: 'workspace' },
+  { key: 'workFlow', href: 'flow' },
   { key: 'goals', href: 'goals' },
   { key: 'syncMind', href: 'syncmind' },
   { key: 'brainstorm', href: 'brainstorm' },
@@ -47,7 +65,11 @@ export function TopBar({
   const locale = localeProp ?? (params?.locale as string) ?? 'en'
   const [showMenu, setShowMenu] = useState(false)
 
-  const tabs = role === 'member' ? memberTabs : ownerTabs
+  const tabs =
+    role === 'member' ? memberTabs
+    : role === 'c_level' ? cLevelTabs
+    : role === 'team_lead' ? teamLeadTabs
+    : ownerTabs
   const initials = getInitials(userName)
   const avatarGrad = getAvatarColor(userName)
 
@@ -102,7 +124,7 @@ export function TopBar({
                 whiteSpace: 'nowrap',
               }}
             >
-              {t(key as 'workFlow' | 'assignWork' | 'goals' | 'syncMind' | 'brainstorm' | 'office' | 'home')}
+              {t(key as 'workFlow' | 'assignWork' | 'goals' | 'syncMind' | 'brainstorm' | 'office' | 'home' | 'overview' | 'myTeam')}
             </NextLink>
           )
         })}

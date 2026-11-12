@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { createServiceClient } from '@/lib/supabase/server'
+import { createServiceClient, getCurrentUserInfo } from '@/lib/supabase/server'
 import { NotificationsClient } from '@/components/notifications/NotificationsClient'
 import type { NotifItem } from '@/components/notifications/NotificationsClient'
 import { TopBar } from '@/components/layout/TopBar'
@@ -69,7 +69,7 @@ function groupFor(dateStr: string): 'Today' | 'Earlier' {
 export default async function NotificationsPage() {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const supabase: any = await createServiceClient()
+    const [supabase, currentUser] = await Promise.all([createServiceClient(), getCurrentUserInfo()]) as [any, Awaited<ReturnType<typeof getCurrentUserInfo>>]
     const { data: ws } = await supabase.from('workspaces').select('id').limit(1).single()
     const wid = ws?.id
 
@@ -115,7 +115,7 @@ export default async function NotificationsPage() {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#F7F8FC' }}>
-        <TopBar locale="en" role="owner" userName="Olga White" unreadCount={unread} />
+        <TopBar role={currentUser.role} userName={currentUser.name} unreadCount={unread} />
         <NotificationsClient notifications={notifs} unreadCount={unread} />
         <LanguageSwitch />
       </div>
@@ -125,7 +125,7 @@ export default async function NotificationsPage() {
     const unread = DEMO.filter(n => !n.read).length
     return (
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#F7F8FC' }}>
-        <TopBar locale="en" role="owner" userName="Olga White" unreadCount={unread} />
+        <TopBar unreadCount={unread} />
         <NotificationsClient notifications={DEMO} unreadCount={unread} />
         <LanguageSwitch />
       </div>

@@ -40,3 +40,54 @@ export async function createServiceClient() {
     { auth: { autoRefreshToken: false, persistSession: false } }
   )
 }
+
+type UserRole = 'owner' | 'c_level' | 'team_lead' | 'member'
+
+export interface CurrentUserInfo {
+  userId: string | null
+  name: string
+  role: UserRole
+  workspaceId: string | null
+  unreadCount: number
+}
+
+// Returns the currently logged-in user's display name, role, and unread notification count.
+// Falls back gracefully so pages never crash if the user is unauthenticated.
+export async function getCurrentUserInfo(): Promise<CurrentUserInfo> {
+  try {
+    const userClient = await createClient()
+    const { data: { user } } = await userClient.auth.getUser()
+    if (!user) return { userId: null, name: 'Guest', role: 'member', workspaceId: null, unreadCount: 0 }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const svc = await createServiceClient() as any
+
+    const { data: membership } = await svc
+      .from('memberships')
+      .select('id, role, workspace_id, profiles(full_name)')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .limit(1)
+      .single()
+
+    if (!membership) return { userId: user.id, name: user.email ?? 'Unknown', role: 'member', workspaceId: null, unreadCount: 0 }
+
+    const { count } = await svc
+      .from('notifications')
+      .select('id', { count: 'exact', head: true })
+      .eq('membership_id', membership.id)
+      .eq('read', false)
+
+    const name = (membership.profiles as { full_name: string | null } | null)?.full_name ?? user.email ?? 'Unknown'
+
+    return {
+      userId: user.id,
+      name,
+      role: membership.role as UserRole,
+      workspaceId: membership.workspace_id,
+      unreadCount: count ?? 0,
+    }
+  } catch {
+    return { userId: null, name: 'Unknown', role: 'member', workspaceId: null, unreadCount: 0 }
+  }
+}

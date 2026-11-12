@@ -21,6 +21,8 @@ test-results/
 
 # misc
 .DS_Store
+.claude/
+tsconfig.tsbuildinfo
 *.pem
 .vercel
 npm-debug.log*

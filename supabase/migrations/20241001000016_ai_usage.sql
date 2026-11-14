@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS ai_usage (
   created_at      timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX ai_usage_workspace_month
-  ON ai_usage (workspace_id, date_trunc('month', created_at));
+CREATE INDEX ai_usage_workspace_created
+  ON ai_usage (workspace_id, created_at);
 
 ALTER TABLE ai_usage ENABLE ROW LEVEL SECURITY;
 

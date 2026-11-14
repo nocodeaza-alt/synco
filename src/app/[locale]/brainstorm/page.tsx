@@ -44,6 +44,7 @@ export default async function BrainstormPage() {
           sessions={sessions ?? []}
           ideas={ideas}
           members={members ?? []}
+          role={currentUser.role}
         />
         <LanguageSwitch />
       </div>

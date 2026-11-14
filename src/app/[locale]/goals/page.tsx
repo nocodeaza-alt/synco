@@ -157,6 +157,7 @@ export default async function GoalsPage() {
           departments={departments}
           members={memberRows}
           workspaceId={workspaceId}
+          role={currentUser.role}
         />
         <LanguageSwitch />
       </div>

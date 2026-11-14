@@ -29,6 +29,7 @@ interface Props {
   departments: DeptInfo[]
   members: MemberRow[]
   workspaceId: string
+  role?: 'owner' | 'c_level' | 'team_lead' | 'member'
 }
 
 interface DecompTask {
@@ -89,7 +90,7 @@ function pctComplete(tasks: TaskRow[]) {
   return Math.round((done / tasks.length) * 100)
 }
 
-export function GoalsClient({ goals: initialGoals, departments, workspaceId }: Props) {
+export function GoalsClient({ goals: initialGoals, departments, workspaceId, role = 'owner' }: Props) {
   const t = useTranslations('goals')
   const router = useRouter()
   const [goals, setGoals] = useState(initialGoals)
@@ -233,12 +234,14 @@ export function GoalsClient({ goals: initialGoals, departments, workspaceId }: P
       <div style={{ width: 300, flexShrink: 0, backgroundColor: '#fff', borderRight: '1px solid #ECEEF5', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '20px 18px 12px', display: 'flex', alignItems: 'center', borderBottom: '1px solid #ECEEF5' }}>
           <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.4px', color: '#0F1B2D' }}>{t('title')}</span>
-          <button
-            onClick={() => { setMode('new'); setPhase('idle'); setDecompTasks([]); setGoalText('') }}
-            style={{ marginLeft: 'auto', height: 34, padding: '0 12px', borderRadius: 10, border: 'none', background: '#5B4FE8', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
-          >
-            + {t('newGoal')}
-          </button>
+          {(role === 'owner' || role === 'c_level') && (
+            <button
+              onClick={() => { setMode('new'); setPhase('idle'); setDecompTasks([]); setGoalText('') }}
+              style={{ marginLeft: 'auto', height: 34, padding: '0 12px', borderRadius: 10, border: 'none', background: '#5B4FE8', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+            >
+              + {t('newGoal')}
+            </button>
+          )}
         </div>
         <div style={{ flex: 1, overflowY: 'auto', padding: '10px 14px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {goals.map(g => {

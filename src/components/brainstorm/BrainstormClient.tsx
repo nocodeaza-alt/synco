@@ -26,6 +26,7 @@ interface Props {
   sessions: Session[]
   ideas: Idea[]
   members: Member[]
+  role?: 'owner' | 'c_level' | 'team_lead' | 'member'
 }
 
 const DEMO_USER_ID = '00000000-0000-0000-0000-000000000004' // Tom Reyes
@@ -74,7 +75,7 @@ function formatTimer(ms: number) {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 
-export function BrainstormClient({ workspaceId, sessions: initSessions, ideas: initIdeas, members }: Props) {
+export function BrainstormClient({ workspaceId, sessions: initSessions, ideas: initIdeas, members, role = 'owner' }: Props) {
   const params = useParams()
   const locale = (params?.locale as string) ?? 'en'
   const r = (path: string) => `/${locale}/${path}`
@@ -215,12 +216,14 @@ export function BrainstormClient({ workspaceId, sessions: initSessions, ideas: i
       <div style={{ width: 300, flexShrink: 0, background: '#fff', borderRight: '1px solid #ECEEF5', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '20px 18px 12px', display: 'flex', alignItems: 'center' }}>
           <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.4px', color: '#0F1B2D' }}>Brainstorms</div>
-          <button
-            onClick={() => setShowNew(v => !v)}
-            style={{ marginLeft: 'auto', height: 34, padding: '0 12px', borderRadius: 10, border: 'none', background: '#5B4FE8', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
-          >
-            {showNew ? 'Cancel' : '+ New'}
-          </button>
+          {role !== 'member' && (
+            <button
+              onClick={() => setShowNew(v => !v)}
+              style={{ marginLeft: 'auto', height: 34, padding: '0 12px', borderRadius: 10, border: 'none', background: '#5B4FE8', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+            >
+              {showNew ? 'Cancel' : '+ New'}
+            </button>
+          )}
         </div>
 
         {/* New session form */}
